@@ -1,20 +1,32 @@
 import React from "react";
+import { Container, Row, Col } from "reactstrap";
 
 import "./style/product.css";
 
 const product = (props) => {
   return (
-    <div className="product">
-      <div class="img">
+    <div className="product" key={props.key}>
+      <Row className="justify-content-center img">
         <img src={props.book.urlimg} alt="productimg" />
-      </div>
-      <div class="name">{props.book.name}</div>
-      <div class="author">
+      </Row>
+      <Row className="justify-content-center " mt="10px">
+        <div className="name">
+          <div>
+          {props.book.name}
+          </div>
+        </div>
+       
+      </Row>
+      <div>
+      <Row className="justify-content-center author" mt="10px">
         <p>By {props.book.author}</p>
-      </div>
-      <div class="price">$ {props.book.price}</div>
-      <div class="button">
-        <button>Add to cart</button>
+      </Row>
+      <Row className="justify-content-center price" mt="10px">
+       $ {props.book.price}
+      </Row>
+      <Row className="justify-content-center button">
+      <button>Add to cart</button>
+      </Row>
       </div>
     </div>
   );

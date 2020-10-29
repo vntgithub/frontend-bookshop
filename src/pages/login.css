@@ -1,4 +1,30 @@
-h1 {
-    text-align: center;
+.title {
+  color: brown;
+  font-weight: bold;
+  font-size: 2rem;
 }
 
+#custom {
+  color: #fff;
+  font-weight: bold;
+  background-color: #a73737;
+  border-color: #eadedf;
+}
+
+#custom:hover {
+  color: #fff;
+  font-weight: bold;
+  background-color: #c7303e;
+  border-color: #f38f97;
+}
+label {
+  color: brown;
+  font-weight: bold;
+}
+.linksign {
+  font-weight: 600;
+  color: #bd4e4ed9;
+}
+.linksign:hover {
+  color: brown;
+}

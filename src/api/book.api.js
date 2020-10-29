@@ -1,13 +1,18 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:3001/api";
-
 const bookApi = {
-  getBooks: (page) => {
-    
-    };
+  getBooks: async (page, setBook) => {
+    const url = "http://localhost:3001/api/book/getbooks/" + page;
+
+    try {
+      const response = await axios.get(url);
+      setBook(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   },
-  getByName: (name) => {},
+
+  // getByName: (name) => {},
 };
 
 export default bookApi;

@@ -1,0 +1,11 @@
+.buttonChangePape {
+  height: 2rem;
+  width: 2rem;
+  color: #fff;
+  font-weight: bold;
+  background-color: brown;
+  border: 2px solid #fff;
+}
+.buttonChangePape:hover {
+  background-color: #901b1b;
+}

@@ -1,35 +1,76 @@
-import React from 'react';
-import { Button, Form, FormGroup, Input, Container, Row, Col } from 'reactstrap';
+import React, { useState } from "react";
+import { Container, Row, Col, Input, Button } from "reactstrap";
+import { Link } from "react-router-dom";
 
-import './login.css';
+import axios from "axios";
+
+import userApi from "../api/user.api";
+
+import "./login.css";
 const LoginPage = (props) => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  // const [checkLogin ,setCheckLogin] = useState(false);
+  const getUsername = (event) => {
+    setUsername(event.target.value);
+  };
+  const getPassword = (event) => {
+    setPassword(event.target.value);
+  };
+  const sumbmit = () => {
+    const url = "http://localhost:3001/api/user/login";
+    const postData = { username: username, password: password };
+    console.log(username, password);
+    const login = async () => {
+      try {
+        const res = await axios.post(url, postData);
+        console.log(res);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  };
   return (
-      <Container>
-        <Form>
-            <h1>Login</h1>
-        <FormGroup>
-            <Row className="justify-content-md-center">
-                <Col sm={5}>
-                    <Input type="email" name="email" id="exampleEmail" placeholder="usernmae" />
-                </Col>
+    <Container className="container-form">
+      <Row className="justify-content-center mt-5">
+        <div className="title">Login</div>
+      </Row>
+      <Row className="justify-content-center">
+        <div className="form">
+          <form onSubmit={sumbmit}>
+            <Row className="mt-5">
+              <label>Username</label>
+              <Input
+                type="text"
+                value={username}
+                placeholder="Enter username"
+                onChange={getUsername}
+              />
             </Row>
-            
-        </FormGroup>
-        <FormGroup>
-            <Row className="justify-content-md-center">
-            <Col sm={5}>
-                <Input type="password" name="password" id="examplePassword" placeholder="password" />
-            </Col>
+            <Row className="mt-3">
+              <label>Password</label>
+              <Input
+                type="password"
+                value={password}
+                placeholder="Enter password"
+                onChange={getPassword}
+              />
             </Row>
-        </FormGroup>
-        <Row className="justify-content-md-center">
-            <Col sm={5} className="justify-content-center">
-                <Button>Login</Button>
-            </Col>
-        </Row>
-       </Form>
-      </Container>
+            <Row className="mt-3 justify-content-center">
+              <Button id="custom" type="submit">
+                Submit
+              </Button>
+            </Row>
+          </form>
+        </div>
+      </Row>
+      <Row className="mt-3 justify-content-center">
+        <Link to="/sigin" className="linksign">
+          Create accout
+        </Link>
+      </Row>
+    </Container>
   );
-}
+};
 
 export default LoginPage;
