@@ -1,9 +1,15 @@
 import React from "react";
 import { Row } from "reactstrap";
 
+//import { CartContext } from "../contexts/cart.context";
 import "./style/product.css";
 
 const product = (props) => {
+  const addToCart = (book) => {
+   return () => {
+     console.log(book);
+   }
+  }
   return (
     <div className="product" >
       <Row className="justify-content-center img">
@@ -22,9 +28,11 @@ const product = (props) => {
       <Row className="justify-content-center price" mt="10px">
        $ {props.book.price}
       </Row>
-      <Row className="justify-content-center button">
-      <button >Add to cart</button>
-      </Row>
+      {/* <CartContext.Consumer> */}
+        <Row className="justify-content-center button">
+          <button onClick={addToCart(props.book)}>Add to cart</button>
+        </Row>
+      {/* </CartContext.Consumer> */}
     </div>
   );
 };

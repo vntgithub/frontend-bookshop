@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Container, Row, Col, Input, Button } from "reactstrap";
+import { Container, Row, Input, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 
 import axios from "axios";
 
-import userApi from "../api/user.api";
+//import userApi from "../api/user.api";
 
 import "./login.css";
 const LoginPage = (props) => {
@@ -17,27 +17,30 @@ const LoginPage = (props) => {
   const getPassword = (event) => {
     setPassword(event.target.value);
   };
-  const sumbmit = () => {
+  const submit = () => {
     const url = "http://localhost:3001/api/user/login";
     const postData = { username: username, password: password };
-    console.log(username, password);
     const login = async () => {
       try {
-        const res = await axios.post(url, postData);
-        console.log(res);
+        axios.post(url, postData)
+              .then(res => console.log(res))
+              .catch(err => console.log(err));
       } catch (error) {
         console.log(error);
       }
-    };
+  }
+    login();
+    console.log("call login...");
   };
   return (
     <Container className="container-form">
+      
       <Row className="justify-content-center mt-5">
         <div className="title">Login</div>
       </Row>
       <Row className="justify-content-center">
         <div className="form">
-          <form onSubmit={sumbmit}>
+          <form>
             <Row className="mt-5">
               <label>Username</label>
               <Input
@@ -57,7 +60,7 @@ const LoginPage = (props) => {
               />
             </Row>
             <Row className="mt-3 justify-content-center">
-              <Button id="custom" type="submit">
+              <Button id="custom" onClick={submit}>
                 Submit
               </Button>
             </Row>

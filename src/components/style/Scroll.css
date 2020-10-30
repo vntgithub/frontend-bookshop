@@ -1,0 +1,8 @@
+.GoTop {
+  width: 150px;
+  height: 150px;
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  border-radius: 50%;
+}

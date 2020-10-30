@@ -14,19 +14,32 @@ const HomePage = () => {
   const [book, setBook] = useState([]);
   const [categogies, setCategogies] = useState([]);
   const [page, setPage] = useState(0);
+  const [pageCategogies, setPageCategogies] = useState('');
   useEffect(() => {
     bookApi.getBooks(page, setBook);
     bookApi.getCategogies(setCategogies);
-    setNumPage(4);
+    setNumPage(4)
+  }, []);
+  useEffect(() => {
+    bookApi.getBooks(page, setBook);
   }, [page]);
+  useEffect(() => {
+    if(pageCategogies === ''){
+      return;
+    }
+    bookApi.getBookByCategogies(pageCategogies, setBook);
+  }, [pageCategogies]);
   return (
     <div>
         <Topmenu />
         <Banner />
-        <div style={{ height: "150px" }}></div>
-        <Container>
+       
+        <Container className="mt-5">
           <Row>
-            <Col md="2"><Categogies categogies={categogies} /></Col>
+            <Col md="2"><Categogies 
+              categogiesState={{categogies, setPageCategogies}} 
+              setBook={setBook}/>
+            </Col>
             <Col md="10"><ListProduct book={book} /></Col>
           </Row>
         </Container>
