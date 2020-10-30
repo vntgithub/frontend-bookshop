@@ -17,7 +17,14 @@ const Pagination = (props) => {
 
     }
     for(let i = 0; i < props.numpage; i++){
-        pagination.push(<button className="buttonChangePape" onClick={changePage(i)}>{i+1}</button>)
+        pagination.push(
+            <button className="buttonChangePape" 
+                    onClick={changePage(i)}
+                    key={i}
+            >
+                {i+1}
+            </button>
+            );
     }
     return (
         <Row className="justify-content-center">

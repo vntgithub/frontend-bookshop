@@ -1,7 +1,6 @@
 .product {
-  margin: 20px 0px 20px 0px;
-  padding: 1.5rem 0 3rem 0;
-  height: 90%;
+  margin-top: 1rem;
+  padding: 1rem;
   border: 1px solid transparent;
 }
 .product:hover {
@@ -15,15 +14,16 @@
   justify-content: center;
   margin-bottom: 20px;
 }
+.name-author {
+  height: 4.5rem;
+  margin-bottom: 0.5rem;
+}
 .name {
-  padding: 5px;
   display: flex;
   align-content: center;
-  height: 50px;
-  margin-top: 20px;
   text-align: center;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 0.8rem;
   color: #064532;
 }
 .author {

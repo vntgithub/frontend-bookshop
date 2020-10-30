@@ -12,7 +12,6 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
-
 import "./style/TopMenu.css";
 import cart from "../img/cart.svg";
 import avt from "../img/avt.jpg";
@@ -37,7 +36,7 @@ const TopMenu = (props) => {
                 <Link className="link" to="/cart">
                   <img src={cart} alt="cartIcon" width="30px" height="30px" />
                 </Link>
-                <span className="numberItems">0</span>
+                   <span className="numberItems">{0}</span>
               </div>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
