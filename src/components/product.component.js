@@ -1,13 +1,15 @@
 import React from "react";
+import { useContext } from "react";
 import { Row } from "reactstrap";
 
-//import { CartContext } from "../contexts/cart.context";
+import CartContext from '../contexts/cart.context';
 import "./style/product.css";
 
 const product = (props) => {
   const addToCart = (book) => {
    return () => {
-     console.log(book);
+     console.log(book._id);
+      
    }
   }
   return (

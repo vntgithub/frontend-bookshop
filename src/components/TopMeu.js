@@ -16,11 +16,13 @@ import "./style/TopMenu.css";
 import avt from "../img/avt.jpg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { faCartPlus } from '@fortawesome/free-solid-svg-icons'
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import UserCart from '../contexts/cart.context';
+import { useContext } from "react";
 
 const TopMenu = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const userAvt = props.userAvt || avt;
+  const numItems = useContext(UserCart);
   const toggle = () => setIsOpen(!isOpen);
 
   return (
@@ -38,7 +40,9 @@ const TopMenu = (props) => {
                 <Link className="link" to="/cart">
                   <FontAwesomeIcon icon={faCartPlus} size="2x" />
                 </Link>
-                   <span className="numberItems">{0}</span>
+                
+                  <span className="numberItems">{numItems}</span>
+                   
               </div>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>

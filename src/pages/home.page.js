@@ -7,6 +7,7 @@ import Categogies from "../components/Categogies";
 import ListProduct from "../components/ListPoduct";
 import Pagination from "../components/pagination";
 import Footer from "../components/Footer";
+import CartContext from "../contexts/cart.context";
 
 import "./home.css";
 
@@ -16,10 +17,16 @@ const HomePage = () => {
   const [categogies, setCategogies] = useState([]);
   const [page, setPage] = useState(0);
   const [pageCategogies, setPageCategogies] = useState('All books');
+  const [userCart, setUserCart] = useState([]);
   useEffect(() => {
-    bookApi.getBooks(page, setBook);
-    bookApi.getCategogies(setCategogies);
-    setNumPage(4)
+    const componentDidMount = async () => {
+      await bookApi.getBooks(page, setBook);
+      await bookApi.getCategogies(setCategogies);
+      setNumPage(4);
+      if(localStorage.getItem('cartItems'))
+        setUserCart(localStorage.getItem('carItems'));
+    }
+    componentDidMount();
   }, []);
   useEffect(() => {
     if(pageCategogies === 'All books')
@@ -31,9 +38,9 @@ const HomePage = () => {
   }, [pageCategogies]);
   return (
     <div>
+      <CartContext.Provider value={userCart.length}>
         <Topmenu />
         <Banner />
-       
         <Container className="mt-5">
         <Row className="offset-md-2">
             <h2 className="current-filter">{pageCategogies}</h2>
@@ -48,6 +55,7 @@ const HomePage = () => {
         </Container>
         <Pagination numpage={numPage} setpage={setPage}/>
         <Footer />
+        </CartContext.Provider>
       </div>
   );
 };
