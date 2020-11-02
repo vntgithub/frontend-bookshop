@@ -3,4 +3,6 @@
   width: auto;
   background-image: url("./banner.jpg");
   background-size: cover;
+  margin: 0px;
+  padding: 0px;
 }

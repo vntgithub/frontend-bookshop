@@ -8,25 +8,25 @@ import ListProduct from "../components/ListPoduct";
 import Pagination from "../components/pagination";
 import Footer from "../components/Footer";
 
+import "./home.css";
 
 const HomePage = () => {
   const [numPage, setNumPage] = useState(0);
   const [book, setBook] = useState([]);
   const [categogies, setCategogies] = useState([]);
   const [page, setPage] = useState(0);
-  const [pageCategogies, setPageCategogies] = useState('');
+  const [pageCategogies, setPageCategogies] = useState('All books');
   useEffect(() => {
     bookApi.getBooks(page, setBook);
     bookApi.getCategogies(setCategogies);
     setNumPage(4)
   }, []);
   useEffect(() => {
-    bookApi.getBooks(page, setBook);
+    if(pageCategogies === 'All books')
+      bookApi.getBooks(page, setBook);
+    
   }, [page]);
   useEffect(() => {
-    if(pageCategogies === ''){
-      return;
-    }
     bookApi.getBookByCategogies(pageCategogies, setBook);
   }, [pageCategogies]);
   return (
@@ -35,6 +35,9 @@ const HomePage = () => {
         <Banner />
        
         <Container className="mt-5">
+        <Row className="offset-md-2">
+            <h2 className="current-filter">{pageCategogies}</h2>
+          </Row>
           <Row>
             <Col md="2"><Categogies 
               categogiesState={{categogies, setPageCategogies}} 

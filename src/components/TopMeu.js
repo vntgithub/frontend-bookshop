@@ -13,8 +13,10 @@ import {
   DropdownItem,
 } from "reactstrap";
 import "./style/TopMenu.css";
-import cart from "../img/cart.svg";
 import avt from "../img/avt.jpg";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons'
 
 const TopMenu = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -34,20 +36,14 @@ const TopMenu = (props) => {
             <NavItem>
               <div className="cart">
                 <Link className="link" to="/cart">
-                  <img src={cart} alt="cartIcon" width="30px" height="30px" />
+                  <FontAwesomeIcon icon={faCartPlus} size="2x" />
                 </Link>
                    <span className="numberItems">{0}</span>
               </div>
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                <img
-                  className="userAvt"
-                  src={userAvt}
-                  alt="avtuser"
-                  width="30px"
-                  height="30px"
-                />
+                <FontAwesomeIcon icon={faUser} size="2x" />
               </DropdownToggle>
               <DropdownMenu right>
                 <DropdownItem>

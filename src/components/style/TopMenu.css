@@ -1,35 +1,42 @@
-.link-dropdown a{
-    color: #333;
+.link-dropdown a {
+  color: brown;
 }
 .userAvt {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 .logo {
-    font-family: 'Lucida Sans', 
-        'Lucida Sans Regular', 'Lucida Grande', 
-        'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    font-size: 2rem;
-    font-weight: bold;
-    color: brown;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: brown;
 }
-.link img {
-    margin-top: .4rem;
-    margin-right: .7rem;
-    opacity: .5;
+.cart {
+  margin-top: 0.6rem;
+  margin-right: 0.5rem;
+  display: flex;
 }
-.cart{
-    display: flex;
+.cart a {
+  color: #777;
 }
 .numberItems {
-    text-align: center;
-    width: 1.5rem;
-    height: 1.5rem;
-    font-size: 1rem;
-    font-weight: bold;
-    margin-left: -1.2rem;
-    border: 1px solid #EEE;
-    border-radius: 50%;
-    background-color: brown;
-    color: white;
-    Z-index: 1;
+  text-align: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  font-size: 0.95rem;
+  font-weight: bold;
+  margin-left: -0.6rem;
+  margin-top: -0.3rem;
+  border: 1px solid #eee;
+  border-radius: 50%;
+  background-color: brown;
+  color: white;
+  z-index: 1;
+}
+.link-dropdown {
+  color: brown;
+}
+.dropdown,
+.nav-item {
+  color: rgb(161, 72, 72);
 }

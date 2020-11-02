@@ -1,2 +1,0 @@
-BACKEND_URL=http://backend-bookshop.herokuapp.com/api
-BACKEND_URL_LOCAL=http://localhost:3001/api
