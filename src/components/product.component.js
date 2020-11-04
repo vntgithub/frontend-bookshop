@@ -9,16 +9,15 @@ const Product = (props) => {
   const { userCart, setUserCart } = useContext(CartContext);
   const addToCart = (book) => {
    return () => {
-     const index = userCart.findIndex(item => item._id === book._id);
+     const index = userCart.findIndex(element => element.item._id === book._id);
      if(index === -1){
-        const newItem = { _id: book._id, count: 1};
+        const newItem = { item: book, count: 1};
         const newCart = userCart.concat(newItem);
         localStorage.setItem("cartItems", JSON.stringify(newCart));
         setUserCart(newCart);
      }else{
-        const newCart = userCart;
-        newCart[index].count = newCart[index].count + 1;
-        console.log(newCart);
+        const newCart = [...userCart];
+        newCart[index].count += 1; 
         localStorage.setItem("cartItems", JSON.stringify(newCart));
         setUserCart(newCart);
      }
