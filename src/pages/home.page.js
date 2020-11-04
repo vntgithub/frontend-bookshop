@@ -23,8 +23,12 @@ const HomePage = () => {
       await bookApi.getBooks(page, setBook);
       await bookApi.getCategogies(setCategogies);
       setNumPage(4);
-      if(localStorage.getItem('cartItems'))
-        setUserCart(localStorage.getItem('carItems'));
+      if(localStorage.getItem('cartItems')){
+        const arrayItems = JSON.parse(localStorage.getItem('cartItems'));
+        setUserCart(arrayItems);
+      }else{
+        localStorage.setItem('cartItems', []);
+      }
     }
     componentDidMount();
   }, []);
@@ -38,7 +42,7 @@ const HomePage = () => {
   }, [pageCategogies]);
   return (
     <div>
-      <CartContext.Provider value={userCart.length}>
+      <CartContext.Provider value={{ userCart, setUserCart }}>
         <Topmenu />
         <Banner />
         <Container className="mt-5">

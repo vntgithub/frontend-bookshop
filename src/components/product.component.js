@@ -5,11 +5,23 @@ import { Row } from "reactstrap";
 import CartContext from '../contexts/cart.context';
 import "./style/product.css";
 
-const product = (props) => {
+const Product = (props) => {
+  const { userCart, setUserCart } = useContext(CartContext);
   const addToCart = (book) => {
    return () => {
-     console.log(book._id);
-      
+     const index = userCart.findIndex(item => item._id === book._id);
+     if(index === -1){
+        const newItem = { _id: book._id, count: 1};
+        const newCart = userCart.concat(newItem);
+        localStorage.setItem("cartItems", JSON.stringify(newCart));
+        setUserCart(newCart);
+     }else{
+        const newCart = userCart;
+        newCart[index].count = newCart[index].count + 1;
+        console.log(newCart);
+        localStorage.setItem("cartItems", JSON.stringify(newCart));
+        setUserCart(newCart);
+     }
    }
   }
   return (
@@ -30,12 +42,10 @@ const product = (props) => {
       <Row className="justify-content-center price" mt="10px">
        $ {props.book.price}
       </Row>
-      {/* <CartContext.Consumer> */}
-        <Row className="justify-content-center button">
-          <button onClick={addToCart(props.book)}>Add to cart</button>
-        </Row>
-      {/* </CartContext.Consumer> */}
+      <Row className="justify-content-center button">
+        <button onClick={addToCart(props.book)}>Add to cart</button>
+      </Row>
     </div>
   );
 };
-export default product;
+export default Product;
