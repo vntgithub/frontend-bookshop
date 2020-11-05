@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col } from "reactstrap";
 
-import Product from "./product.component";
+import Product from "./Product";
 const ListProduct = (props) => {
   return (
     <Container>

@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Container, Col, Row } from "reactstrap";
+
+import CartContext from "../contexts/cart.context";
 import bookApi from "../api/book.api";
 import Topmenu from "../components/TopMeu";
 import Banner from "../components/Banner";
 import Categogies from "../components/Categogies";
 import ListProduct from "../components/ListPoduct";
-import Pagination from "../components/pagination";
+import Pagination from "../components/Pagination";
 import Footer from "../components/Footer";
-import CartContext from "../contexts/cart.context";
 
-import "./home.css";
+
+import "./style/home.css";
 
 const HomePage = () => {
   const [numPage, setNumPage] = useState(0);
@@ -17,7 +19,7 @@ const HomePage = () => {
   const [categogies, setCategogies] = useState([]);
   const [page, setPage] = useState(0);
   const [pageCategogies, setPageCategogies] = useState('All books');
-  const [userCart, setUserCart] = useState([]);
+  const { userCart, setUserCart } = useContext(CartContext);
   useEffect(() => {
     const componentDidMount = async () => {
       await bookApi.getBooks(page, setBook);
@@ -42,7 +44,7 @@ const HomePage = () => {
   }, [pageCategogies]);
   return (
     <div>
-      <CartContext.Provider value={{ userCart, setUserCart }}>
+      
         <Topmenu />
         <Banner />
         <Container className="mt-5">
@@ -59,7 +61,7 @@ const HomePage = () => {
         </Container>
         <Pagination numpage={numPage} setpage={setPage}/>
         <Footer />
-        </CartContext.Provider>
+        
       </div>
   );
 };

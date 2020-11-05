@@ -1,0 +1,48 @@
+.col {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding: 1rem;
+  border: 1px solid #ebebeb;
+}
+
+.col-sm-2,
+.col-sm-1 {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  padding: 1rem;
+  border: 1px solid #ebebeb;
+}
+
+.sgv {
+  font-size: 1.2rem;
+  color: #555;
+  cursor: pointer;
+  margin: 0 1rem 0 1rem;
+}
+
+.header {
+  font-weight: bold;
+}
+.name-product {
+  font-size: 1 rem;
+  color: cadetblue;
+  font-weight: bold;
+}
+.price-product {
+  color: brown;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.count {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: green;
+}
+
+.index {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
