@@ -9,14 +9,19 @@
   color: #651705;
   font-family: MerriweatherBlack, serif;
   font-weight: 700;
-  padding: 0.5rem 0;
+  padding: 0.8rem 0;
 }
-.categogies-item a {
+.categogies-item p {
   color: #9b3300;
+  font-weight: bold;
   display: block;
-  padding: 0.5rem 0;
+  cursor: pointer;
 }
-
+.categogies-item p:hover {
+  color: #023e83;
+  display: block;
+  cursor: pointer;
+}
 @media only screen and (max-width: 1000px) {
   .boder-categogies {
     display: none;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useContext } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import CartContext from "../contexts/cart.context";
@@ -7,15 +7,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import InvoiceForm from '../components/InvoiceForm';
 
 import './style/cart.css';
 
 const CartPage = () => {
+    const [isOpen, setIsOpen] = useState(false);
     const { userCart, setUserCart } = useContext(CartContext);
+    let count = 0, totalAmount = 0;
+    for(let i = 0; i < userCart.length; i++){
+        count += userCart[i].count;
+        totalAmount += (userCart[i].count * userCart[i].item.price);
+    };
     const deleteItem = (index) => {
         return function() {
             const newCart = userCart.filter((element, i) => i !== index);
-            console.log(newCart);
             setUserCart(newCart);
             localStorage.setItem('cartItems', JSON.stringify(newCart));
         }
@@ -32,7 +38,7 @@ const CartPage = () => {
         return function() {
             const newCart = [...userCart];
             newCart[index].count -= 1;
-            if(newCart[index].count == 0){
+            if(newCart[index].count === 0){
                 const del = deleteItem(index);
                 del();
             }else{
@@ -42,9 +48,18 @@ const CartPage = () => {
             
         }
     }
+    const toggle = () => setIsOpen(!isOpen);
     return (
-        <Container>
-            <h1>Cart</h1>
+        <Container className="container-cartpage">
+            {isOpen && <InvoiceForm />}
+            <Row className="total">
+                <Col sm={3}>Cart</Col>
+                <Col sm={{size: 2, offset: 4}}>Products: {count}</Col>
+                <Col sm={{size: 2}}>
+                Capital-sum: {parseFloat(totalAmount).toPrecision(4)} $
+                </Col>
+                
+            </Row>
             <Row className="header">
                 <Col sm={1}>#</Col>
                 <Col sm={2}>Image product</Col>
@@ -54,8 +69,9 @@ const CartPage = () => {
                 <Col sm={2}>Total amount </Col>
                 <Col sm={1}>Delete</Col>
             </Row>
-            {userCart.map((element, index) => 
-                <Row key={index}>
+            {userCart.map((element, index) => {
+                return(
+                <Row key={index} className="body-table">
                     <Col sm={1} className="index">{index}</Col>
                     <Col sm={2}>
                         <img src={element.item.urlimg} alt="productImg" />
@@ -71,8 +87,21 @@ const CartPage = () => {
                     <Col sm={1}>
                         <FontAwesomeIcon className="sgv" icon={faTrashAlt} onClick={deleteItem(index)} />
                     </Col>
-                </Row>
+                </Row>);
+            }
             )}
+            <Row className="capital-sum">
+               <Col sm={{size: 3, offset: 9}}>
+                   <p>Capital-sum:</p>
+                   <h6>{parseFloat(totalAmount).toPrecision(4)} $</h6>
+               </Col>
+            </Row>
+            <Row className="buy">
+                <Col sm={{size: 3, offset: 9}}>
+                    <button onClick={toggle}>Buy</button>
+                </Col>
+            </Row>
+           
         </Container>
     );
 }

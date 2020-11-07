@@ -3,12 +3,10 @@ import { Container, Col, Row } from "reactstrap";
 
 import CartContext from "../contexts/cart.context";
 import bookApi from "../api/book.api";
-import Topmenu from "../components/TopMeu";
 import Banner from "../components/Banner";
 import Categogies from "../components/Categogies";
 import ListProduct from "../components/ListPoduct";
 import Pagination from "../components/Pagination";
-import Footer from "../components/Footer";
 
 
 import "./style/home.css";
@@ -45,7 +43,7 @@ const HomePage = () => {
   return (
     <div>
       
-        <Topmenu />
+        
         <Banner />
         <Container className="mt-5">
         <Row className="offset-md-2">
@@ -60,7 +58,7 @@ const HomePage = () => {
           </Row>
         </Container>
         <Pagination numpage={numPage} setpage={setPage}/>
-        <Footer />
+        
         
       </div>
   );

@@ -1,0 +1,11 @@
+.invoice-form {
+  position: fixed;
+
+  z-index: 1;
+  background-color: ghostwhite;
+  border-radius: 3rem;
+}
+.title-information {
+  color: brown;
+  font-weight: bold;
+}

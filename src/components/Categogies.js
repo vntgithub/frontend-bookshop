@@ -9,11 +9,11 @@ const Categogies = (props) => {
             <Row className="title">Filter by Categogies</Row>
             {props.categogiesState.categogies.map((item, index) => 
                 <Row className="categogies-item" key={index}>
-                    <a href="/#" onClick={() => 
+                    <p onClick={() => 
                         {props.categogiesState.setPageCategogies(item)}}
                     >
                         {item}
-                    </a>
+                    </p>
                 </Row>
             )}
         </div>

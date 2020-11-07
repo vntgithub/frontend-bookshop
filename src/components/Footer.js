@@ -7,7 +7,6 @@ const Footer = () => {
   return (
     <div className="footer">
       <Row className="justify-content-center">
-        <h1 className="logofooter">BookShop</h1>
      
       </Row>
     </div>

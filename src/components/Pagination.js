@@ -7,7 +7,7 @@ const Pagination = (props) => {
     const changePage = (pageNumber) => {
         return function() {
             props.setpage(pageNumber);
-            window.scrollTo(0, 0);
+            //window.scrollTo(0, 0);
         }
     }
     const left = () => {
