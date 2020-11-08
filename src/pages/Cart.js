@@ -51,7 +51,7 @@ const CartPage = () => {
     const toggle = () => setIsOpen(!isOpen);
     return (
         <Container className="container-cartpage">
-            {isOpen && <InvoiceForm />}
+            {isOpen && <InvoiceForm toggle={toggle} />}
             <Row className="total">
                 <Col sm={3}>Cart</Col>
                 <Col sm={{size: 2, offset: 4}}>Products: {count}</Col>

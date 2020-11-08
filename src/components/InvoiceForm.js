@@ -3,6 +3,10 @@ import { Container, FormGroup, Input, Label, Form, Row, Col } from 'reactstrap';
 
 import invoiceApi from '../api/invoice.api';
 import CartContext from '../contexts/cart.context';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faExclamationCircle, faTimes
+} from '@fortawesome/free-solid-svg-icons';
 import './style/invoiceform.css';
 
 const InvoiceForm = (props) => {
@@ -19,21 +23,48 @@ const InvoiceForm = (props) => {
     const setPhone = (event) => setData({...data, phone: event.target.value});
     const setAdress = (event) => setData({...data, adress: event.target.value});
     const submit = () => {
+        const RegExp = /^0[1-9]{9,10}/;
+        let check = true;
         if(data.name === ''){
-            setErr({...err, name:true});
-            return;
+            check &= false;
+            document.getElementById('name').style.visibility = "unset";
+        }else{
+            document.getElementById('name').style.visibility = "hidden";
         }
-        const invoice = {
-            ...data, 
-        };
-        console.log(invoice);
-        invoiceApi.addInvoice(invoice);
-        setUserCart([]);
-        localStorage.setItem('cartItems', JSON.stringify([]));
+        if(data.phone === ''){
+            check &= false;
+            document.getElementById('phone').style.visibility = "unset";
+            
+        }else{
+            if(RegExp.test(data.phone)){
+                document.getElementById('phone').style.visibility = "hidden";
+            }else{
+                document.getElementById('phone').children[1].innerHTML= "Phone numbers must begin with 0, have 10-11 numbers";
+                document.getElementById('phone').style.visibility = "unset";
+            }
+        }
+        if(data.adress === ''){
+            check &= false;
+            document.getElementById('adress').style.visibility = "unset";
+        }else{
+            document.getElementById('adress').style.visibility = "hidden";
+        }
+        if(check) {
+            const invoice = {
+                ...data, 
+            };
+            console.log(invoice);
+            invoiceApi.addInvoice(invoice);
+            setUserCart([]);
+            localStorage.setItem('cartItems', JSON.stringify([]));
+        }
+        return;
     }
     return(
+        <div>
+        <div className="overlay"></div>
         <Container className="invoice-form">
-            
+            <FontAwesomeIcon icon={faTimes} className="exit" onClick={props.toggle} />
             <Row className="justify-content-center m-2">
                 <h1 className="title-information">Infomation</h1>
             </Row>
@@ -43,17 +74,33 @@ const InvoiceForm = (props) => {
                         <FormGroup>
                             <Label>Name</Label>
                             <Input onChange={setName} name="name" type="text" />
+                            <div id="name" className="require">
+                                <FontAwesomeIcon icon={faExclamationCircle} />
+                                <p>Name is require</p>
+                            </div>
                             <div className="err">{}</div>
                             <Label>Phone</Label>
                             <Input onChange={setPhone} name="phone" type="text" />
+                            <div id="phone" className="require">
+                                <FontAwesomeIcon icon={faExclamationCircle} />
+                                <p>Phone is require</p>
+                            </div>
                             <Label>Adress</Label>
                             <Input onChange={setAdress} name="adress" type="text" />
-                            <Input className="mt-5" type="submit" onClick={submit} />
+                            <div id="adress" className="require">
+                                <FontAwesomeIcon icon={faExclamationCircle} />
+                                <p>Adress is require</p>
+                            </div>
+                            
                         </FormGroup>
                     </Form>
                 </Col>
             </Row>
+            <Row className="justify-content-center mb-2">
+                <h4 className="mt-5 button-submit" onClick={submit} >Submit</h4>
+            </Row>
         </Container>
+        </div>
     );
 }
 export default InvoiceForm;
