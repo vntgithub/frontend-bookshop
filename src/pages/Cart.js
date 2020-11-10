@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useContext } from 'react';
-import { Container, Row, Col } from 'reactstrap';
-import CartContext from "../contexts/cart.context";
+import { Container, Row, Col, Alert } from 'reactstrap';
+import { CartContext } from "../contexts/Context";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
@@ -48,7 +48,13 @@ const CartPage = () => {
             
         }
     }
-    const toggle = () => setIsOpen(!isOpen);
+    const toggle = () => {
+        if(userCart.length === 0){
+            document.getElementById('warning').style.visibility = "unset";
+            return;
+        }
+        setIsOpen(!isOpen);
+    }
     return (
         <Container className="container-cartpage">
             {isOpen && <InvoiceForm toggle={toggle} />}
@@ -97,7 +103,12 @@ const CartPage = () => {
                </Col>
             </Row>
             <Row className="buy">
-                <Col sm={{size: 3, offset: 9}}>
+                <Col id="warning" style={{visibility: "hidden"}} sm={{size: 4, offset: 5}}>
+                    <Alert style={{margin: 0}} color="warning">
+                        Cart is empty!
+                    </Alert>
+                </Col>
+                <Col sm={{size: 3}}>
                     <button onClick={toggle}>Buy</button>
                 </Col>
             </Row>

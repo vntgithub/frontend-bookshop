@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Container, Col, Row } from "reactstrap";
 
-import CartContext from "../contexts/cart.context";
+import { CartContext } from "../contexts/Context";
 import bookApi from "../api/book.api";
 import Banner from "../components/Banner";
 import Categogies from "../components/Categogies";

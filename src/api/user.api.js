@@ -1,11 +1,15 @@
 import axios from "axios";
 
 const userApi = {
-  login: async (username, password) => {
+  login: async (user, setUser) => {
     const url = "http://localhost:3001/api/user/login";
     await axios
-      .post(url, { username: username, password: password })
-      .then((res) => res)
+      .post(url, user)
+      .then((res) => {
+        if(res && res.data.login){
+          setUser(res.data.user);
+        }
+      })
       .catch((err) => console.log(err));
   },
 };

@@ -6,3 +6,6 @@
 a:hover {
   color: #7d2b03 !important;
 }
+html {
+  scroll-behavior: smooth;
+}

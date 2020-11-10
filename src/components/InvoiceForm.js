@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Container, FormGroup, Input, Label, Form, Row, Col } from 'reactstrap';
 
 import invoiceApi from '../api/invoice.api';
-import CartContext from '../contexts/cart.context';
+import { CartContext } from '../contexts/Context';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle, faTimes
@@ -18,7 +18,6 @@ const InvoiceForm = (props) => {
         date: new Date(), 
         cart: [...userCart]
     });
-    const [err, setErr] = useState({name: false, phone: false, adress: false});
     const setName = (event) => setData({...data, name: event.target.value})
     const setPhone = (event) => setData({...data, phone: event.target.value});
     const setAdress = (event) => setData({...data, adress: event.target.value});
@@ -39,6 +38,7 @@ const InvoiceForm = (props) => {
             if(RegExp.test(data.phone)){
                 document.getElementById('phone').style.visibility = "hidden";
             }else{
+                check &= false;
                 document.getElementById('phone').children[1].innerHTML= "Phone numbers must begin with 0, have 10-11 numbers";
                 document.getElementById('phone').style.visibility = "unset";
             }
@@ -57,6 +57,7 @@ const InvoiceForm = (props) => {
             invoiceApi.addInvoice(invoice);
             setUserCart([]);
             localStorage.setItem('cartItems', JSON.stringify([]));
+            props.toggle();
         }
         return;
     }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   Collapse,
@@ -12,23 +12,36 @@ import {
   DropdownMenu,
   DropdownItem,
 } from "reactstrap";
+
 import "./style/TopMenu.css";
+import { CartContext, UserContext } from '../contexts/Context';
+import ModalLogin from './ModalLogin';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
-import CartContext from '../contexts/cart.context';
-import { useContext } from "react";
+
 
 const TopMenu = (props) => {
+  const { user } = useContext(UserContext);
+  let avt;
+  if(user) {
+    avt = <img style={{width: "2.5rem", height: "2.5rem"}} src={user.urlimg} alt="userimg" />;
+  }else{
+    avt = <FontAwesomeIcon icon={faUser} size="2x" /> ;
+  }
   const [isOpen, setIsOpen] = useState(false);
+  const [login, setLogin] = useState(false);
   const { userCart } = useContext(CartContext);
   const toggle = () => setIsOpen(!isOpen);
   let count = 0;
   for(let i = 0; i < userCart.length; i++){
     count += userCart[i].count;
   };
+  const openModalLogin = () => setLogin(!login);
   return (
+    
     <div>
+      {login&&<ModalLogin openModalLogin={openModalLogin} />}
       <Navbar fixed="top" color="light" light expand="md">
         <NavbarBrand href="/">
           <div className="logo">BookShop</div>
@@ -47,24 +60,18 @@ const TopMenu = (props) => {
             </NavItem>
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                <FontAwesomeIcon icon={faUser} size="2x" />
+                {avt}
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>
-                  <Link className="link-dropdown" to="login">
-                    Login
-                  </Link>
+                <DropdownItem onClick={openModalLogin}>
+                  <p>Login/Sigin</p>
                 </DropdownItem>
                 <DropdownItem>
-                  <Link className="link-dropdown" to="/sigin">
-                    Sigin
-                  </Link>
+                  <p>My invoice</p>
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem>
-                  <Link className="link-dropdown" to="/sigin">
-                    Logout
-                  </Link>
+                  <p>Logout</p>
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>

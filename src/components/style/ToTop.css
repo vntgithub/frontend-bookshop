@@ -1,0 +1,15 @@
+.totop {
+  cursor: pointer;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: rgb(18, 128, 218);
+  color: white;
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 4rem;
+  right: 4rem;
+}
