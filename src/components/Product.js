@@ -2,7 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { Row } from "reactstrap";
 
-import { CartContext, ModalLoginContext } from '../contexts/Context';
+import { CartContext } from '../contexts/Context';
 import "./style/product.css";
 
 const Product = (props) => {

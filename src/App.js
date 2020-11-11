@@ -30,7 +30,7 @@ function App() {
     <CartContext.Provider value={{ userCart, setUserCart }}>
     <UserContext.Provider value={{ user, setUser }}>
       <Router>
-      <Topmenu openModalLogin={openModalLogin} />
+      <Topmenu openModalLogin={openModalLogin} setUserState={setUser}/>
       {login&&<ModalLogin openModalLogin={openModalLogin} />}
         <Switch>
           <Route path="/" exact component={HomePgae} />

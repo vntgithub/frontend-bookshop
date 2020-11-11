@@ -11,12 +11,10 @@ import InvoiceForm from '../components/InvoiceForm';
 
 import './style/cart.css';
 
-const CartPage = (props) => {
+const CartPage = () => {
     const { userCart, setUserCart } = useContext(CartContext);
     const { login, setLogin } = useContext(ModalLoginContext);
-    console.log(login);
     const [isOpen, setIsOpen] = useState(false);
-    const [checkUser, setCheckUser] = useState(false);
     let count = 0, totalAmount = 0;
     for(let i = 0; i < userCart.length; i++){
         count += userCart[i].count;
@@ -59,7 +57,7 @@ const CartPage = (props) => {
         setIsOpen(!isOpen);
     }
     const buy = () => {
-        if(document.cookie == ''){
+        if(document.cookie === ''){
             setLogin(!login);
             return;
         }

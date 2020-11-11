@@ -38,6 +38,10 @@ const TopMenu = (props) => {
   for(let i = 0; i < userCart.length; i++){
     count += userCart[i].count;
   };
+  const logout = () => {
+    document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    props.setUserState(null);
+  }
   return (
     
     <div>
@@ -70,7 +74,7 @@ const TopMenu = (props) => {
                   <p>My invoice</p>
                 </DropdownItem>
                 <DropdownItem divider />
-                <DropdownItem>
+                <DropdownItem onClick={logout}>
                   <p>Logout</p>
                 </DropdownItem>
               </DropdownMenu>
