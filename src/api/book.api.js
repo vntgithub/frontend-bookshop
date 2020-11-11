@@ -28,6 +28,16 @@ const bookApi = {
     } catch (error) {
       
     }
+  },
+  countPage: async (categogies, setPage) => {
+    const url = process.env.REACT_APP_URL_DATABASE + `book/countbycategogies/${categogies}`;
+    try {
+      const res = await axios.get(url);
+      setPage(Math.ceil(res.data/32));
+      
+    } catch (error) {
+      
+    }
   }
 };
 

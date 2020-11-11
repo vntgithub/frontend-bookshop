@@ -1,0 +1,10 @@
+.signup-form {
+  position: fixed;
+  z-index: 2;
+  background-color: ghostwhite;
+  border-radius: 3rem;
+  transition: opacity 60ms;
+  right: 37rem;
+  top: 3rem;
+  width: 40rem !important;
+}

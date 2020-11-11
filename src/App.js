@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { CartContext, UserContext, ModalLoginContext } from "./contexts/Context";
 import ModalLogin from './components/ModalLogin';
+import ModalSignUp from './components/ModalSignup';
 import Topmenu from "./components/TopMeu";
 import Footer from "./components/Footer";
 import HomePgae from "./pages/Home";
@@ -13,6 +14,7 @@ function App() {
   const [userCart, setUserCart] = useState([]);
   const [user, setUser] = useState(null);
   const [login, setLogin] = useState(false);
+  const [signup, setSingup] = useState(false);
   useEffect(() => {
     if(document.cookie !== ''){
       userApi.getByCookie(document.cookie.substr(3), setUser);
@@ -25,6 +27,7 @@ function App() {
     }
   }, []);
   const openModalLogin = () => setLogin(!login);
+  const openModalSignUP = () => setSingup(!signup);
   return (
     
     <CartContext.Provider value={{ userCart, setUserCart }}>
@@ -32,6 +35,7 @@ function App() {
       <Router>
       <Topmenu openModalLogin={openModalLogin} setUserState={setUser}/>
       {login&&<ModalLogin openModalLogin={openModalLogin} />}
+      {false && <ModalSignUp />}
         <Switch>
           <Route path="/" exact component={HomePgae} />
           <ModalLoginContext.Provider value={{ login, setLogin }}>

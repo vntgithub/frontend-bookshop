@@ -14,15 +14,15 @@ import "./style/home.css";
 const HomePage = () => {
   const [numPage, setNumPage] = useState(0);
   const [book, setBook] = useState([]);
-  const [categogies, setCategogies] = useState([]);
+  const [categogies, setCategogies] = useState([]); //List categogies
   const [page, setPage] = useState(0);
-  const [pageCategogies, setPageCategogies] = useState('All books');
+  const [pageCategogies, setPageCategogies] = useState('All books'); //Current
   const { setUserCart } = useContext(CartContext);
   useEffect(() => {
     const componentDidMount = async () => {
       await bookApi.getBooks(page, setBook);
       await bookApi.getCategogies(setCategogies);
-      setNumPage(4);
+      await bookApi.countPage(pageCategogies, setNumPage);
       if(localStorage.getItem('cartItems')){
         const arrayItems = JSON.parse(localStorage.getItem('cartItems'));
         setUserCart(arrayItems);
@@ -39,6 +39,7 @@ const HomePage = () => {
   }, [page]);
   useEffect(() => {
     bookApi.getBookByCategogies(pageCategogies, setBook);
+    bookApi.countPage(pageCategogies, setNumPage);
   }, [pageCategogies]);
   return (
     <div>
