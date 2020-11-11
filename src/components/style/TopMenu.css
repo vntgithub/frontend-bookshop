@@ -3,6 +3,7 @@
 }
 .userAvt {
   border-radius: 50%;
+  border: 2px solid #777;
 }
 .logo {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",

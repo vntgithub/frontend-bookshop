@@ -2,12 +2,13 @@ import React from "react";
 import { useContext } from "react";
 import { Row } from "reactstrap";
 
-import { CartContext } from '../contexts/Context';
+import { CartContext, ModalLoginContext } from '../contexts/Context';
 import "./style/product.css";
 
 const Product = (props) => {
   const { userCart, setUserCart } = useContext(CartContext);
   const addToCart = (book) => {
+    
    return () => {
      const index = userCart.findIndex(element => element.item._id === book._id);
      if(index === -1){

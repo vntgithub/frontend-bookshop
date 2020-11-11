@@ -9,7 +9,7 @@ import './style/modallogin.css';
 import { UserContext } from '../contexts/Context';
 
 const ModalLogin = (props) => {
-    const { user, setUser } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
     const [data, setData] = useState({
         username: '', 
         password: '', 
@@ -40,10 +40,10 @@ const ModalLogin = (props) => {
     return(
         <div>
         <div className="overlay"></div>
-        <Container className="invoice-form">
-            <FontAwesomeIcon icon={faTimes} className="exit" onClick={props.toggle} />
+        <Container className="login-form">
+            <FontAwesomeIcon icon={faTimes} className="exit" onClick={props.openModalLogin} />
             <Row className="justify-content-center m-2">
-                <h1 className="title-information">Infomation</h1>
+                <h1 className="title-information">Login</h1>
             </Row>
             <Row className="justify-content-center">
                 <Col sm={6}>
@@ -71,6 +71,7 @@ const ModalLogin = (props) => {
             </Row>
         </Container>
         </div>
+        
     );
 }
 export default ModalLogin;

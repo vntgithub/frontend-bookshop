@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useContext } from 'react';
 import { Container, Row, Col, Alert } from 'reactstrap';
-import { CartContext } from "../contexts/Context";
+import { CartContext, ModalLoginContext } from "../contexts/Context";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons';
@@ -11,9 +11,12 @@ import InvoiceForm from '../components/InvoiceForm';
 
 import './style/cart.css';
 
-const CartPage = () => {
-    const [isOpen, setIsOpen] = useState(false);
+const CartPage = (props) => {
     const { userCart, setUserCart } = useContext(CartContext);
+    const { login, setLogin } = useContext(ModalLoginContext);
+    console.log(login);
+    const [isOpen, setIsOpen] = useState(false);
+    const [checkUser, setCheckUser] = useState(false);
     let count = 0, totalAmount = 0;
     for(let i = 0; i < userCart.length; i++){
         count += userCart[i].count;
@@ -54,6 +57,13 @@ const CartPage = () => {
             return;
         }
         setIsOpen(!isOpen);
+    }
+    const buy = () => {
+        if(document.cookie == ''){
+            setLogin(!login);
+            return;
+        }
+        toggle();
     }
     return (
         <Container className="container-cartpage">
@@ -109,7 +119,7 @@ const CartPage = () => {
                     </Alert>
                 </Col>
                 <Col sm={{size: 3}}>
-                    <button onClick={toggle}>Buy</button>
+                    <button onClick={buy}>Buy</button>
                 </Col>
             </Row>
            

@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { CartContext, UserContext } from "./contexts/Context";
+import { CartContext, UserContext, ModalLoginContext } from "./contexts/Context";
+import ModalLogin from './components/ModalLogin';
 import Topmenu from "./components/TopMeu";
 import Footer from "./components/Footer";
 import HomePgae from "./pages/Home";
 import CartPage from "./pages/Cart";
 import ToTop from './components/ToTop';
-function App(props) {
+import userApi from "./api/user.api";
+function App() {
   const [userCart, setUserCart] = useState([]);
   const [user, setUser] = useState(null);
+  const [login, setLogin] = useState(false);
   useEffect(() => {
+    if(document.cookie !== ''){
+      userApi.getByCookie(document.cookie.substr(3), setUser);
+    }
     if(localStorage.getItem('cartItems')){
       const arrayItems = JSON.parse(localStorage.getItem('cartItems'));
       setUserCart(arrayItems);
@@ -18,15 +24,19 @@ function App(props) {
       localStorage.setItem('cartItems', []);
     }
   }, []);
+  const openModalLogin = () => setLogin(!login);
   return (
     
     <CartContext.Provider value={{ userCart, setUserCart }}>
     <UserContext.Provider value={{ user, setUser }}>
       <Router>
-      <Topmenu />
+      <Topmenu openModalLogin={openModalLogin} />
+      {login&&<ModalLogin openModalLogin={openModalLogin} />}
         <Switch>
           <Route path="/" exact component={HomePgae} />
-          <Route path="/cart" component={CartPage} />
+          <ModalLoginContext.Provider value={{ login, setLogin }}>
+            <Route path="/cart" component={CartPage} />
+          </ModalLoginContext.Provider>
         </Switch>
         <Footer />
         <ToTop />

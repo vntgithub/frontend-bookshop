@@ -17,7 +17,7 @@ const HomePage = () => {
   const [categogies, setCategogies] = useState([]);
   const [page, setPage] = useState(0);
   const [pageCategogies, setPageCategogies] = useState('All books');
-  const { userCart, setUserCart } = useContext(CartContext);
+  const { setUserCart } = useContext(CartContext);
   useEffect(() => {
     const componentDidMount = async () => {
       await bookApi.getBooks(page, setBook);
