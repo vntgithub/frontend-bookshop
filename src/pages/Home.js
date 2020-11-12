@@ -41,6 +41,13 @@ const HomePage = () => {
     bookApi.getBookByCategogies(pageCategogies, setBook);
     bookApi.countPage(pageCategogies, setNumPage);
   }, [pageCategogies]);
+  const search = (event) => {
+    const searchString = event.target.value;
+    if(event.keyCode === 13 && searchString !== ''){
+      console.log(searchString);
+      bookApi.search(searchString, setBook);
+    }
+  }
   return (
     <div>
       
@@ -48,10 +55,18 @@ const HomePage = () => {
         <Banner />
         <Container className="mt-5">
         <Row className="offset-md-2">
-            <h2 className="current-filter">{pageCategogies}</h2>
+            <Col md={3}>
+              <h2 className="current-filter">{pageCategogies}</h2>
+            </Col>
+            <Col md={9}>
+            
+              <input type="text" placeholder="Search name..."  onKeyUp={search} />
+            
+            </Col>
           </Row>
           <Row>
-            <Col md="2"><Categogies 
+            <Col md="2">
+              <Categogies 
               categogiesState={{categogies, setPageCategogies}} 
               setBook={setBook}/>
             </Col>

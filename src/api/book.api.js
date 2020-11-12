@@ -38,6 +38,10 @@ const bookApi = {
     } catch (error) {
       
     }
+  },
+  search: async (searchString, setBook) => {
+    const url = process.env.REACT_APP_URL_DATABASE + `book/findbyname/${searchString}`;
+    await axios.get(url).then(res => setBook(res.data));
   }
 };
 
