@@ -47,9 +47,9 @@ const ModalLogin = (props) => {
         <div>
         <div className="overlay"></div>
         <Container className="login-form">
-            <FontAwesomeIcon icon={faTimes} className="exit" onClick={props.openModalLogin} />
+            <FontAwesomeIcon icon={faTimes} className="exit exit-login" onClick={props.openModalLogin} />
             <Row className="justify-content-center m-2">
-                <h1 className="title-information">Login</h1>
+                <h1 className="title-login">Login</h1>
             </Row>
             <Row className="justify-content-center">
                 <Col sm={8}>
@@ -82,7 +82,7 @@ const ModalLogin = (props) => {
                 </div>
             </Row>
             <Row className="justify-content-center mb-2">
-                <h4 className="mt-5 button-submit" onClick={submit} >Submit</h4>
+                <h4 className="mt-5 button-login" onClick={submit} >Submit</h4>
             </Row>
         </Container>
         </div>

@@ -22,3 +22,26 @@
 #check {
   display: none;
 }
+.title-login {
+  color: cadetblue;
+  font-weight: bold;
+}
+.button-login {
+  width: 10rem;
+  height: 2.5rem;
+  border-radius: 2rem;
+  background-color: cadetblue;
+  color: aliceblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+.button-login:hover {
+  background-color: rgb(69, 114, 116);
+  transition: 3ms;
+}
+.exit-login {
+  color: cadetblue !important;
+}
