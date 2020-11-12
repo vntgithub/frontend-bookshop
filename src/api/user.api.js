@@ -7,7 +7,9 @@ const userApi = {
       .post(url, user)
       .then((res) => {
         if(res && res.data.login){
-          document.cookie = "id=" + res.data.user._id;
+          let expires = new Date();  
+          expires.setTime(expires.getTime() + 31536000000);
+          document.cookie = `id=${res.data.user._id}; expires=${expires}; path=/`;
           setUser(res.data.user);
         }
       })
