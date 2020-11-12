@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Container, Col, Row } from "reactstrap";
+import { Container, Col, Row, Input } from "reactstrap";
 
 import { CartContext } from "../contexts/Context";
 import bookApi from "../api/book.api";
@@ -16,13 +16,13 @@ const HomePage = () => {
   const [book, setBook] = useState([]);
   const [categogies, setCategogies] = useState([]); //List categogies
   const [page, setPage] = useState(0);
-  const [pageCategogies, setPageCategogies] = useState('All books'); //Current filter
+  const [filter, setFilter] = useState('All books'); //Current filter
   const { setUserCart } = useContext(CartContext);
   useEffect(() => {
     const componentDidMount = async () => {
       await bookApi.getBooks(page, setBook);
       await bookApi.getCategogies(setCategogies);
-      await bookApi.countPageByCategogies(pageCategogies, setNumPage);
+      await bookApi.countPageByCategogies(filter, setNumPage);
       if(localStorage.getItem('cartItems')){
         const arrayItems = JSON.parse(localStorage.getItem('cartItems'));
         setUserCart(arrayItems);
@@ -33,19 +33,20 @@ const HomePage = () => {
     componentDidMount();
   }, []);
   useEffect(() => {
-    if(pageCategogies === 'All books')
+    if(filter === 'All books')
       bookApi.getBooks(page, setBook);
     
   }, [page]);
   useEffect(() => {
-    bookApi.getBookByCategogies(pageCategogies, setBook);
-    bookApi.countPageByCategogies(pageCategogies, setNumPage);
-  }, [pageCategogies]);
+    bookApi.getBookByCategogies(filter, setBook);
+    bookApi.countPageByCategogies(filter, setNumPage);
+  }, [filter]);
   const search = (event) => {
     const searchString = event.target.value;
     if(event.keyCode === 13 && searchString !== ''){
       bookApi.search(searchString, setBook);
-      bookApi.countPageBySearchString(searchString, setPage)
+      bookApi.countPageBySearchString(searchString, setPage);
+      setFilter(searchString);
     }
   }
   return (
@@ -55,20 +56,21 @@ const HomePage = () => {
         <Banner />
         <Container className="mt-5">
         <Row className="offset-md-2">
-            <Col md={3}>
-              <h2 className="current-filter">{pageCategogies}</h2>
+            <Col md={6}>
+              <h4 className="current-filter">Filter: {filter}</h4>
             </Col>
-            <Col md={9}>
-            
-              <input type="text" placeholder="Search name..."  onKeyUp={search} />
-            
+            <Col md={6} className="search">
+              <Input type="text" 
+              placeholder="Search name..."  
+              onKeyUp={search} />
             </Col>
           </Row>
           <Row>
             <Col md="2">
               <Categogies 
-              categogiesState={{categogies, setPageCategogies}} 
-              setBook={setBook}/>
+              categogies={categogies}
+              setFilter={setFilter}
+               />
             </Col>
             <Col md="10"><ListProduct book={book} /></Col>
           </Row>

@@ -7,10 +7,10 @@ const Categogies = (props) => {
     return (
         <div className="pt-3 boder-categogies">
             <Row className="title">Filter by Categogies</Row>
-            {props.categogiesState.categogies.map((item, index) => 
+            {props.categogies.map((item, index) => 
                 <Row className="categogies-item" key={index}>
                     <p onClick={() => 
-                        {props.categogiesState.setPageCategogies(item)}}
+                        {props.setFilter(item)}}
                     >
                         {item}
                     </p>
