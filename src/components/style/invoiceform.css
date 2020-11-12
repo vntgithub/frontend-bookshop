@@ -23,7 +23,7 @@
 #name,
 #phone,
 #adress {
-  visibility: hidden;
+  display: none;
 }
 
 .button-submit {

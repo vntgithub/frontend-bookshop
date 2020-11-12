@@ -15,41 +15,41 @@ const InvoiceForm = (props) => {
     console.log(user);
     const [data, setData] = useState({
         name: user.name, 
-        phone: user.phonenumber, 
+        phonenumber: user.phonenumber, 
         adress: user.adress,
         date: new Date(), 
         cart: [...userCart]
     });
     const setName = (event) => setData({...data, name: event.target.value})
-    const setPhone = (event) => setData({...data, phone: event.target.value});
+    const setPhone = (event) => setData({...data, phonenumber: event.target.value});
     const setAdress = (event) => setData({...data, adress: event.target.value});
     const submit = () => {
         const RegExp = /^0[1-9]{9,10}/;
         let check = true;
         if(data.name === ''){
             check &= false;
-            document.getElementById('name').style.visibility = "unset";
+            document.getElementById('name').style.display = "flex";
         }else{
-            document.getElementById('name').style.visibility = "hidden";
+            document.getElementById('name').style.display = "none";
         }
         if(data.phone === ''){
             check &= false;
-            document.getElementById('phone').style.visibility = "unset";
+            document.getElementById('phone').style.display = "flex";
             
         }else{
-            if(RegExp.test(data.phone)){
-                document.getElementById('phone').style.visibility = "hidden";
+            if(RegExp.test(data.phonenumber)){
+                document.getElementById('phone').style.display = "none";
             }else{
                 check &= false;
                 document.getElementById('phone').children[1].innerHTML= "Phone numbers must begin with 0, have 10-11 numbers";
-                document.getElementById('phone').style.visibility = "unset";
+                document.getElementById('phone').style.display = "flex";
             }
         }
         if(data.adress === ''){
             check &= false;
-            document.getElementById('adress').style.visibility = "unset";
+            document.getElementById('adress').style.display = "flex";
         }else{
-            document.getElementById('adress').style.visibility = "hidden";
+            document.getElementById('adress').style.display = "none";
         }
         if(check) {
             const invoice = {
@@ -76,20 +76,20 @@ const InvoiceForm = (props) => {
                     <Form onSubmit={submit}>
                         <FormGroup>
                             <Label>Name</Label>
-                            <Input onChange={setName} name="name" type="text" value={user.name} />
+                            <Input onChange={setName} name="name" type="text" value={data.name} />
                             <div id="name" className="require">
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Name is require</p>
                             </div>
                             <div className="err">{}</div>
                             <Label>Phone numbers</Label>
-                            <Input onChange={setPhone} name="phone" type="text" value={user.phonenumber} />
+                            <Input onChange={setPhone} name="phone" type="text" value={data.phonenumber} />
                             <div id="phone" className="require">
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Phone is require</p>
                             </div>
                             <Label>Adress</Label>
-                            <Input onChange={setAdress} name="adress" type="text" value={user.adress} />
+                            <Input onChange={setAdress} name="adress" type="text" value={data.adress} />
                             <div id="adress" className="require">
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Adress is require</p>
