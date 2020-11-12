@@ -9,7 +9,7 @@ import './style/modallogin.css';
 import { UserContext } from '../contexts/Context';
 
 const ModalLogin = (props) => {
-    const { setUser } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
     const [data, setData] = useState({
         username: '', 
         password: '', 
@@ -20,19 +20,25 @@ const ModalLogin = (props) => {
         let check = true;
         if(data.username === ''){
             check &= false;
-            document.getElementById('name').style.visibility = "unset";
+            document.getElementById('username').style.display = "flex";
         }else{
-            document.getElementById('name').style.visibility = "hidden";
+            document.getElementById('username').style.display = "none";
         }
         if(data.password === ''){
             check &= false;
-            document.getElementById('phone').style.visibility = "unset";
+            document.getElementById('password').style.display = "flex";
             
         }else{
-                document.getElementById('phone').style.visibility = "hidden";
+                document.getElementById('password').style.display = "none";
         }
         if(check) {
             userApi.login(data, setUser);
+            if(!user){
+                document.getElementById('check').style.display = "flex";
+                return;
+            }else{
+                document.getElementById('password').style.display = "none";
+            }
             props.openModalLogin();
         }
         return;
@@ -46,25 +52,34 @@ const ModalLogin = (props) => {
                 <h1 className="title-information">Login</h1>
             </Row>
             <Row className="justify-content-center">
-                <Col sm={6}>
+                <Col sm={8}>
                     <Form onSubmit={submit}>
                         <FormGroup>
-                            <Label>UserName</Label>
-                            <Input onChange={setUsername} name="name" type="text" />
-                            <div id="name" className="require">
+                            
+                            <Input onChange={setUsername} name="username" type="text" placeholder="Username" />
+                            <div id="username" className="require">
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Username is require</p>
-                            </div>
-                            <div className="err">{}</div>
-                            <Label>Password</Label>
-                            <Input onChange={setPassword} name="phone" type="password" />
-                            <div id="phone" className="require">
+                            </div>                           
+                            <Input 
+                                onChange={setPassword} 
+                                name="password" 
+                                type="password" 
+                                placeholder="Password"
+                                className="mt-3" />
+                            <div id="password" className="require">
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Password is require</p>
                             </div>
                         </FormGroup>
                     </Form>
                 </Col>
+            </Row>
+            <Row className="justify-content-center mb-2">
+                <div id="check" className="require">
+                    <FontAwesomeIcon icon={faExclamationCircle} />
+                    <p>Username or password is wrong</p>
+                </div>
             </Row>
             <Row className="justify-content-center mb-2">
                 <h4 className="mt-5 button-submit" onClick={submit} >Submit</h4>

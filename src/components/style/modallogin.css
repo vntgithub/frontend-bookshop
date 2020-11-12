@@ -8,65 +8,17 @@
   top: 8rem;
   width: 36rem !important;
 }
-.title-information {
-  color: brown;
-  font-weight: bold;
-}
-.invoice-form p {
-  color: red;
+.login-form p {
   margin-top: -0.2rem;
   margin-left: 0.5rem;
 }
-
 .require {
   display: flex;
   margin: 0.8rem 0 0.1rem 0;
   color: red;
 }
-#name,
-#phone,
-#adress {
-  visibility: hidden;
-}
-
-.button-submit {
-  width: 10rem;
-  height: 2.5rem;
-  border-radius: 2rem;
-  background-color: rgb(184, 48, 48);
-  color: aliceblue;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  cursor: pointer;
-}
-.button-submit:hover {
-  background-color: rgb(223, 65, 65);
-  transition: 3ms;
-}
-.overlay {
-  position: fixed; /* Sit on top of the page content */
-  display: block; /* Hidden by default */
-  width: 100%; /* Full width (cover the whole page) */
-  height: 100%; /* Full height (cover the whole page) */
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
-  z-index: 1;
-}
-.exit {
-  font-size: 2rem;
-  color: brown;
-  position: absolute;
-  right: 3rem;
-  top: 2rem;
-  cursor: pointer;
-}
-.exit:hover {
-  color: rgb(207, 76, 76);
-  font-size: 2.5rem;
-  transition: 1ms;
+#username,
+#password,
+#check {
+  display: none;
 }
