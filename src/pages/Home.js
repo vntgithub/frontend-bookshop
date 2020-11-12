@@ -38,14 +38,18 @@ const HomePage = () => {
     
   }, [page]);
   useEffect(() => {
-    bookApi.getBookByCategogies(filter, setBook);
+    if(categogies.indexOf(filter) === -1){
+      bookApi.countPageBySearchString(filter, setPage);
+      bookApi.search(filter, setBook);
+      return;
+    }
     bookApi.countPageByCategogies(filter, setNumPage);
+    bookApi.getBookByCategogies(filter, setBook);
+    
   }, [filter]);
   const search = (event) => {
     const searchString = event.target.value;
     if(event.keyCode === 13 && searchString !== ''){
-      bookApi.search(searchString, setBook);
-      bookApi.countPageBySearchString(searchString, setPage);
       setFilter(searchString);
     }
   }
@@ -62,7 +66,7 @@ const HomePage = () => {
             <Col md={6} className="search">
               <Input type="text" 
               placeholder="Search name..."  
-              onKeyUp={search} />
+              onKeyDown={search} />
             </Col>
           </Row>
           <Row>
