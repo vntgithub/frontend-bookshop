@@ -16,13 +16,13 @@ const HomePage = () => {
   const [book, setBook] = useState([]);
   const [categogies, setCategogies] = useState([]); //List categogies
   const [page, setPage] = useState(0);
-  const [pageCategogies, setPageCategogies] = useState('All books'); //Current
+  const [pageCategogies, setPageCategogies] = useState('All books'); //Current filter
   const { setUserCart } = useContext(CartContext);
   useEffect(() => {
     const componentDidMount = async () => {
       await bookApi.getBooks(page, setBook);
       await bookApi.getCategogies(setCategogies);
-      await bookApi.countPage(pageCategogies, setNumPage);
+      await bookApi.countPageByCategogies(pageCategogies, setNumPage);
       if(localStorage.getItem('cartItems')){
         const arrayItems = JSON.parse(localStorage.getItem('cartItems'));
         setUserCart(arrayItems);
@@ -39,13 +39,13 @@ const HomePage = () => {
   }, [page]);
   useEffect(() => {
     bookApi.getBookByCategogies(pageCategogies, setBook);
-    bookApi.countPage(pageCategogies, setNumPage);
+    bookApi.countPageByCategogies(pageCategogies, setNumPage);
   }, [pageCategogies]);
   const search = (event) => {
     const searchString = event.target.value;
     if(event.keyCode === 13 && searchString !== ''){
-      console.log(searchString);
       bookApi.search(searchString, setBook);
+      bookApi.countPageBySearchString(searchString, setPage)
     }
   }
   return (

@@ -29,19 +29,26 @@ const bookApi = {
       
     }
   },
-  countPage: async (categogies, setPage) => {
+  countPageByCategogies: async (categogies, setPage) => {
     const url = process.env.REACT_APP_URL_DATABASE + `book/countbycategogies/${categogies}`;
     try {
       const res = await axios.get(url);
       setPage(Math.ceil(res.data/32));
-      
     } catch (error) {
       
     }
   },
   search: async (searchString, setBook) => {
     const url = process.env.REACT_APP_URL_DATABASE + `book/findbyname/${searchString}`;
-    await axios.get(url).then(res => setBook(res.data));
+    await axios.get(url)
+    .then(res => setBook(res.data))
+    .catch(error => console.log(error));
+  },
+  countPageBySearchString: async (searchString, setPage) => {
+    const url = process.env.REACT_APP_URL_DATABASE + `book/countbysearchstring/${searchString}`;
+    await axios.get(url)
+    .then(res => setPage(res.data/32))
+    .catch(error => console.log(error));
   }
 };
 
