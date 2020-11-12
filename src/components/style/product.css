@@ -26,6 +26,9 @@
   font-size: 0.8rem;
   color: #064532;
 }
+.longname {
+  font-size: 0.7rem !important;
+}
 .author {
   height: 30px;
   text-align: center;

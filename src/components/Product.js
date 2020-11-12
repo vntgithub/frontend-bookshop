@@ -1,6 +1,7 @@
 import React from "react";
 import { useContext } from "react";
 import { Row } from "reactstrap";
+import classNames from 'classnames';
 
 import { CartContext } from '../contexts/Context';
 import "./style/product.css";
@@ -8,7 +9,7 @@ import "./style/product.css";
 const Product = (props) => {
   const { userCart, setUserCart } = useContext(CartContext);
   const addToCart = (book) => {
-    
+  
    return () => {
      const index = userCart.findIndex(element => element.item._id === book._id);
      if(index === -1){
@@ -31,7 +32,7 @@ const Product = (props) => {
       </Row>
       <div className="name-author">
         <Row className="justify-content-center mb-1" >
-          <div className="name">
+          <div className={classNames({'name': true, 'longname': props.book.name.length > 80})}>
             {props.book.name}
           </div>
         </Row>
