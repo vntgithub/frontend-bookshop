@@ -96,7 +96,7 @@ const HomePage = () => {
             <Col md="10"><ListProduct book={book} /></Col>
           </Row>
         </Container>
-        <Pagination numpage={numPage} setpage={setPage}/>
+        <Pagination numpage={numPage} currentPage={page} setpage={setPage}/>
         
         
       </div>

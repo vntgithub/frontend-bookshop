@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import classNames from 'classnames';
 import { Row } from "reactstrap";
 
 import './style/pagination.css';
@@ -23,7 +24,7 @@ const Pagination = (props) => {
     }
     for(let i = 0; i < props.numpage; i++){
         pagination.push(
-            <button className="buttonChangePape" 
+            <button className={classNames('buttonChangePape', {'active': props.currentPage === i})} 
                     onClick={changePage(i)}
                     key={i}
             >
