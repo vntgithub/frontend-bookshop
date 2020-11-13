@@ -1,11 +1,14 @@
 .buttonChangePape {
+  margin: 0.2rem;
   height: 2rem;
   width: 2rem;
-  color: #fff;
+  color: cadetblue;
   font-weight: bold;
-  background-color: brown;
-  border: 2px solid #fff;
+  border: 1px solid cadetblue;
+  background-color: white;
+  border-radius: 15%;
 }
 .buttonChangePape:hover {
-  background-color: #901b1b;
+  background-color: cadetblue;
+  color: azure;
 }
