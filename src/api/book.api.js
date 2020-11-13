@@ -20,8 +20,8 @@ const bookApi = {
       console.log(error);
     }
   },
-  getBookByCategogies: async (categogies, setBook) => {
-    const url = process.env.REACT_APP_URL_DATABASE+"book/findbycategogies/" + categogies ;
+  getBookByCategogies: async (categogies, page, setBook) => {
+    const url = process.env.REACT_APP_URL_DATABASE+ `book/findbycategogies/${categogies}&${page}`;
     try {
       const res = await axios.get(url);
       setBook(res.data);
@@ -33,13 +33,13 @@ const bookApi = {
     const url = process.env.REACT_APP_URL_DATABASE + `book/countbycategogies/${categogies}`;
     try {
       const res = await axios.get(url);
-      setPage(Math.ceil(res.data/32));
+      setPage(Math.ceil(res.data/20));
     } catch (error) {
       
     }
   },
-  search: async (searchString, setBook) => {
-    const url = process.env.REACT_APP_URL_DATABASE + `book/findbyname/${searchString}`;
+  search: async (searchString, page, setBook) => {
+    const url = process.env.REACT_APP_URL_DATABASE + `book/findbyname/${searchString}&${page}`;
     await axios.get(url)
     .then(res => setBook(res.data))
     .catch(error => console.log(error));
@@ -47,7 +47,7 @@ const bookApi = {
   countPageBySearchString: async (searchString, setPage) => {
     const url = process.env.REACT_APP_URL_DATABASE + `book/countbysearchstring/${searchString}`;
     await axios.get(url)
-    .then(res => setPage(res.data/32))
+    .then(res => setPage(res.data/20))
     .catch(error => console.log(error));
   }
 };

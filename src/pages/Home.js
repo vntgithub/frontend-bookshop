@@ -19,33 +19,50 @@ const HomePage = () => {
   const [filter, setFilter] = useState('All books'); //Current filter
   const { setUserCart } = useContext(CartContext);
   useEffect(() => {
+    if(localStorage.getItem('cartItems')){
+      const arrayItems = JSON.parse(localStorage.getItem('cartItems'));
+      setUserCart(arrayItems);
+    }else{
+      localStorage.setItem('cartItems', []);
+    }
     const componentDidMount = async () => {
       await bookApi.getBooks(page, setBook);
       await bookApi.getCategogies(setCategogies);
       await bookApi.countPageByCategogies(filter, setNumPage);
-      if(localStorage.getItem('cartItems')){
-        const arrayItems = JSON.parse(localStorage.getItem('cartItems'));
-        setUserCart(arrayItems);
-      }else{
-        localStorage.setItem('cartItems', []);
-      }
     }
     componentDidMount();
   }, []);
   useEffect(() => {
-    if(filter === 'All books')
-      bookApi.getBooks(page, setBook);
-    
+    const pageUpdate = async () => {
+      if(filter === 'All books'){
+        await bookApi.getBooks(page, setBook);
+        return;
+      }
+      if(categogies.indexOf(filter) === -1){
+        await bookApi.search(filter, page, setBook);
+        return;
+      }
+      await bookApi.getBookByCategogies(filter, page, setBook);
+    }
+    pageUpdate();
   }, [page]);
   useEffect(() => {
-    if(categogies.indexOf(filter) === -1){
-      bookApi.countPageBySearchString(filter, setPage);
-      bookApi.search(filter, setBook);
-      return;
+    const filterUpdate = async () => {
+      if(filter === 'All books'){
+        await bookApi.getBooks(0, setBook);
+        return;
+      }
+      if(categogies.indexOf(filter) === -1){
+        await bookApi.countPageBySearchString(filter, setNumPage);
+        await bookApi.search(filter, 0, setBook);
+        return;
+      }else{
+        await bookApi.countPageByCategogies(filter, setNumPage);
+        await bookApi.getBookByCategogies(filter, 0, setBook);
+      }
     }
-    bookApi.countPageByCategogies(filter, setNumPage);
-    bookApi.getBookByCategogies(filter, setBook);
-    
+    filterUpdate();
+    setPage(0);
   }, [filter]);
   const search = (event) => {
     const searchString = event.target.value;
