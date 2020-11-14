@@ -18,7 +18,7 @@ const Pagination = (props) => {
         setRange({begin: (range.begin-5), end: (range.end - 5)});
     }
     const right = () => {
-        if(range.end == pagination.length)
+        if(range.end >= pagination.length - 1)
             return;
         setRange({begin: (range.begin + 5), end: (range.end + 5)})
     }

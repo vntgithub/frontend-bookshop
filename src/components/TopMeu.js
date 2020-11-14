@@ -42,6 +42,9 @@ const TopMenu = (props) => {
     document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     props.setUserState(null);
   }
+  const myInfo = () => {
+
+  }
   return (
     
     <div>
@@ -67,9 +70,12 @@ const TopMenu = (props) => {
                 {avt}
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem onClick={props.openModalLogin}>
+                {(document.cookie === '') && <DropdownItem onClick={props.openModalLogin}>
                   <p>Login/Sigin</p>
-                </DropdownItem>
+                </DropdownItem>}
+            {  (document.cookie !== '') &&  <DropdownItem onClick={myInfo}>
+                  <p>My information</p>
+                </DropdownItem>}
                 <DropdownItem>
                   <p>My invoice</p>
                 </DropdownItem>
