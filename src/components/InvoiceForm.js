@@ -24,7 +24,7 @@ const InvoiceForm = (props) => {
     const setPhone = (event) => setData({...data, phonenumber: event.target.value});
     const setAdress = (event) => setData({...data, adress: event.target.value});
     const submit = () => {
-        const RegExp = /^0[1-9]{9,10}/;
+        const RegExp = /^0[1-9]{9,10}$/;
         let check = true;
         if(data.name === ''){
             check &= false;
