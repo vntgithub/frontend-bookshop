@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Container, FormGroup, Input, Label, Form, Row, Col } from 'reactstrap';
+import { Container, FormGroup, Input, Form, Row, Col } from 'reactstrap';
 
 import userApi from '../api/user.api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

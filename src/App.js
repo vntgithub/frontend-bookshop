@@ -35,7 +35,7 @@ function App() {
       <Router>
       <Topmenu openModalLogin={openModalLogin} setUserState={setUser}/>
       {login&&<ModalLogin openModalLogin={openModalLogin} />}
-      {true && <ModalSignUp />}
+      {signup && <ModalSignUp />}
         <Switch>
           <Route path="/" exact component={HomePgae} />
           <ModalLoginContext.Provider value={{ login, setLogin }}>
