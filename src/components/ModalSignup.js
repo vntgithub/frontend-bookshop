@@ -10,7 +10,6 @@ import { faExclamationCircle, faTimes
 import './style/modallogin.css';
 
 const ModalSigup = (props) => {
-    const { setUser } = useContext(UserContext);
     const [data, setData] = useState({
         username: '', 
         password: '', 
@@ -33,16 +32,16 @@ const ModalSigup = (props) => {
         const RegExp = /^0[1-9]{9,10}$/;
         if(data.username === ''){
             check &= false;
-            document.getElementById('username').style.display = "flex";
+            document.getElementById('usernameSU').style.display = "flex";
         }else{
-            document.getElementById('username').style.display = "none";
+            document.getElementById('usernameSU').style.display = "none";
         }
         if(data.password === ''){
             check &= false;
-            document.getElementById('password').style.display = "flex";
+            document.getElementById('passwordSU').style.display = "flex";
             
         }else{
-                document.getElementById('password').style.display = "none";
+                document.getElementById('passwordSU').style.display = "none";
         }
         if(data.confirm === ''){
             check &= false;
@@ -83,8 +82,8 @@ const ModalSigup = (props) => {
         }
 
         if(check) {
-            userApi.login(data, setUser);
-            props.openModalLogin();
+            userApi.create(data);
+            props.openModalSignUp();
         }
         return;
     }
@@ -105,7 +104,7 @@ const ModalSigup = (props) => {
                             type="text" 
                             placeholder="Username"
                             className="mt-3" />
-                            <div id="username" className="require">
+                            <div id="usernameSU" className="require">
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Username is require</p>
                             </div>
@@ -114,7 +113,7 @@ const ModalSigup = (props) => {
                             type="password" 
                             placeholder="Password"
                             className="mt-3" />
-                            <div id="password" className="require">
+                            <div id="passwordSU" className="require">
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Password is require</p>
                             </div>
@@ -159,7 +158,7 @@ const ModalSigup = (props) => {
                             type="file" 
                             placeholder="Choose Image" c
                             lassName="mt-3"
-                            accept="image/*,.pdf" className="mt-3" />
+                            accept="image/*" className="mt-3" />
                             <div id="image" className="require">
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Image is require</p>
