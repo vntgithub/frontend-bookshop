@@ -14,7 +14,7 @@ function App() {
   const [userCart, setUserCart] = useState([]);
   const [user, setUser] = useState(null);
   const [login, setLogin] = useState(false);
-  const [signup, setSingup] = useState(false);
+  const [signup, setSignup] = useState(false);
   useEffect(() => {
     if(document.cookie !== ''){
       userApi.getByCookie(document.cookie.substr(3), setUser);
@@ -27,15 +27,15 @@ function App() {
     }
   }, []);
   const openModalLogin = () => setLogin(!login);
-  const openModalSignUP = () => setSingup(!signup);
+  const openModalSignUp = () => setSignup(!signup);
   return (
     
     <CartContext.Provider value={{ userCart, setUserCart }}>
     <UserContext.Provider value={{ user, setUser }}>
       <Router>
       <Topmenu openModalLogin={openModalLogin} setUserState={setUser}/>
-      {login&&<ModalLogin openModalLogin={openModalLogin} />}
-      {signup && <ModalSignUp />}
+      {login&&<ModalLogin openModalLogin={openModalLogin} openModalSignUp={openModalSignUp} />}
+      {signup && <ModalSignUp openModalSignUp={openModalSignUp} />}
         <Switch>
           <Route path="/" exact component={HomePgae} />
           <ModalLoginContext.Provider value={{ login, setLogin }}>

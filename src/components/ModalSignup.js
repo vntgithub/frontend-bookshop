@@ -92,7 +92,7 @@ const ModalSigup = (props) => {
         <div>
         <div className="overlay"></div>
         <Container className="login-form">
-            <FontAwesomeIcon icon={faTimes} className="exit" onClick={props.openModalLogin} />
+            <FontAwesomeIcon icon={faTimes} className="exit" onClick={props.openModalSignUp} />
             <Row className="justify-content-center m-2">
                 <h1 className="title-information">SignUp</h1>
             </Row>

@@ -84,6 +84,9 @@ const ModalLogin = (props) => {
             <Row className="justify-content-center mb-2">
                 <h4 className="mt-5 button-login" onClick={submit} >Submit</h4>
             </Row>
+            <Row className="justify-content-center mb-2">
+                <p className="mt-5 link-signup" onClick={props.openModalSignUp} >Don't have accout?</p>
+            </Row>
         </Container>
         </div>
         

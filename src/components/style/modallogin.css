@@ -48,3 +48,11 @@
 .exit-login {
   color: cadetblue !important;
 }
+.link-signup {
+  cursor: pointer;
+  color: cornflowerblue;
+  font-weight: bold;
+}
+.link-signup:hover {
+  color: rgb(78, 114, 180);
+}
