@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Container, Col, Row, Input } from "reactstrap";
 
-import { CartContext } from "../contexts/Context";
+import { CartContext, RangePageContext } from "../contexts/Context";
 import bookApi from "../api/book.api";
 
 import Banner from "../components/Banner";
@@ -18,6 +18,7 @@ const HomePage = () => {
   const [categogies, setCategogies] = useState([]); //List categogies
   const [page, setPage] = useState(0);
   const [filter, setFilter] = useState('All books'); //Current filter
+  const [range, setRange] = useState({begin: 0, end: 5});
   const { setUserCart } = useContext(CartContext);
   useEffect(() => {
     if(localStorage.getItem('cartItems')){
@@ -63,6 +64,7 @@ const HomePage = () => {
       }
     }
     filterUpdate();
+    setRange({begin: 0, end: 5});
     setPage(0);
   }, [filter]);
   const search = (event) => {
@@ -97,7 +99,10 @@ const HomePage = () => {
             <Col md="10"><ListProduct book={book} /></Col>
           </Row>
         </Container>
-        <Pagination numpage={numPage} currentPage={page} setpage={setPage}/>
+        <RangePageContext.Provider value={{ range, setRange }}>
+          <Pagination numpage={numPage} currentPage={page} setpage={setPage}/>
+        </RangePageContext.Provider>
+        
         
         
       </div>

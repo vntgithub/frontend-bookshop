@@ -80,7 +80,12 @@ const ModalSigup = (props) => {
         }else {
             document.getElementById('adress').style.display = "none";
         }
-
+        if(data.urlimg ===''){
+            check &= false;
+            document.getElementById('image').style.display = "flex";
+        }else{
+            document.getElementById('image').style.display = "none";
+        }
         if(check) {
             userApi.create(data);
             props.openModalSignUp();

@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import classNames from 'classnames';
 import { Row } from "reactstrap";
 
 import './style/pagination.css';
+import { RangePageContext } from "../contexts/Context";
 const Pagination = (props) => {
-    const [range, setRange] = useState({begin: 0, end: 5});
+    const { range, setRange } = useContext(RangePageContext);
     const pagination = [];
     const changePage = (pageNumber) => {
         return function() {
