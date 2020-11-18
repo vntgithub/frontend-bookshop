@@ -14,7 +14,7 @@ const Pagination = (props) => {
         }
     }
     const left = () => {
-        if(range.begin == 0)
+        if(range.begin === 0)
             return;
         setRange({begin: (range.begin-5), end: (range.end - 5)});
     }

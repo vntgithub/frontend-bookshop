@@ -81,7 +81,7 @@ const TopMenu = (props) => {
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem onClick={logout}>
-                  <p>Logout</p>
+                  {user&&<p>Logout</p>}
                 </DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>

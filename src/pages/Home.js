@@ -75,8 +75,6 @@ const HomePage = () => {
   }
   return (
     <div>
-      
-        
         <Banner />
         <Container className="mt-5">
         <Row className="offset-md-2">
@@ -102,9 +100,6 @@ const HomePage = () => {
         <RangePageContext.Provider value={{ range, setRange }}>
           <Pagination numpage={numPage} currentPage={page} setpage={setPage}/>
         </RangePageContext.Provider>
-        
-        
-        
       </div>
   );
 };

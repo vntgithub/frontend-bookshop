@@ -9,13 +9,18 @@ import './style/modallogin.css';
 import { UserContext } from '../contexts/Context';
 
 const ModalLogin = (props) => {
-    const { user, setUser } = useContext(UserContext);
+    const { setUser } = useContext(UserContext);
     const [data, setData] = useState({
         username: '', 
         password: '', 
     });
     const setUsername = (event) => setData({...data, username: event.target.value})
     const setPassword = (event) => setData({...data, password: event.target.value});
+    const checkUserExist = async () => {
+            let exist = false;
+            await userApi.login(data, setUser).then(x => exist = x);
+            return exist;
+    }
     const submit = () => {
         let check = true;
         if(data.username === ''){
@@ -32,15 +37,15 @@ const ModalLogin = (props) => {
                 document.getElementById('password').style.display = "none";
         }
         if(check) {
-            userApi.login(data, setUser);
-            if(!user){
-                document.getElementById('check').style.display = "flex";
+            let exist = checkUserExist();
+            if(!exist){
+                document.getElementById('check-exist').style.display = "flex";
                 return;
             }else{
-                document.getElementById('password').style.display = "none";
+                document.getElementById('check-exist').style.display = "none";
             }
-            props.openModalLogin();
         }
+        props.openModalLogin();
         return;
     }
     return(
@@ -76,7 +81,7 @@ const ModalLogin = (props) => {
                 </Col>
             </Row>
             <Row className="justify-content-center mb-2">
-                <div id="check" className="require">
+                <div id="check-exist" className="require">
                     <FontAwesomeIcon icon={faExclamationCircle} />
                     <p>Username or password is wrong</p>
                 </div>

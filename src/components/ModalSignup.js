@@ -1,16 +1,17 @@
-import React, { useState, useContext } from 'react';
-import { Container, FormGroup, Input, Label, Form, Row, Col } from 'reactstrap';
+import React, { useState } from 'react';
+import { Container, FormGroup, Input, Form, Row, Col } from 'reactstrap';
 
 import userApi from '../api/user.api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { UserContext } from '../contexts/Context';
 import { faExclamationCircle, faTimes
 } from '@fortawesome/free-solid-svg-icons';
 
 import './style/modallogin.css';
+import Axios from 'axios';
 
 const ModalSigup = (props) => {
-    const [data, setData] = useState({
+    const [image, setImage] = useState(null);
+    const [dataForm, setDataForm] = useState({
         username: '', 
         password: '', 
         confirm: '',
@@ -19,35 +20,53 @@ const ModalSigup = (props) => {
         adress: '',
         urlimg: ''
     });
-    const setUsername = (event) => setData({...data, username: event.target.value})
-    const setPassword = (event) => setData({...data, password: event.target.value});
-    const setConfirm = (event) => setData({...data, confirm: event.target.value});
-    const setName = (event) => setData({...data, name: event.target.value});
-    const setPhone = (event) => setData({...data, phonenumber: event.target.value});
-    const setAdress = (event) => setData({...data, adress: event.target.value});
+    const setUsername = (event) => setDataForm({...dataForm, username: event.target.value})
+    const setPassword = (event) => setDataForm({...dataForm, password: event.target.value});
+    const setConfirm = (event) => setDataForm({...dataForm, confirm: event.target.value});
+    const setName = (event) => setDataForm({...dataForm, name: event.target.value});
+    const setPhone = (event) => setDataForm({...dataForm, phonenumber: event.target.value});
+    const setAdress = (event) => setDataForm({...dataForm, adress: event.target.value});
+    const getImage = (e) => {
+        const file = e.target.files;
+        const imageData  = new FormData();
+        imageData.append('file', file[0]);
+        imageData.append('upload_preset', 'usersimage');
+        setImage(imageData);
+    }
 
 
     const submit = () => {
         let check = true;
         const RegExp = /^0[1-9]{9,10}$/;
-        if(data.username === ''){
+        if(dataForm.username === ''){
             check &= false;
+            document.getElementById('usernameSU').children[1].innerHTML = "Username is require";
             document.getElementById('usernameSU').style.display = "flex";
         }else{
-            document.getElementById('usernameSU').style.display = "none";
+            userApi.checkExist(dataForm.username).then(res => {
+                if(res.data.checkUserExist){
+                    check &= false;
+                    document.getElementById('usernameSU').children[1].innerHTML = "Account already exists";
+                    document.getElementById('usernameSU').style.display = "flex";
+                }else{
+                    document.getElementById('usernameSU').style.display = "none";
+                }
+            });
+            
+            
         }
-        if(data.password === ''){
+        if(dataForm.password === ''){
             check &= false;
             document.getElementById('passwordSU').style.display = "flex";
             
         }else{
                 document.getElementById('passwordSU').style.display = "none";
         }
-        if(data.confirm === ''){
+        if(dataForm.confirm === ''){
             check &= false;
             document.getElementById('confirm-pass').style.display = "flex"; 
         }else {
-            if(data.confirm === data.password){
+            if(dataForm.confirm === dataForm.password){
                 document.getElementById('confirm-pass').style.display = "none";
             }else { 
                 check &= false;
@@ -56,17 +75,17 @@ const ModalSigup = (props) => {
             }
             
         }
-        if(data.name === ''){
+        if(dataForm.name === ''){
             check &= false;
             document.getElementById('name').style.display = "flex"; 
         }else {
             document.getElementById('name').style.display = "none";
         }
-        if(data.phonenumber === ''){
+        if(dataForm.phonenumber === ''){
             check &= false;
             document.getElementById('phone').style.display = "flex"; 
         }else {
-            if(RegExp.test(data.phonenumber)){
+            if(RegExp.test(dataForm.phonenumber)){
                 document.getElementById('phone').style.display = "none";
             }else{
                 check &= false;
@@ -74,21 +93,24 @@ const ModalSigup = (props) => {
                 document.getElementById('phone').style.display = "flex";
             }
         }
-        if(data.adress=== ''){
+        if(dataForm.adress=== ''){
             check &= false;
             document.getElementById('adress').style.display = "flex"; 
         }else {
             document.getElementById('adress').style.display = "none";
         }
-        if(data.urlimg ===''){
+        if(!image){
             check &= false;
             document.getElementById('image').style.display = "flex";
         }else{
             document.getElementById('image').style.display = "none";
         }
         if(check) {
-            userApi.create(data);
-            props.openModalSignUp();
+            Axios.post('https://api.cloudinary.com/v1_1/vntrieu/image/upload', image)
+            .then(res => {
+                const userCreate = {...dataForm, urlimg: res.data.secure_url}
+                userApi.create(userCreate).then(() => props.openModalSignUp());
+            });
         }
         return;
     }
@@ -159,11 +181,13 @@ const ModalSigup = (props) => {
                                 <p>Adress is require</p>
                             </div>
                             <Input 
+                            id="imagedata"
                             name="image" 
                             type="file" 
-                            placeholder="Choose Image" c
-                            lassName="mt-3"
-                            accept="image/*" className="mt-3" />
+                            placeholder="Choose Image"
+                            className="mt-3"
+                            accept="image/*" className="mt-3"
+                            onChange={getImage} />
                             <div id="image" className="require">
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Image is require</p>
