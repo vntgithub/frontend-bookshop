@@ -13,19 +13,22 @@ import ToTop from './components/ToTop';
 import userApi from "./api/user.api";
 function App() {
   const [userCart, setUserCart] = useState([]);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   const [login, setLogin] = useState(false);
   const [signup, setSignup] = useState(false);
   useEffect(() => {
+   const componentDidMount = async () => {
     if(document.cookie !== ''){
-      userApi.getByCookie(document.cookie.substr(3), setUser);
+      await userApi.getByCookie(document.cookie.substr(3), setUser);
     }
-    if(localStorage.getItem('cartItems')){
-      const arrayItems = JSON.parse(localStorage.getItem('cartItems'));
-      setUserCart(arrayItems);
-    }else{
-      localStorage.setItem('cartItems', []);
-    }
+   }
+   componentDidMount();
+   if(localStorage.getItem('cartItems')){
+    const arrayItems = JSON.parse(localStorage.getItem('cartItems'));
+    setUserCart(arrayItems);
+  }else{
+    localStorage.setItem('cartItems', []);
+  }
   }, []);
   const openModalLogin = () => setLogin(!login);
   const openModalSignUp = () => setSignup(!signup);

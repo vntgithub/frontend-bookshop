@@ -3,7 +3,28 @@
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: rgb(89, 148, 150);
-  height: 10rem;
+  background-color: rgb(53, 87, 88);
+  height: 17rem;
   width: 100%;
+  color: #fff;
+  font-weight: bold;
+}
+.title-footer {
+  font-size: 1.6rem;
+  text-decoration: underline;
+}
+.boder-top {
+  border-top: 1px solid #fff;
+  padding-top: 1rem;
+  display: flex;
+  justify-content: center;
+}
+.footer-icon {
+  font-size: 2rem;
+  margin: 0.2rem 0.5rem;
+  color: #fff;
+}
+.footer-icon:hover {
+  font-size: 2.2rem;
+  transition: 100ms;
 }

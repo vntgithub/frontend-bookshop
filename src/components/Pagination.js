@@ -35,7 +35,7 @@ const Pagination = (props) => {
     }
 
     return (
-        <Row className="justify-content-center">
+        <Row className="justify-content-center m-3">
             <div>
                 <button className="buttonChangePape" onClick={left}>&lt;&lt;</button>
                 {pagination.slice(range.begin, range.end)}

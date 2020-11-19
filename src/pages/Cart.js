@@ -57,12 +57,17 @@ const CartPage = () => {
         setIsOpen(!isOpen);
     }
     const buy = () => {
+        if(userCart.length === 0){
+            document.getElementById('warning').style.visibility = "unset";
+            return;
+        }
         if(document.cookie === ''){
             setLogin(!login);
             return;
         }
         toggle();
     }
+    window.scrollTo(0,0);
     return (
         <Container className="container-cartpage">
             {isOpen && <InvoiceForm toggle={toggle} />}
@@ -122,7 +127,7 @@ const CartPage = () => {
                     <button onClick={buy}>Buy</button>
                 </Col>
             </Row>
-           
+           {userCart.length === 0 && <div style={{height: "260px"}}></div>}
         </Container>
     );
 }
