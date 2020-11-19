@@ -18,7 +18,7 @@ const CartPage = () => {
     let count = 0, totalAmount = 0;
     for(let i = 0; i < userCart.length; i++){
         count += userCart[i].count;
-        totalAmount += (userCart[i].count * userCart[i].item.price);
+        totalAmount += (userCart[i].count*100) * (userCart[i].item.price*100);
     };
     const deleteItem = (index) => {
         return function() {
@@ -69,8 +69,8 @@ const CartPage = () => {
             <Row className="total">
                 <Col sm={3}>Cart</Col>
                 <Col sm={{size: 2, offset: 4}}>Products: {count}</Col>
-                <Col sm={{size: 2}}>
-                Capital-sum: {parseFloat(totalAmount).toPrecision(4)} $
+                <Col id="CapitalSum" sm={{size: 3}}>
+                Capital-sum: {totalAmount/10000} $
                 </Col>
                 
             </Row>
@@ -97,7 +97,9 @@ const CartPage = () => {
                         {element.count}
                         <FontAwesomeIcon className="sgv" icon={faPlusCircle} onClick={plusItem(index)} />
                     </Col>
-                    <Col sm={2} className="price-product">$ {parseFloat(element.count*element.item.price).toPrecision(4)}</Col>
+                    <Col sm={2} className="price-product">
+                        $ {(element.count*100)*(element.item.price*100)/10000}
+                    </Col>
                     <Col sm={1}>
                         <FontAwesomeIcon className="sgv" icon={faTrashAlt} onClick={deleteItem(index)} />
                     </Col>
@@ -107,7 +109,7 @@ const CartPage = () => {
             <Row className="capital-sum">
                <Col sm={{size: 3, offset: 9}}>
                    <p>Capital-sum:</p>
-                   <h6>{parseFloat(totalAmount).toPrecision(4)} $</h6>
+                   <h6>{totalAmount/10000} $</h6>
                </Col>
             </Row>
             <Row className="buy">

@@ -1,8 +1,8 @@
 .banner {
   height: 400px;
   width: auto;
-  background-image: url("./banner.jpg");
+  background-image: url("./banner1.jpg");
   background-size: cover;
-  margin: 0px;
+  margin: 70px 0 0 0;
   padding: 0px;
 }

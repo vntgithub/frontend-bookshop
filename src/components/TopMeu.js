@@ -16,21 +16,11 @@ import {
 import "./style/TopMenu.css";
 import { CartContext, UserContext } from '../contexts/Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 const TopMenu = (props) => {
   const { user } = useContext(UserContext);
-  let avt;
-  if(user) {
-    avt = <img 
-            style={{width: "2.5rem", height: "2.5rem"}} 
-            src={user.urlimg} alt="userimg"
-            className="userAvt" />;
-  }else{
-    avt = <FontAwesomeIcon icon={faUser} size="2x" /> ;
-  }
   const [isOpen, setIsOpen] = useState(false);
   const { userCart } = useContext(CartContext);
   const toggle = () => setIsOpen(!isOpen);
@@ -65,26 +55,33 @@ const TopMenu = (props) => {
                   <span className="numberItems">{count}</span>
               </div>
             </NavItem>
+            {(document.cookie === '') && 
+            <NavItem >
+              <div >
+                <p onClick={props.openModalLogin} className="login-signup">Login / Signup</p>
+              </div>
+            </NavItem>}
+            { (document.cookie !== '') && 
             <UncontrolledDropdown nav inNavbar>
               <DropdownToggle nav caret>
-                {avt}
+              <img 
+              style={{width: "2.5rem", height: "2.5rem"}} 
+              src={user.urlimg} alt="userimg"
+              className="userAvt" />
               </DropdownToggle>
               <DropdownMenu right>
-                {(document.cookie === '') && <DropdownItem onClick={props.openModalLogin}>
-                  <p>Login/Sigin</p>
-                </DropdownItem>}
-            {  (document.cookie !== '') &&  <DropdownItem onClick={myInfo}>
+            <DropdownItem onClick={myInfo}>
                   <p>My information</p>
-                </DropdownItem>}
+                </DropdownItem>
                 <DropdownItem>
                   <Link to="/myinvoice">My invoice</Link>
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem onClick={logout}>
-                  {user&&<p>Logout</p>}
+                  <p>Logout</p>
                 </DropdownItem>
               </DropdownMenu>
-            </UncontrolledDropdown>
+            </UncontrolledDropdown>}
           </Nav>
         </Collapse>
       </Navbar>

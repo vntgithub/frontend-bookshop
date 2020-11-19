@@ -1,10 +1,6 @@
 .current-filter {
-  color: brown;
+  color: goldenrod;
   font-weight: bold;
-}
-
-a:hover {
-  color: #7d2b03 !important;
 }
 html {
   scroll-behavior: smooth;
