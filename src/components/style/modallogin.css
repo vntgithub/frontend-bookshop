@@ -13,7 +13,7 @@
   margin-left: 0.5rem;
 }
 .require {
-  display: flex;
+  display: none;
   color: red;
   padding: 0;
   height: 1rem;
@@ -24,7 +24,8 @@
 #passwordSU,
 #check-exist,
 #confirm-pass,
-#image {
+#image,
+#address {
   display: none;
 }
 .title-login {

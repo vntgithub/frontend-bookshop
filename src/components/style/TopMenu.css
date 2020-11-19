@@ -35,9 +35,16 @@
   z-index: 1;
 }
 .link-dropdown {
-  color: brown;
+  color: black;
 }
 .dropdown,
 .nav-item {
   color: rgb(161, 72, 72);
+}
+.dropdown-menu a {
+  color: black;
+}
+.dropdown-menu a:hover {
+  color: black;
+  font-weight: bold;
 }

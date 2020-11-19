@@ -77,7 +77,7 @@ const TopMenu = (props) => {
                   <p>My information</p>
                 </DropdownItem>}
                 <DropdownItem>
-                  <p>My invoice</p>
+                  <Link to="/myinvoice">My invoice</Link>
                 </DropdownItem>
                 <DropdownItem divider />
                 <DropdownItem onClick={logout}>

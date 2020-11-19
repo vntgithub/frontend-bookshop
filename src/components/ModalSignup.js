@@ -17,7 +17,7 @@ const ModalSigup = (props) => {
         confirm: '',
         name: '',
         phonenumber: '',
-        adress: '',
+        address: '',
         urlimg: ''
     });
     const setUsername = (event) => setDataForm({...dataForm, username: event.target.value})
@@ -25,7 +25,7 @@ const ModalSigup = (props) => {
     const setConfirm = (event) => setDataForm({...dataForm, confirm: event.target.value});
     const setName = (event) => setDataForm({...dataForm, name: event.target.value});
     const setPhone = (event) => setDataForm({...dataForm, phonenumber: event.target.value});
-    const setAdress = (event) => setDataForm({...dataForm, adress: event.target.value});
+    const setAddress = (event) => setDataForm({...dataForm, address: event.target.value});
     const getImage = (e) => {
         const file = e.target.files;
         const imageData  = new FormData();
@@ -93,11 +93,11 @@ const ModalSigup = (props) => {
                 document.getElementById('phone').style.display = "flex";
             }
         }
-        if(dataForm.adress=== ''){
+        if(dataForm.address=== ''){
             check &= false;
-            document.getElementById('adress').style.display = "flex"; 
+            document.getElementById('address').style.display = "flex"; 
         }else {
-            document.getElementById('adress').style.display = "none";
+            document.getElementById('address').style.display = "none";
         }
         if(!image){
             check &= false;
@@ -172,13 +172,13 @@ const ModalSigup = (props) => {
                                 <p>Phone numbers is require</p>
                             </div>
                             <Input 
-                            onChange={setAdress}
+                            onChange={setAddress}
                             type="text" 
-                            placeholder="Adress" 
+                            placeholder="Address" 
                             className="mt-3" />
-                            <div id="adress" className="require">
+                            <div id="address" className="require">
                                 <FontAwesomeIcon icon={faExclamationCircle} />
-                                <p>Adress is require</p>
+                                <p>Address is require</p>
                             </div>
                             <Input 
                             id="imagedata"

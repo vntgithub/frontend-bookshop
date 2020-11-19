@@ -16,13 +16,13 @@ const InvoiceForm = (props) => {
     const [data, setData] = useState({
         name: user.name, 
         phonenumber: user.phonenumber, 
-        adress: user.adress,
+        address: user.address,
         date: new Date(), 
         cart: [...userCart]
     });
     const setName = (event) => setData({...data, name: event.target.value})
     const setPhone = (event) => setData({...data, phonenumber: event.target.value});
-    const setAdress = (event) => setData({...data, adress: event.target.value});
+    const setAddress = (event) => setData({...data, address: event.target.value});
     const submit = () => {
         const RegExp = /^0[1-9]{9,10}$/;
         let check = true;
@@ -45,11 +45,11 @@ const InvoiceForm = (props) => {
                 document.getElementById('phone').style.display = "flex";
             }
         }
-        if(data.adress === ''){
+        if(data.address === ''){
             check &= false;
-            document.getElementById('adress').style.display = "flex";
+            document.getElementById('address').style.display = "flex";
         }else{
-            document.getElementById('adress').style.display = "none";
+            document.getElementById('address').style.display = "none";
         }
         if(check) {
             const invoice = {
@@ -88,11 +88,11 @@ const InvoiceForm = (props) => {
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Phone is require</p>
                             </div>
-                            <Label>Adress</Label>
-                            <Input onChange={setAdress} name="adress" type="text" value={data.adress} />
-                            <div id="adress" className="require">
+                            <Label>Address</Label>
+                            <Input onChange={setAddress} name="address" type="text" value={data.address} />
+                            <div id="address" className="require">
                                 <FontAwesomeIcon icon={faExclamationCircle} />
-                                <p>Adress is require</p>
+                                <p>Address is require</p>
                             </div>
                             
                         </FormGroup>

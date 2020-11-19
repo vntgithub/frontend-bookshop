@@ -8,6 +8,7 @@ import Topmenu from "./components/TopMeu";
 import Footer from "./components/Footer";
 import HomePgae from "./pages/Home";
 import CartPage from "./pages/Cart";
+import MyInvoice from "./pages/MyInvoice";
 import ToTop from './components/ToTop';
 import userApi from "./api/user.api";
 function App() {
@@ -38,6 +39,7 @@ function App() {
       {signup && <ModalSignUp openModalSignUp={openModalSignUp} />}
         <Switch>
           <Route path="/" exact component={HomePgae} />
+          <Route path="/myinvoice" exact component={MyInvoice} />
           <ModalLoginContext.Provider value={{ login, setLogin }}>
             <Route path="/cart" component={CartPage} />
           </ModalLoginContext.Provider>

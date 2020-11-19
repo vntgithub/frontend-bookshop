@@ -9,6 +9,15 @@ const invoiceApi = {
       } catch (error) {
           console.log(error);
       }
+  },
+  getInvoiceByUserId: async(userId) => {
+      const url = process.env.REACT_APP_URL_DATABASE + `invoice/getbyuserid/${userId}`;
+      try {
+        const res = await axios.get(url);
+        return res;
+    } catch (error) {
+        console.log(error);
+    }
   }
 };
 
