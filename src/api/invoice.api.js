@@ -18,6 +18,15 @@ const invoiceApi = {
     } catch (error) {
         console.log(error);
     }
+  },
+  updateState: async (id, state) => {
+      const url = process.env.REACT_APP_URL_DATABASE + 'invoice/update';
+      await axios.put(url, { id: id, state: state }).then(res => console.log(res.data));
+  },
+  getByState: async (userId, state) => {
+      const url = process.env.REACT_APP_URL_DATABASE + `invoice/getbystate/${state}&${userId}`;
+      const response = await axios.get(url);
+      return response;
   }
 };
 

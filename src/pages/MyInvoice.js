@@ -1,9 +1,10 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Input } from 'reactstrap';
+import classNames from 'classnames';
 import invoiceApi from '../api/invoice.api';
 
 import InvoiceForm from '../components/InvoiceForm';
-import './style/invoice.css';
+import './style/myinvoice.css';
 
 const MyInvoice = () => {
     const [invoice, setInvoice] = useState([]);
@@ -16,6 +17,20 @@ const MyInvoice = () => {
             toggle();
         }
     }
+    const cancel = (id) => {
+        return () => {
+            invoiceApi.updateState(id, 'Cancel');
+        }
+    }
+    const filterState = (e) => {
+        if(e.target.value === 'All'){
+            invoiceApi.getInvoiceByUserId(document.cookie.substr(3))
+            .then(res => setInvoice(res.data));
+            return;
+        }
+        invoiceApi.getByState(document.cookie.substr(3), e.target.value)
+        .then(res => setInvoice(res.data));
+    }
     useEffect(() => {
         invoiceApi.getInvoiceByUserId(document.cookie.substr(3))
         .then(res => {
@@ -24,18 +39,39 @@ const MyInvoice = () => {
     }, []);
     return(
         <Container className="body-invoice-list">
+            <Row className="justify-content-center ">
+                <Col>
+                    <Input type="text" placeholder="Search id..." />
+                </Col>
+                <Col>
+                <Input type="select" onChange={filterState}>
+                    <option>All</option>
+                    <option>Done</option>
+                    <option>Delivering</option>
+                    <option>Waitting</option>
+                    <option>Cancel</option>
+                </Input>
+                </Col>
+            </Row>
             {isOpen && <InvoiceForm toggle={toggle} invoiceBuyAgain={invoiceBuyAgain} />}
             {invoice.map((item, index) => 
                 <Container className="invoice-item" key={index}>
-                    <Row className="justify-content-center m-3">
+                    <Row className="justify-content-center m-3 date-time">
                     Date time: {item.date}
                     </Row>
                 <Row className="m-3 header-invoice-item">
                     <Col md={6}>
                         ID: {item._id}
                     </Col>
-                    <Col md={{size: 3, offset: 3}} className="justify-content-right">
-                        State: Delevered
+                    <Col md={{size: 3, offset: 3}} className="justify-content-right state">
+                        State: <span className={
+                            classNames(
+                                {'state-done': item.state === 'Done'},
+                                {'state-waitting': item.state === 'Waitting'},
+                                {'state-cancel': item.state === 'Cancel'},
+                                {'state-delivering': item.state === 'Delivering'}
+                                )
+                            }>{item.state}</span>
                     </Col>
                 </Row>
                 
@@ -61,7 +97,10 @@ const MyInvoice = () => {
                    </Col>
                 </Row>
                 <Row className="m-3 buy">
-                    <Col md={{size: 3, offset: 9}}>
+                    {item.state === 'Waitting' ? <Col md={{size: 3, offset: 6}}>
+                        <button id="cancel-button" onClick={cancel(item._id)}>Cancel</button>
+                    </Col> : <Col md={{size: 3, offset: 6}}></Col>}
+                    <Col md={{size: 3}}>
                         <button onClick={eventOnclick(index)}>Buy again</button>
                     </Col>
                 </Row>

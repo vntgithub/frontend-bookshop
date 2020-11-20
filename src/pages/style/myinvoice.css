@@ -38,3 +38,34 @@
   font-weight: bold;
   color: coral;
 }
+.date-time {
+  color: red;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.state-done {
+  color: green;
+}
+.state-waitting {
+  color: rgb(180, 180, 13);
+}
+.state-cancel {
+  color: red;
+}
+.state-delivering {
+  color: rgb(0, 174, 255);
+}
+.state {
+  font-size: 1.5rem;
+  color: #555;
+}
+#cancel-button {
+  background-color: brown;
+}
+#cancel-button:hover {
+  background-color: rgb(226, 123, 26);
+}
+.search-filter,
+.col {
+  border: none !important;
+}
