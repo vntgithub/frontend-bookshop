@@ -12,13 +12,14 @@ import './style/invoiceform.css';
 const InvoiceForm = (props) => {
     const { userCart, setUserCart } = useContext(CartContext);
     const { user } = useContext(UserContext);
-    console.log(user);
     const [data, setData] = useState({
+        userId: document.cookie.substr(3),
         name: user.name, 
         phonenumber: user.phonenumber, 
         address: user.address,
         date: new Date(), 
-        cart: [...userCart]
+        cart: [...userCart],
+        totalamount: props.totalAmount
     });
     const setName = (event) => setData({...data, name: event.target.value})
     const setPhone = (event) => setData({...data, phonenumber: event.target.value});
@@ -52,14 +53,19 @@ const InvoiceForm = (props) => {
             document.getElementById('address').style.display = "none";
         }
         if(check) {
-            const invoice = {
-                ...data, 
-            };
-            console.log(invoice);
-            invoiceApi.addInvoice(invoice);
-            setUserCart([]);
-            localStorage.setItem('cartItems', JSON.stringify([]));
-            props.toggle();
+            if(props.invoiceBuyAgain){
+                const newInvoice = {...props.invoiceBuyAgain, date: new Date()};
+                delete newInvoice._id;
+                console.log(newInvoice)
+                invoiceApi.addInvoice(newInvoice);
+                props.toggle();
+            }else{
+                invoiceApi.addInvoice(data);
+                setUserCart([]);
+                localStorage.setItem('cartItems', JSON.stringify([]));
+                props.toggle();
+            }
+            
         }
         return;
     }
