@@ -126,7 +126,7 @@ const CartPage = () => {
                     <button onClick={buy}>Buy</button>
                 </Col>
             </Row>
-           {userCart.length === 0 && <div style={{height: "260px"}}></div>}
+           
         </Container>
     );
 }

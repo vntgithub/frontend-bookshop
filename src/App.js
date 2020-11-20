@@ -33,25 +33,26 @@ function App() {
   const openModalLogin = () => setLogin(!login);
   const openModalSignUp = () => setSignup(!signup);
   return (
-    
-    <CartContext.Provider value={{ userCart, setUserCart }}>
-    <UserContext.Provider value={{ user, setUser }}>
-      <Router>
-      <Topmenu openModalLogin={openModalLogin} setUserState={setUser}/>
-      {login&&<ModalLogin openModalLogin={openModalLogin} openModalSignUp={openModalSignUp} />}
-      {signup && <ModalSignUp openModalSignUp={openModalSignUp} />}
-        <Switch>
-          <Route path="/" exact component={HomePgae} />
-          <Route path="/myinvoice" exact component={MyInvoice} />
-          <ModalLoginContext.Provider value={{ login, setLogin }}>
-            <Route path="/cart" component={CartPage} />
-          </ModalLoginContext.Provider>
-        </Switch>
-        <Footer />
-        <ToTop />
-      </Router>
-    </UserContext.Provider>
-    </CartContext.Provider>
+    <div id="App">
+      <CartContext.Provider value={{ userCart, setUserCart }}>
+        <UserContext.Provider value={{ user, setUser }}>
+          <Router>
+          <Topmenu openModalLogin={openModalLogin} setUserState={setUser}/>
+          {login&&<ModalLogin openModalLogin={openModalLogin} openModalSignUp={openModalSignUp} />}
+          {signup && <ModalSignUp openModalSignUp={openModalSignUp} />}
+            <Switch>
+              <Route path="/" exact component={HomePgae} />
+              <Route path="/myinvoice" exact component={MyInvoice} />
+              <ModalLoginContext.Provider value={{ login, setLogin }}>
+                <Route path="/cart" component={CartPage} />
+              </ModalLoginContext.Provider>
+            </Switch>
+            <Footer />
+            <ToTop />
+          </Router>
+        </UserContext.Provider>
+      </CartContext.Provider>
+    </div>
   );
 }
 

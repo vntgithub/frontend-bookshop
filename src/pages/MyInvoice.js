@@ -7,6 +7,9 @@ import InvoiceForm from '../components/InvoiceForm';
 import './style/myinvoice.css';
 
 const MyInvoice = () => {
+    if(document.cookie == '')
+        window.location.replace('/');
+
     const [invoice, setInvoice] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
     const [invoiceBuyAgain, setInvoiceBuyAgain] = useState(null);
