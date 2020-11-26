@@ -68,3 +68,7 @@
   border: 1px solid white;
   border-radius: 20px;
 }
+
+button:focus {
+  outline: none;
+}

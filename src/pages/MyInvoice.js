@@ -7,7 +7,6 @@ import InvoiceForm from '../components/InvoiceForm';
 import './style/myinvoice.css';
 
 const MyInvoice = () => {
-    window.scrollTo(0,0);
     if(document.cookie == '')
         window.location.replace('/');
 
@@ -21,14 +20,12 @@ const MyInvoice = () => {
             toggle();
         }
     }
-    const cancel = (id) => {
+    const cancel = (id, index) => {
         return async () => {
-            await invoiceApi.updateState(id, 'Cancel')
-            .then(() => {
-                invoiceApi.getInvoiceByUserId(document.cookie.substr(3))
-                .then(res => setInvoice(res.data));
-                 window.scrollTo(0,0);
-            })
+            await invoiceApi.updateState(id, 'Cancel');
+            let newArrInvoice = [...invoice];
+            newArrInvoice[index].state = 'Cancel';
+            setInvoice(newArrInvoice);
         }
     }
     const filterState = (e) => {
@@ -119,7 +116,7 @@ const MyInvoice = () => {
                 </Row>
                 <Row className="m-3 buy">
                     {item.state === 'Waitting' ? <Col md={{size: 3, offset: 6}}>
-                        <button id="cancel-button" onClick={cancel(item._id)}>Cancel</button>
+                        <button id="cancel-button" onClick={cancel(item._id, index)}>Cancel</button>
                     </Col> : <Col md={{size: 3, offset: 6}}></Col>}
                     <Col md={{size: 3}}>
                         <button onClick={eventOnclick(index)}>Buy again</button>
