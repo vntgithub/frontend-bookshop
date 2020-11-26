@@ -58,7 +58,8 @@ const InvoiceForm = (props) => {
                 delete newInvoice._id;
                 console.log(newInvoice)
                 invoiceApi.addInvoice(newInvoice);
-                props.toggle();
+                props.reload().then(() =>  props.toggle());
+               
             }else{
                 invoiceApi.addInvoice(data);
                 setUserCart([]);

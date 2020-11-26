@@ -7,6 +7,7 @@ import InvoiceForm from '../components/InvoiceForm';
 import './style/myinvoice.css';
 
 const MyInvoice = () => {
+    window.scrollTo(0,0);
     if(document.cookie == '')
         window.location.replace('/');
 
@@ -21,8 +22,13 @@ const MyInvoice = () => {
         }
     }
     const cancel = (id) => {
-        return () => {
-            invoiceApi.updateState(id, 'Cancel');
+        return async () => {
+            await invoiceApi.updateState(id, 'Cancel')
+            .then(() => {
+                invoiceApi.getInvoiceByUserId(document.cookie.substr(3))
+                .then(res => setInvoice(res.data));
+                 window.scrollTo(0,0);
+            })
         }
     }
     const filterState = (e) => {
@@ -34,6 +40,13 @@ const MyInvoice = () => {
         invoiceApi.getByState(document.cookie.substr(3), e.target.value)
         .then(res => setInvoice(res.data));
     }
+    const reload = async() => {
+        console.log('reload call');
+        await invoiceApi.getInvoiceByUserId(document.cookie.substr(3))
+        .then(res => {
+            setInvoice(res.data);
+        });
+    }
     useEffect(() => {
         invoiceApi.getInvoiceByUserId(document.cookie.substr(3))
         .then(res => {
@@ -43,10 +56,10 @@ const MyInvoice = () => {
     return(
         <Container className="body-invoice-list">
             <Row className="justify-content-center ">
-                <Col>
+                <Col md={4}>
                     <Input type="text" placeholder="Search id..." />
                 </Col>
-                <Col>
+                <Col md={{size: 2, offset: 2}}>
                 <Input type="select" onChange={filterState}>
                     <option>All</option>
                     <option>Done</option>
@@ -56,9 +69,14 @@ const MyInvoice = () => {
                 </Input>
                 </Col>
             </Row>
-            {isOpen && <InvoiceForm toggle={toggle} invoiceBuyAgain={invoiceBuyAgain} />}
+            {isOpen && 
+                <InvoiceForm 
+                toggle={toggle} 
+                invoiceBuyAgain={invoiceBuyAgain}
+                reload={reload}
+                />}
             {invoice.map((item, index) => 
-                <Container className="invoice-item" key={index}>
+                <Container className="invoice-item mt-5" key={index}>
                     <Row className="justify-content-center m-3 date-time">
                     Date time: {item.date}
                     </Row>
@@ -93,7 +111,7 @@ const MyInvoice = () => {
                     <Col className="price-product">$ {book.item.price}</Col>
                 </Row>
                 )}
-                <Row className="m-3">
+                <Row className="m-3 total-row">
                    <Col className="capital-sum-invoice-item" md={{size: 3, offset: 9}}>
                    <p>Capital-sum:</p>
                    <h6>{item.totalamount} $</h6>
