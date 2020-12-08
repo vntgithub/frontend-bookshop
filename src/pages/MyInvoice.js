@@ -7,7 +7,7 @@ import InvoiceForm from '../components/InvoiceForm';
 import './style/myinvoice.css';
 
 const MyInvoice = () => {
-    if(document.cookie == '')
+    if(document.cookie === '')
         window.location.replace('/');
 
     const [invoice, setInvoice] = useState([]);

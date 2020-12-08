@@ -69,6 +69,6 @@
   border-radius: 20px;
 }
 
-button:focus {
+.button button:focus {
   outline: none;
 }

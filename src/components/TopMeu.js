@@ -16,7 +16,7 @@ import {
 import "./style/TopMenu.css";
 import { CartContext, UserContext } from '../contexts/Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faBell } from '@fortawesome/free-solid-svg-icons';
 
 
 const TopMenu = (props) => {
@@ -47,6 +47,7 @@ const TopMenu = (props) => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
+           {window.location.href.indexOf('Admin') === -1 ?
             <NavItem>
               <div className="cart">
                 <Link className="link" to="/cart">
@@ -54,7 +55,14 @@ const TopMenu = (props) => {
                 </Link>
                   <span className="numberItems">{count}</span>
               </div>
+            </NavItem> :
+            <NavItem>
+              <div className="cart">
+                  <FontAwesomeIcon icon={faBell} size="2x" style={{color: "#999"}} />
+                  <span className="numberItems">{count}</span>
+              </div>
             </NavItem>
+          }
             {(document.cookie === '') && 
             <NavItem >
               <div >

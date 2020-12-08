@@ -1,13 +1,12 @@
 .footer {
-  position: absolute;
-  left: 0;
-  bottom: -350px;
   width: 100%;
   background-color: rgb(53, 87, 88);
   height: 17rem;
   width: 100%;
   color: #fff;
   font-weight: bold;
+  position: relative;
+  bottom: 0;
 }
 .title-footer {
   font-size: 1.6rem;
