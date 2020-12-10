@@ -16,6 +16,7 @@ const userApi = {
         }
       })
       .catch((err) => console.log(err));
+      console.log('check variable in api: ', check);
       return check;
   },
   getByCookie: async (cookie, setUser) => {

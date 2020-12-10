@@ -16,12 +16,7 @@ const ModalLogin = (props) => {
     });
     const setUsername = (event) => setData({...data, username: event.target.value})
     const setPassword = (event) => setData({...data, password: event.target.value});
-    const checkUserExist = async () => {
-            let exist = false;
-            await userApi.login(data, setUser).then(x => exist = x);
-            return exist;
-    }
-    const submit = () => {
+    const submit = async () => {
         let check = true;
         if(data.username === ''){
             check &= false;
@@ -37,15 +32,16 @@ const ModalLogin = (props) => {
                 document.getElementById('password').style.display = "none";
         }
         if(check) {
-            let exist = checkUserExist();
-            if(!exist){
+            if(! await userApi.login(data, setUser)){
                 document.getElementById('check-exist').style.display = "flex";
                 return;
             }else{
                 document.getElementById('check-exist').style.display = "none";
+                props.openModalLogin();
             }
+            
         }
-        props.openModalLogin();
+        
         return;
     }
     return(

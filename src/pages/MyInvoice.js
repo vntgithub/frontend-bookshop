@@ -73,7 +73,7 @@ const MyInvoice = () => {
                 reload={reload}
                 />}
             {invoice.map((item, index) => 
-                <Container className="invoice-item mt-5" key={index}>
+                <div className="invoice-item mt-5" key={index}>
                     <Row className="justify-content-center m-3 date-time">
                     Date time: {item.date}
                     </Row>
@@ -122,7 +122,7 @@ const MyInvoice = () => {
                         <button onClick={eventOnclick(index)}>Buy again</button>
                     </Col>
                 </Row>
-            </Container>
+            </div>
             )}
         </Container>
     );

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Table } from 'reactstrap';
 
+import './style/AdminTable.css';
+
 const AdminTable = (props) => {
   return (
     <Table>
