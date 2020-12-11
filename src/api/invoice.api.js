@@ -27,6 +27,16 @@ const invoiceApi = {
       const url = process.env.REACT_APP_URL_DATABASE + `invoice/getbystate/${state}&${userId}`;
       const response = await axios.get(url);
       return response;
+  },
+  getPerPage: async(currenPage, setData) => {
+      const url = process.env.REACT_APP_URL_DATABASE + `invoice/getperpage/${currenPage}`;
+      await axios.get(url)
+                 .then(res => setData(res.data))
+                 .catch(err => console.log(err));
+  },
+  count: async (setPage) => {
+      const url = process.env.REACT_APP_URL_DATABASE + 'invoice/count';
+      await axios.get(url).then(res => setPage(res.data/20));
   }
 };
 

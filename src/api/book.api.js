@@ -39,10 +39,15 @@ const bookApi = {
     }
   },
   search: async (searchString, page, setBook) => {
+    let countPage = 0;
     const url = process.env.REACT_APP_URL_DATABASE + `book/findbyname/${searchString}&${page}`;
     await axios.get(url)
-    .then(res => setBook(res.data))
+    .then(res => {
+      setBook(res.data);
+      countPage = res.data.length/20;
+    })
     .catch(error => console.log(error));
+    return countPage;
   },
   countPageBySearchString: async (searchString, setPage) => {
     const url = process.env.REACT_APP_URL_DATABASE + `book/countbysearchstring/${searchString}`;

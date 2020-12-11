@@ -33,6 +33,15 @@ const userApi = {
     const url = process.env.REACT_APP_URL_DATABASE + "user/check";
     const res = await axios.post(url, {username: username});
     return res;
+  },
+  getUsersPerPage: async (page, setData) => {
+    const url = process.env.REACT_APP_URL_DATABASE + `user/getperpage/${page}`;
+    await axios.get(url).then(users => setData(users.data));
+  },
+  countUsers: async(setPage) => {
+    const url = process.env.REACT_APP_URL_DATABASE + 'user/count';
+    await axios.get(url).then(n => setPage(n.data/20));
+
   }
 };
 export default userApi;

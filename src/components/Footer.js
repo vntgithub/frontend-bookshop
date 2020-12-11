@@ -4,15 +4,15 @@ import { Row, Col } from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHome, 
   faEnvelope, 
-  faPhone } from '@fortawesome/free-solid-svg-icons';
+  faPhone, faCopyright } from '@fortawesome/free-solid-svg-icons';
 import "./style/footer.css";
 
 const Footer = () => {
   return (
-    <div className="footer mt-3">
+    <div className='footer mt-3' >
       <Row>
         <Col md={{size: 2, offset: 2}}>
-          <Row className="mt-3 title-footer">About:</Row>
+          <Row className="mt-3 title-footer">About: This project for </Row>
           <Row className="mt-3">
             
           </Row>
@@ -59,7 +59,8 @@ const Footer = () => {
       </Row>
       <Row className="justify-content-center mt-3">
           <Col md={{size: 6}} className="justify-content-center boder-top">
-          2020 Copyright: Vo Nhat Trieu
+            <FontAwesomeIcon icon={faCopyright} className="mr-1" style={{marginTop: "3px"}} />
+            2020 Copyright: Vo Nhat Trieu
           </Col>
       </Row>
       <Row className="justify-content-center">

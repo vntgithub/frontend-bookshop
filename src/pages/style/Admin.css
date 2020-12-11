@@ -1,34 +1,65 @@
-/* .list-admin-menu {
-  list-style-type: none;
-}
-.list-admin-menu li {
-  padding: 0.5rem;
-  font-weight: bold;
-  color: cadetblue;
-  cursor: pointer;
-  opacity: 0.6;
-}
-.list-admin-menu li:hover {
-  opacity: 1;
-}
-.menu {
-  margin-top: 5rem;
-}
-
-.dashboard {
-  margin-left: 0 !important;
-  height: 100;
-}
-.menu h3 {
-  font-weight: bold;
-  color: cadetblue;
-  border-bottom: 1px solid cadetblue;
-  border-top: 1px solid cadetblue;
-  padding: 0.3rem;
-} */
 .admin-wrapper {
-  margin-top: 200px;
+  margin-top: 115px;
 }
 .dashboard {
   border-right: 1px solid lightseagreen;
+}
+.dashboard li {
+  list-style-type: none;
+  font-weight: bold;
+  color: cornflowerblue;
+  margin-top: 10px;
+  opacity: 0.55;
+  cursor: pointer;
+}
+.dashboard h2 {
+  font-weight: bold;
+  color: cornflowerblue;
+}
+.activeaaa {
+  opacity: 1 !important;
+}
+.right-col h2 {
+  padding: 10px;
+  font-weight: bold;
+  color: cornflowerblue;
+}
+.admin-wrapper th,
+td {
+  text-align: center;
+  justify-content: center;
+}
+.categogy {
+  font-weight: bold;
+  color: darkgreen;
+}
+.table td,
+.table th {
+  vertical-align: middle !important;
+}
+.name-intable {
+  font-weight: bold;
+  color: #064532;
+}
+.author-intable {
+  font-weight: bold;
+  color: #828185;
+}
+.iconInTable {
+  cursor: pointer;
+  color: #828185;
+}
+.iconInTable:hover {
+  color: black;
+}
+.date {
+  font-weight: bold;
+  color: darkblue;
+}
+.state-in-table {
+  font-weight: bold;
+}
+.searchInAdminpage {
+  width: 450px !important;
+  margin: 15px;
 }

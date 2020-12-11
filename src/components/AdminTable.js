@@ -1,45 +1,22 @@
 import React from 'react';
-import { Table } from 'reactstrap';
+import { useContext } from 'react';
+import { TableDataContext } from '../contexts/Context';
+
+import BookTable from './TableType/BookTable';
+import UserTable from './TableType/UserTable';
+import InvoiceTable from './TableType/InvoiceTable';
 
 import './style/AdminTable.css';
 
-const AdminTable = (props) => {
-  return (
-    <Table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Img</th>
-          <th>Name</th>
-          <th>Author</th>
-          <th>Categogy</th>
-          <th>Price</th>
-          <th>Edit</th>
-          <th>Del</th>
-        </tr>
-      </thead>
-      <tbody>
-        {props.data.map((item, index) => 
-          <tr key={index}>
-            <th>{index + 1}</th>
-            <td>
-              <img 
-                src={item.urlimg} 
-                alt="img-product"
-                style={{width: "20%", height: "30%"}}
-              />
-            </td>
-            <td>{item.name}</td>
-            <td>{item.author}</td>
-            <td>{item.categogy}</td>
-            <td>{item.price}</td>
-            <td>edit</td>
-            <td>del</td>
-          </tr>
-        )}
-      </tbody>
-    </Table>
-  );
+
+const AdminTable = () => {
+  const { dataType } = useContext(TableDataContext);
+  
+  switch(dataType) {
+    case 'Books': return <BookTable />;
+    case 'Users': return <UserTable />; 
+    default: return <InvoiceTable />;
+  }
 }
 
 export default AdminTable;
