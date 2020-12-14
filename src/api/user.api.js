@@ -41,7 +41,17 @@ const userApi = {
   countUsers: async(setPage) => {
     const url = process.env.REACT_APP_URL_DATABASE + 'user/count';
     await axios.get(url).then(n => setPage(n.data/20));
-
+  },
+  search: async(str, setData) => {
+    let n = 0;
+    const url = process.env.REACT_APP_URL_DATABASE + `user/search/${str}`;
+    await axios.get(url)
+               .then(res => {
+                setData(res.data);
+                n = res.data.length;
+               })
+               .catch(err => console.log(err));
+    return n;
   }
 };
 export default userApi;

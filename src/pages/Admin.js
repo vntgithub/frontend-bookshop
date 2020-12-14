@@ -65,7 +65,19 @@ const AdminPage = () => {
     }
     const input = (event) => {
         if(event.keyCode === 13){
-            bookApi.search(event.target.value, 0, setData).then(n => setPage(n));
+            const str = event.target.value;
+            switch(dataType){
+                case 'Books': 
+                    bookApi.search(str, 0, setData).then(n => setPage(n));
+                    break;
+                case 'Users':
+                    userApi.search(str, setData).then(n => setPage(n));
+                    break;
+                case 'Invoices':
+                    invoiceApi.search(str, setData).then(n => setPage(n));
+                    break;
+                default: break;
+            }
         }
     }
     const height = document.getElementById('root').clientHeight < 790;

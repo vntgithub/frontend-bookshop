@@ -36,7 +36,7 @@ const BookTable = (props) => {
                     <td className="name-intable">{item.name}</td>
                     <td className="author-intable">{item.author}</td>
                     <td className="categogy">{item.categogy}</td>
-                    <td className="price">{item.price}</td>
+                    <td className="price">{item.price} $</td>
                     <td>
                         <FontAwesomeIcon icon={faEdit} className="iconInTable" />
                     </td>

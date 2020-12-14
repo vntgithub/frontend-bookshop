@@ -35,7 +35,7 @@ const InvoiceTable = () => {
                     <td>
                         {/* {item.cart} */}
                     </td>
-                    <td className="price">{item.totalamount}</td>
+                    <td className="price">{item.totalamount} $</td>
                     <td className={classNames(
                         'state-in-table',
                         {'state-done': item.state === 'Done'},
