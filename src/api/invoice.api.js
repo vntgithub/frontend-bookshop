@@ -39,14 +39,11 @@ const invoiceApi = {
       await axios.get(url).then(res => setPage(res.data/20));
   },
   search: async(str, setData) => {
-      let n = 0;
       const url = process.env.REACT_APP_URL_DATABASE + `invoice/search/${str}`;
       await axios.get(url)
                  .then(res => {
-                     setData(res.data);
-                     n = res.data.length;
+                     setData([res.data]);
                  });
-        return n;
   }
 };
 

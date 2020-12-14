@@ -63,3 +63,12 @@ td {
   width: 450px !important;
   margin: 15px;
 }
+.cart-list {
+  text-align: left;
+
+  font-weight: bold;
+  color: chocolate;
+}
+.cart-list li {
+  list-style-type: none;
+}

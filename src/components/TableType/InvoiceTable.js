@@ -32,8 +32,16 @@ const InvoiceTable = () => {
                     <td className="author-intable">{item.address}</td>
                     <td className="author-intable">{item.phonenumber}</td>
                     <td className="date">{item.date}</td>
-                    <td>
-                        {/* {item.cart} */}
+                    <td className="cart-list">
+                        <ul>
+                        {
+                            
+                            item.cart.map((book, index) => 
+                            <li key={index}>
+                                {book.item.name}: {book.count}
+                            </li>)
+                        }
+                        </ul>
                     </td>
                     <td className="price">{item.totalamount} $</td>
                     <td className={classNames(

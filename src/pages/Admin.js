@@ -37,7 +37,6 @@ const AdminPage = () => {
     useEffect(() => {
         setCurrentPage(0);
         setRange({begin: 0, end: 5});
-        setData([]);
         switch(dataType){
             case 'Books': loadDataBooks(); break;
             case 'Users': loadDataUsers(); break;
@@ -59,7 +58,9 @@ const AdminPage = () => {
         changePage();
     }, [currentPage]);
     const changeDataType = (datatype) => {
+        
         return () => {
+            setData([]);
             setDataType(datatype);
         }
     }
@@ -74,7 +75,7 @@ const AdminPage = () => {
                     userApi.search(str, setData).then(n => setPage(n));
                     break;
                 case 'Invoices':
-                    invoiceApi.search(str, setData).then(n => setPage(n));
+                    invoiceApi.search(str, setData).then(() =>{setPage(1); console.log(data)});
                     break;
                 default: break;
             }
