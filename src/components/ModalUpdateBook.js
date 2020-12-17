@@ -28,6 +28,13 @@ const ModalUpdateBook = (props) => {
         imageData.append('file', file[0]);
         imageData.append('upload_preset', 'usersimage');
         setImage(imageData);
+        //Review img
+        var reader = new FileReader();
+        reader.onload = function (e) {
+                document.getElementById("blah").src = e.target.result;
+            };
+
+        reader.readAsDataURL(file[0]);
     }
 
 
@@ -159,7 +166,12 @@ const ModalUpdateBook = (props) => {
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Image is require</p>
                             </div>
-                            <img src={dataForm.urlimg} alt="imgproduct" />
+                            <img 
+                                id="blah" 
+                                src={dataForm.urlimg} 
+                                alt="imgproduct"
+                                width="120px"
+                                height="180px" />
                         </FormGroup>
                     </Form>
                 </Col>
