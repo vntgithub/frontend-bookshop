@@ -57,7 +57,7 @@ const bookApi = {
   },
   update: async (dataUpdate, id) => {
     const url = process.env.REACT_APP_URL_DATABASE + `book/update/${id}`;
-     await axios.put(url, dataUpdate).then(res => console.log(res));
+     await axios.put(url, dataUpdate).then(res => console.log(res.data));
   }
 };
 

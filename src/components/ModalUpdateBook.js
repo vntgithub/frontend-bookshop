@@ -76,11 +76,21 @@ const ModalUpdateBook = (props) => {
                 Axios.post('https://api.cloudinary.com/v1_1/vntrieu/image/upload', image)
                 .then(res => {
                     const dataUpdate = {...dataForm, urlimg: res.data.secure_url}
-                //userApi.create(userCreate).then(() => props.openModalSignUp());
                     bookApi.update(dataUpdate, props.bookUpdate['_id']);
+                    //update data in page
+                    const newItem = {...dataUpdate, _id: props.bookUpdate['_id']}
+                    let newData = [...props.dataObj.data];
+                    newData[props.dataObj.indexBookUpdate] = {...newItem};
+                    props.dataObj.setData(newData);
                  });
             }else{
-                bookApi.update(dataForm, props.bookUpdate['_id']);
+                bookApi.update(dataForm, props.bookUpdate['_id']).then(() => {
+                    //update data in page
+                    const newItem = {...dataForm, _id: props.bookUpdate['_id']}
+                    let newData = [...props.dataObj.data];
+                    newData[props.dataObj.indexBookUpdate] = {...newItem};
+                    props.dataObj.setData(newData);
+                });
             }
             close();
         }

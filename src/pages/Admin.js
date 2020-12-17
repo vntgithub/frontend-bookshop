@@ -20,6 +20,7 @@ import './style/Admin.css';
 const AdminPage = () => {
     const [data, setData] = useState([]);
     const [bookUpdate, setBookUpdate] = useState({name: ''});
+    const [indexBookUpdate, setIndexBookUpdate] = useState(null);
     const [openModalUpdate, setOpenModalUpdate] = useState(false);
     const [dataType, setDataType] = useState('Books'); //book, user, invoice
     const [currentPage, setCurrentPage] = useState(0);
@@ -38,12 +39,12 @@ const AdminPage = () => {
         await invoiceApi.getPerPage(currentPage, setData);
         await invoiceApi.count(setPage);
     }
-    const openMUD = (item) => {
+    const openMUD = (item, index) => {
         return () => {
             const data = {...item};
             setBookUpdate(data);
+            setIndexBookUpdate(index);
             setOpenModalUpdate(true);
-            console.log();
         }
     }
     useEffect(() => {
@@ -96,7 +97,10 @@ const AdminPage = () => {
     const height = document.getElementById('root').clientHeight < 850;
     return(
         <div className="admin-wrapper">
-            {openModalUpdate && <ModalUpdateBook bookUpdate={bookUpdate} close={setOpenModalUpdate} />}
+            {openModalUpdate && <ModalUpdateBook 
+                                    bookUpdate={bookUpdate} 
+                                    close={setOpenModalUpdate}
+                                    dataObj={{data, setData, indexBookUpdate}} />}
             <Row>
                 <Col md={2} className="dashboard pl-5">
                     <h2>Menu</h2>

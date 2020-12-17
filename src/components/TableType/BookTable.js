@@ -39,7 +39,7 @@ const BookTable = (props) => {
                     <td className="categogy">{item.categogy}</td>
                     <td className="price">{item.price} $</td>
                     <td>
-                        <FontAwesomeIcon onClick={openMUD(item)} icon={faEdit} className="iconInTable" />
+                        <FontAwesomeIcon onClick={openMUD(item, index)} icon={faEdit} className="iconInTable" />
                     </td>
                     <td>
                         <FontAwesomeIcon icon={faTrash} className="iconInTable" />
