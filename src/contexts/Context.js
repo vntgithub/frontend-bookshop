@@ -9,3 +9,5 @@ export const ModalLoginContext = React.createContext(null);
 export const RangePageContext = React.createContext(null);
 
 export const TableDataContext = React.createContext(null);
+
+export const isOpenModalUpdateBook = React.createContext(null);

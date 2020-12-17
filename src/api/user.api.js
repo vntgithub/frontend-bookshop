@@ -51,7 +51,7 @@ const userApi = {
                 n = res.data.length;
                })
                .catch(err => console.log(err));
-    return n;
+    return n/20;
   }
 };
 export default userApi;

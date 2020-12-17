@@ -4,10 +4,11 @@ import { Table } from 'reactstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { TableDataContext } from '../../contexts/Context';
+import { isOpenModalUpdateBook, TableDataContext } from '../../contexts/Context';
 
 const BookTable = (props) => {
     const { data } = useContext(TableDataContext)
+    const openMUD = useContext(isOpenModalUpdateBook);
     return (
         <Table>
             <thead>
@@ -38,7 +39,7 @@ const BookTable = (props) => {
                     <td className="categogy">{item.categogy}</td>
                     <td className="price">{item.price} $</td>
                     <td>
-                        <FontAwesomeIcon icon={faEdit} className="iconInTable" />
+                        <FontAwesomeIcon onClick={openMUD(item)} icon={faEdit} className="iconInTable" />
                     </td>
                     <td>
                         <FontAwesomeIcon icon={faTrash} className="iconInTable" />

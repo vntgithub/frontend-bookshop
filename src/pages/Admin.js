@@ -10,6 +10,8 @@ import { RangePageContext, TableDataContext } from "../contexts/Context";
 
 import AdminTable from '../components/AdminTable';
 import Pagination from '../components/Pagination';
+import ModalUpdateBook from '../components/ModalUpdateBook';
+import { isOpenModalUpdateBook } from '../contexts/Context'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faUser, faFileInvoice } from '@fortawesome/free-solid-svg-icons';
@@ -17,6 +19,8 @@ import './style/Admin.css';
 
 const AdminPage = () => {
     const [data, setData] = useState([]);
+    const [bookUpdate, setBookUpdate] = useState({name: ''});
+    const [openModalUpdate, setOpenModalUpdate] = useState(false);
     const [dataType, setDataType] = useState('Books'); //book, user, invoice
     const [currentPage, setCurrentPage] = useState(0);
     const [page, setPage] = useState(1);
@@ -33,6 +37,14 @@ const AdminPage = () => {
     const loadDataInvoices = async () => {
         await invoiceApi.getPerPage(currentPage, setData);
         await invoiceApi.count(setPage);
+    }
+    const openMUD = (item) => {
+        return () => {
+            const data = {...item};
+            setBookUpdate(data);
+            setOpenModalUpdate(true);
+            console.log();
+        }
     }
     useEffect(() => {
         setCurrentPage(0);
@@ -75,16 +87,16 @@ const AdminPage = () => {
                     userApi.search(str, setData).then(n => setPage(n));
                     break;
                 case 'Invoices':
-                    invoiceApi.search(str, setData).then(() =>{setPage(1); console.log(data)});
+                    invoiceApi.search(str, setData).then(() =>{setPage(1)});
                     break;
                 default: break;
             }
         }
     }
-    const height = document.getElementById('root').clientHeight < 790;
-
+    const height = document.getElementById('root').clientHeight < 850;
     return(
         <div className="admin-wrapper">
+            {openModalUpdate && <ModalUpdateBook bookUpdate={bookUpdate} close={setOpenModalUpdate} />}
             <Row>
                 <Col md={2} className="dashboard pl-5">
                     <h2>Menu</h2>
@@ -121,15 +133,17 @@ const AdminPage = () => {
                         placeholder="Search..."
                         onKeyDown={input}
                         />
+                    <isOpenModalUpdateBook.Provider value={openMUD}>
                     <TableDataContext.Provider value={{data, dataType}}>
                         <AdminTable />
                     </TableDataContext.Provider>
+                    </isOpenModalUpdateBook.Provider>
                     <RangePageContext.Provider value={{ range, setRange }}>
                          <Pagination numpage={page} currentPage={currentPage} setpage={setCurrentPage}/>
                     </RangePageContext.Provider>        
                 </Col>
             </Row>
-            { height && <div style={{height: "300px"}}></div>}
+            
         </div>
         
     );
