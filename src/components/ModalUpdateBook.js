@@ -26,7 +26,7 @@ const ModalUpdateBook = (props) => {
         const file = e.target.files;
         const imageData  = new FormData();
         imageData.append('file', file[0]);
-        imageData.append('upload_preset', 'usersimage');
+        imageData.append('upload_preset', 'booksimage');
         setImage(imageData);
         //Review img
         var reader = new FileReader();
