@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Row, Col, Input } from 'reactstrap';
+import { Row, Col, Input, Button } from 'reactstrap';
 import classNames from 'classnames';
 
 import bookApi from "../api/book.api";
 import userApi from '../api/user.api';
 import invoiceApi from "../api/invoice.api";
 
-import { RangePageContext, TableDataContext, isOpenDelModalContext } from "../contexts/Context";
+import { RangePageContext, TableDataContext, isOpenDelModalContext, isOpenModalAddBookContext } from "../contexts/Context";
 
 import AdminTable from '../components/AdminTable';
 import Pagination from '../components/Pagination';
 import ModalUpdateBook from '../components/ModalUpdateBook';
 import Mess from '../components/Mess';
 import DelModal from '../components/DelModal';
+import ModalAddBook from '../components/ModalAddBook';
 import { isOpenModalUpdateBook } from '../contexts/Context'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -21,6 +22,7 @@ import './style/Admin.css';
 
 const AdminPage = () => {
     const [data, setData] = useState([]);
+    const [isOpenModalAddBook, setIsOpenModalAddBook] = useState(false);
     const [bookUpdate, setBookUpdate] = useState({name: ''});
     const [idDel, setIdDel] = useState('');
     const [indexDel, setIndexDel] = useState(null);
@@ -114,8 +116,15 @@ const AdminPage = () => {
         }
     };
     const closeDelModal = () => setIsOpenDelModal(false);
+    const closeModalAddBook = () => setIsOpenModalAddBook(false);
+    const openModalAddBook = () => setIsOpenModalAddBook(true);
     return(
         <div className="admin-wrapper">
+            {isOpenModalAddBook && <ModalAddBook 
+                                    closeModalAddBook={closeModalAddBook} 
+                                    openMess={openMess} 
+                                    dataObj={{data, setData}}
+                                    />}
             {isOpenDelModal && <DelModal 
                                 openDelModal={openDelModal} 
                                 dataType={dataType} id={idDel} 
@@ -160,12 +169,16 @@ const AdminPage = () => {
                 </Col>
                 <Col md={10} className="pl-1 right-col">
                     <h2>{dataType} manager</h2>
+                    <div className="input-button-admin">
                     <Input  
                         type="text" 
                         className="searchInAdminpage" 
                         placeholder="Search..."
                         onKeyDown={input}
                         />
+                    {dataType==='Books' && <Button onClick={openModalAddBook}>Add book</Button>}
+                    </div>
+                    <isOpenModalAddBookContext.Provider value={openModalAddBook}>
                     <isOpenDelModalContext.Provider value={openDelModal}>
                     <isOpenModalUpdateBook.Provider value={openMUD}>
                     <TableDataContext.Provider value={{data, dataType}}>
@@ -173,6 +186,7 @@ const AdminPage = () => {
                     </TableDataContext.Provider>
                     </isOpenModalUpdateBook.Provider>
                     </isOpenDelModalContext.Provider>
+                    </isOpenModalAddBookContext.Provider>
                     <RangePageContext.Provider value={{ range, setRange }}>
                          <Pagination numpage={page} currentPage={currentPage} setpage={setCurrentPage}/>
                     </RangePageContext.Provider>        

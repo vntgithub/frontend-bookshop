@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import classNames from 'classnames';
 import { Container, FormGroup, Input, Form, Row, Col, Label } from 'reactstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,14 +10,14 @@ import './style/modallogin.css';
 import Axios from 'axios';
 import bookApi from '../api/book.api';
 
-const ModalUpdateBook = (props) => {
+const ModalAddBook = (props) => {
     const [image, setImage] = useState(null);
     const [dataForm, setDataForm] = useState({
-        name: props.bookUpdate.name, 
-        author: props.bookUpdate.author, 
-        categogy: props.bookUpdate.categogy,
-        price: props.bookUpdate.price,
-        urlimg: props.bookUpdate.urlimg
+        name: '', 
+        author: '', 
+        categogy: '',
+        price: '',
+        urlimg: ''
     });
     const setName = (event) => setDataForm({...dataForm, name: event.target.value})
     const setAuthor = (event) => setDataForm({...dataForm, author: event.target.value});
@@ -35,6 +36,7 @@ const ModalUpdateBook = (props) => {
             };
 
         reader.readAsDataURL(file[0]);
+        setDataForm({...dataForm, urlimg: 'ok'});
     }
 
 
@@ -82,37 +84,28 @@ const ModalUpdateBook = (props) => {
             if(image){
                 Axios.post('https://api.cloudinary.com/v1_1/vntrieu/image/upload', image)
                 .then(res => {
-                    const dataUpdate = {...dataForm, urlimg: res.data.secure_url}
-                    bookApi.update(dataUpdate, props.bookUpdate['_id']);
+                    const dataBook = {...dataForm, urlimg: res.data.secure_url}
+                    bookApi.add(dataBook);
                     //update data in page
-                    const newItem = {...dataUpdate, _id: props.bookUpdate['_id']}
                     let newData = [...props.dataObj.data];
-                    newData[props.dataObj.indexBookUpdate] = {...newItem};
+                    newData.push(dataBook)
                     props.dataObj.setData(newData);
                  });
-            }else{
-                bookApi.update(dataForm, props.bookUpdate['_id']).then(() => {
-                    //update data in page
-                    const newItem = {...dataForm, _id: props.bookUpdate['_id']}
-                    let newData = [...props.dataObj.data];
-                    newData[props.dataObj.indexBookUpdate] = {...newItem};
-                    props.dataObj.setData(newData);
-                });
+                 props.closeModalAddBook();
+                props.openMess('Book added.');
             }
-            close();
-            props.openMess('Book updated.');
+            
             
         }
         return;
     }
-    const close = () => props.close(false);
     return(
         <div>
         <div className="overlay"></div>
         <Container className="login-form">
-            <FontAwesomeIcon icon={faTimes} className="exit" onClick={close} />
+            <FontAwesomeIcon icon={faTimes} className="exit" onClick={props.closeModalAddBook} />
             <Row className="justify-content-center m-2">
-                <h1 className="title-information">Update Book</h1>
+                <h1 className="title-information">Add Book</h1>
             </Row>
             <Row className="justify-content-center">
                 <Col sm={10}>
@@ -123,7 +116,6 @@ const ModalUpdateBook = (props) => {
                             onChange={setName} 
                             value={dataForm.name}
                             type="text" 
-                            placeholder="Name"
                             className="mb-3" />
                             <div id="usernameSU" className="require">
                                 <FontAwesomeIcon icon={faExclamationCircle} />
@@ -172,7 +164,7 @@ const ModalUpdateBook = (props) => {
                                 <p>Image is require</p>
                             </div>
                             <img 
-                                className="mt-3"
+                                className={classNames("mt-3", {'class-display-none': dataForm.urlimg === ''})}
                                 id="blah" 
                                 src={dataForm.urlimg} 
                                 alt="imgproduct"
@@ -190,4 +182,4 @@ const ModalUpdateBook = (props) => {
         
     );
 }
-export default ModalUpdateBook;
+export default ModalAddBook;

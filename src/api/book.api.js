@@ -62,6 +62,10 @@ const bookApi = {
   del: async(id) => {
     const url = process.env.REACT_APP_URL_DATABASE + `book/delete/${id}`;
     await axios.delete(url);
+  },
+  add: async (data) => {
+    const url = process.env.REACT_APP_URL_DATABASE + 'book/addbook';
+    await axios.post(url, data);
   }
 };
 

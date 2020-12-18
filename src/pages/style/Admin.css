@@ -72,3 +72,15 @@ td {
 .cart-list li {
   list-style-type: none;
 }
+.input-button-admin {
+  display: flex;
+}
+.input-button-admin button {
+  height: 2.5rem;
+  margin: 0.75rem;
+  margin-left: auto;
+  font-weight: bold;
+}
+.class-display-none {
+  display: none;
+}
