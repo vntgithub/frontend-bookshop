@@ -43,7 +43,7 @@ const BookTable = (props) => {
                         <FontAwesomeIcon onClick={openMUD(item, index)} icon={faEdit} className="iconInTable" />
                     </td>
                     <td>
-                        <FontAwesomeIcon icon={faTrash} className="iconInTable" onClick={openDelModal(item['_id'])} />
+                        <FontAwesomeIcon icon={faTrash} className="iconInTable" onClick={openDelModal(item['_id'], index)} />
                     </td>
                  </tr>)}
             </tbody>

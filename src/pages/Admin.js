@@ -23,6 +23,7 @@ const AdminPage = () => {
     const [data, setData] = useState([]);
     const [bookUpdate, setBookUpdate] = useState({name: ''});
     const [idDel, setIdDel] = useState('');
+    const [indexDel, setIndexDel] = useState(null);
     const [indexBookUpdate, setIndexBookUpdate] = useState(null);
     const [openModalUpdate, setOpenModalUpdate] = useState(false);
     const [dataType, setDataType] = useState('Books'); //book, user, invoice
@@ -105,8 +106,9 @@ const AdminPage = () => {
         setTimeout(() => setIsOpenMess(false),1500);
         console.log("done");
     }
-    const openDelModal = (id) =>{ 
+    const openDelModal = (id, index) =>{ 
         return () => {
+            setIndexDel(index);
             setIdDel(id);
             setIsOpenDelModal(true);
         }
@@ -119,6 +121,7 @@ const AdminPage = () => {
                                 dataType={dataType} id={idDel} 
                                 closeDelModal={closeDelModal}
                                 openMess={openMess}
+                                dataObj={{data, setData, indexDel}}
                                 />}
             {isopenMess && <Mess mess={mess} setIsOpenMess={setIsOpenMess}/>}
             {openModalUpdate && <ModalUpdateBook 

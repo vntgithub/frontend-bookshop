@@ -15,8 +15,11 @@ const DelModal = (props) => {
     const Del = () => {
         if(dataType === 'Books'){
             bookApi.del(props.id).then(() => {
+                let newData = props.dataObj.data.splice(props.dataObj.indexDel, props.dataObj.indexDel+1);
+                props.dataObj.setData(newData);
                 props.closeDelModal();
                 props.openMess('Book deleted.');
+
             });
         }
         if(dataType === 'Users'){
