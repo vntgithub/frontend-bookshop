@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Container, Col, Row, Input } from "reactstrap";
 
-import { CartContext, RangePageContext } from "../contexts/Context";
+import { CartContext, RangePageContext, MessContext } from "../contexts/Context";
 import bookApi from "../api/book.api";
 
 import Banner from "../components/Banner";
 import Categogies from "../components/Categogies";
 import ListProduct from "../components/ListPoduct";
 import Pagination from "../components/Pagination";
+import Mess from "../components/Mess";
 
 
 import "./style/home.css";
@@ -19,6 +20,8 @@ const HomePage = () => {
   const [page, setPage] = useState(0);
   const [filter, setFilter] = useState('All books'); //Current filter
   const [range, setRange] = useState({begin: 0, end: 5});
+  const [mess, setMess] = useState('');
+  const [isOpenMess, setIsOpenMess] = useState(false);
   const { setUserCart } = useContext(CartContext);
   useEffect(() => {
     if(localStorage.getItem('cartItems')){
@@ -73,30 +76,39 @@ const HomePage = () => {
       setFilter(searchString);
     }
   }
+  const openMess =   (m) => {
+    setMess(m);
+    setIsOpenMess(true);
+    setTimeout(setIsOpenMess(false, 2000));
+    console("done");
+  }
   return (
     <div>
+      {isOpenMess && <Mess mess={mess}/>}
         <Banner />
-        <Container className="mt-5">
-        <Row className="offset-md-2">
-            <Col md={6}>
-              <h4 className="current-filter">Filter: {filter}</h4>
-            </Col>
-            <Col md={6} className="search">
-              <Input type="text" 
-              placeholder="Search name..."  
-              onKeyDown={search} />
-            </Col>
-          </Row>
-          <Row>
-            <Col md="2">
-              <Categogies 
-              categogies={categogies}
-              setFilter={setFilter}
-               />
-            </Col>
-            <Col md="10"><ListProduct book={book} /></Col>
-          </Row>
-        </Container>
+        <MessContext.Provider value={openMess}>
+          <Container className="mt-5">
+          <Row className="offset-md-2">
+              <Col md={6}>
+                <h4 className="current-filter">Filter: {filter}</h4>
+              </Col>
+              <Col md={6} className="search">
+                <Input type="text" 
+                placeholder="Search name..."  
+                onKeyDown={search} />
+              </Col>
+            </Row>
+            <Row>
+              <Col md="2">
+                <Categogies 
+                categogies={categogies}
+                setFilter={setFilter}
+                />
+              </Col>
+              <Col md="10"><ListProduct book={book} /></Col>
+            </Row>
+          </Container>
+        </MessContext.Provider>
         <RangePageContext.Provider value={{ range, setRange }}>
           <Pagination numpage={numPage} currentPage={page} setpage={setPage}/>
         </RangePageContext.Provider>

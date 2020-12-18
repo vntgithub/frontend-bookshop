@@ -100,6 +100,8 @@ const ModalUpdateBook = (props) => {
                 });
             }
             close();
+            props.openMess('Book updated.');
+            
         }
         return;
     }
@@ -167,6 +169,7 @@ const ModalUpdateBook = (props) => {
                                 <p>Image is require</p>
                             </div>
                             <img 
+                                className="mt-3"
                                 id="blah" 
                                 src={dataForm.urlimg} 
                                 alt="imgproduct"

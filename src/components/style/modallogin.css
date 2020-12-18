@@ -59,3 +59,19 @@
 .link-signup:hover {
   color: rgb(78, 114, 180);
 }
+.class-del button {
+  color: #fff;
+  width: 100px;
+  height: 40px;
+  border-radius: 1rem;
+  font-weight: bold;
+  background-color: brown;
+  border: none;
+  font-size: 1.2rem;
+}
+.class-del button:hover {
+  background-color: rgb(90, 12, 12);
+}
+.class-del button:active {
+  outline: none;
+}

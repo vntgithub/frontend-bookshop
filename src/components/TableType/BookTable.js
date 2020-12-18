@@ -4,11 +4,12 @@ import { Table } from 'reactstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { isOpenModalUpdateBook, TableDataContext } from '../../contexts/Context';
+import { isOpenDelModalContext, isOpenModalUpdateBook, TableDataContext } from '../../contexts/Context';
 
 const BookTable = (props) => {
     const { data } = useContext(TableDataContext)
     const openMUD = useContext(isOpenModalUpdateBook);
+    const openDelModal = useContext(isOpenDelModalContext);
     return (
         <Table>
             <thead>
@@ -42,7 +43,7 @@ const BookTable = (props) => {
                         <FontAwesomeIcon onClick={openMUD(item, index)} icon={faEdit} className="iconInTable" />
                     </td>
                     <td>
-                        <FontAwesomeIcon icon={faTrash} className="iconInTable" />
+                        <FontAwesomeIcon icon={faTrash} className="iconInTable" onClick={openDelModal(item['_id'])} />
                     </td>
                  </tr>)}
             </tbody>

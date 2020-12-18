@@ -11,3 +11,7 @@ export const RangePageContext = React.createContext(null);
 export const TableDataContext = React.createContext(null);
 
 export const isOpenModalUpdateBook = React.createContext(null);
+
+export const MessContext = React.createContext(null);
+
+export const isOpenDelModalContext = React.createContext(null);
