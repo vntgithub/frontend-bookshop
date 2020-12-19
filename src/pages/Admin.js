@@ -93,13 +93,25 @@ const AdminPage = () => {
             const str = event.target.value;
             switch(dataType){
                 case 'Books': 
+                if(str === ''){
+                    loadDataBooks();
+                }else{
                     bookApi.search(str, 0, setData).then(n => setPage(n));
+                }
                     break;
                 case 'Users':
-                    userApi.search(str, setData).then(n => setPage(n));
+                    if(str === ''){
+                        loadDataUsers();
+                    }else{
+                        userApi.search(str, setData).then(n => setPage(n));
+                    }
                     break;
                 case 'Invoices':
-                    invoiceApi.search(str, setData).then(() =>{setPage(1)});
+                    if(str === ''){
+                        loadDataInvoices();
+                    }else{
+                        invoiceApi.search(str, setData).then(() =>{setPage(1)});
+                    }
                     break;
                 default: break;
             }
