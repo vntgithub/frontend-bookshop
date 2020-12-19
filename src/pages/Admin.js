@@ -6,7 +6,10 @@ import bookApi from "../api/book.api";
 import userApi from '../api/user.api';
 import invoiceApi from "../api/invoice.api";
 
-import { RangePageContext, TableDataContext, isOpenDelModalContext, isOpenModalAddBookContext } from "../contexts/Context";
+import { RangePageContext, 
+    TableDataContext, 
+    isOpenDelModalContext, 
+    isOpenModalAddBookContext } from "../contexts/Context";
 
 import AdminTable from '../components/AdminTable';
 import Pagination from '../components/Pagination';
@@ -118,6 +121,15 @@ const AdminPage = () => {
     const closeDelModal = () => setIsOpenDelModal(false);
     const closeModalAddBook = () => setIsOpenModalAddBook(false);
     const openModalAddBook = () => setIsOpenModalAddBook(true);
+    const filterState = (e) => {
+        console.log(e.target.value);
+        if(e.target.value === 'All'){
+            loadDataInvoices();
+            return;
+        }else{
+            invoiceApi.getAllByState(currentPage, e.target.value, setData );
+        }
+    }
     return(
         <div className="admin-wrapper">
             {isOpenModalAddBook && <ModalAddBook 
@@ -130,7 +142,7 @@ const AdminPage = () => {
                                 dataType={dataType} id={idDel} 
                                 closeDelModal={closeDelModal}
                                 openMess={openMess}
-                                dataObj={{data, setData, indexDel}}
+                                dataObj={{data, indexDel}}
                                 />}
             {isopenMess && <Mess mess={mess} setIsOpenMess={setIsOpenMess}/>}
             {openModalUpdate && <ModalUpdateBook 
@@ -177,11 +189,18 @@ const AdminPage = () => {
                         onKeyDown={input}
                         />
                     {dataType==='Books' && <Button onClick={openModalAddBook}>Add book</Button>}
+                    {dataType==='Invoices' && <Input className="filter-state-admin" type="select" onChange={filterState}>
+                        <option>All</option>
+                        <option>Done</option>
+                        <option>Delivering</option>
+                        <option>Waitting</option>
+                        <option>Cancel</option>
+                    </Input>}
                     </div>
                     <isOpenModalAddBookContext.Provider value={openModalAddBook}>
                     <isOpenDelModalContext.Provider value={openDelModal}>
                     <isOpenModalUpdateBook.Provider value={openMUD}>
-                    <TableDataContext.Provider value={{data, dataType}}>
+                    <TableDataContext.Provider value={{data, dataType, setData}}>
                         <AdminTable />
                     </TableDataContext.Provider>
                     </isOpenModalUpdateBook.Provider>

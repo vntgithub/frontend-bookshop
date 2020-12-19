@@ -4,10 +4,11 @@ import { Table } from 'reactstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { TableDataContext } from '../../contexts/Context';
+import { isOpenDelModalContext, TableDataContext } from '../../contexts/Context';
 
 const UserTable = (props) => {
-    const { data } = useContext(TableDataContext)
+    const { data } = useContext(TableDataContext);
+    const openDelModal = useContext(isOpenDelModalContext);
     return (
         <Table>
             <thead>
@@ -37,7 +38,11 @@ const UserTable = (props) => {
                     <td className="author-intable">{item.phonenumber}</td>
                     <td className="price">{item.username}</td>
                     <td>
-                        <FontAwesomeIcon icon={faTrash} className="iconInTable" />
+                        <FontAwesomeIcon 
+                            icon={faTrash} 
+                            className="iconInTable"
+                            onClick={openDelModal(item['_id'], index)}
+                            />
                     </td>
                  </tr>)}
             </tbody>

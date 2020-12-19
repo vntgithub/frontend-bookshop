@@ -44,6 +44,11 @@ const invoiceApi = {
                  .then(res => {
                      setData([res.data]);
                  });
+  },
+  getAllByState: async(page, state, setData) => {
+      const url = process.env.REACT_APP_URL_DATABASE + `invoice/getallbystate/${page}&${state}`;
+      console.log(url);
+      await axios.get(url).then(res => setData(res.data));
   }
 };
 

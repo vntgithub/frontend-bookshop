@@ -11,19 +11,22 @@ import userApi from '../api/user.api';
 
 const DelModal = (props) => {
     const dataType = props.dataType;
-    console.log(props.id)
     const Del = () => {
         if(dataType === 'Books'){
             bookApi.del(props.id).then(() => {
-                let newData = props.dataObj.data.splice(props.dataObj.indexDel, props.dataObj.indexDel+1);
-                props.dataObj.setData(newData);
+                props.dataObj.data.splice(props.dataObj.indexDel, 1);
                 props.closeDelModal();
                 props.openMess('Book deleted.');
 
             });
         }
         if(dataType === 'Users'){
-            //userApi.Del()
+            userApi.del(props.id).then(() => {
+                props.dataObj.data.splice(props.dataObj.indexDel, 1);
+                props.closeDelModal();
+                props.openMess('Book deleted.');
+
+            });
         }
     }
     return(

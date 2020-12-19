@@ -1,14 +1,43 @@
 import React from 'react';
 import { useContext } from 'react';
-import { Table } from 'reactstrap';
+import { Table, Input } from 'reactstrap';
 import classNames from 'classnames';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { TableDataContext } from '../../contexts/Context';
+import invoiceApi from '../../api/invoice.api';
 
 const InvoiceTable = () => {
-    const { data } = useContext(TableDataContext);
+    const { data, setData } = useContext(TableDataContext);
+    const toNextState = (id, state, index) => {
+        return () => {
+            switch(state){
+                case 'Waitting':
+                    invoiceApi.updateState(id, 'Delivering').then(() => {
+                        let newData = [...data];
+                        newData[index] = {...newData[index], state: 'Delivering'};
+                        setData(newData);
+
+                    });
+                    break;
+                case 'Delivering':
+                    invoiceApi.updateState(id, 'Done').then(() => {
+                        let newData = [...data];
+                        newData[index] = {...newData[index], state: 'Done'};
+                        setData(newData);
+                    });
+                    break;
+                default:
+                    invoiceApi.updateState(id, 'Cancel').then(() => {
+                        let newData = [...data];
+                        newData[index] = {...newData[index], state: 'Cancel'};
+                        setData(newData);
+                    });
+                    break;
+            }
+        }
+    }
     return (
         <Table>
             <thead>
@@ -21,7 +50,7 @@ const InvoiceTable = () => {
                     <th>Cart</th>
                     <th>Total amount</th>
                     <th>State</th>
-                    <th>Delete</th>
+                    <th>Next state</th>
                 </tr>
             </thead>
             <tbody className="justify-content-center text-align-center">
@@ -54,7 +83,11 @@ const InvoiceTable = () => {
                         {item.state}
                     </td>
                     <td>
-                        <FontAwesomeIcon className="ml-3 iconInTable" icon={faTrash} />
+                        <FontAwesomeIcon 
+                            className="icon-nextState" 
+                            icon={faAngleRight} 
+                            onClick={toNextState(item['_id'], item.state, index)}
+                            />
                     </td>
                  </tr>)}
             </tbody>

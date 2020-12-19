@@ -84,3 +84,17 @@ td {
 .class-display-none {
   display: none;
 }
+.icon-nextState {
+  font-size: 1.5rem;
+  font-weight: bold;
+  opacity: 0.6;
+  cursor: pointer;
+}
+.icon-nextState:hover {
+  opacity: 1;
+}
+.filter-state-admin {
+  width: 200px !important;
+  margin: 0.75rem !important;
+  margin-left: auto !important;
+}

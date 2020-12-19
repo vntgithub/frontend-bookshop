@@ -43,9 +43,9 @@ const ModalSigup = (props) => {
             document.getElementById('usernameSU').children[1].innerHTML = "Username is require";
             document.getElementById('usernameSU').style.display = "flex";
         }else{
-            userApi.checkExist(dataForm.username).then(res => {
+             userApi.checkExist(dataForm.username).then(res => {
+                check &= false;
                 if(res.data.checkUserExist){
-                    check &= false;
                     document.getElementById('usernameSU').children[1].innerHTML = "Account already exists";
                     document.getElementById('usernameSU').style.display = "flex";
                 }else{
@@ -105,6 +105,7 @@ const ModalSigup = (props) => {
         }else{
             document.getElementById('image').style.display = "none";
         }
+        console.log(check);
         if(check) {
             Axios.post('https://api.cloudinary.com/v1_1/vntrieu/image/upload', image)
             .then(res => {

@@ -52,6 +52,10 @@ const userApi = {
                })
                .catch(err => console.log(err));
     return n/20;
+  },
+  del: async(id) => {
+    const url = process.env.REACT_APP_URL_DATABASE + `user/delete/${id}`;
+    await axios.delete(url);
   }
 };
 export default userApi;
