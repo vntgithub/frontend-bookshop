@@ -191,7 +191,7 @@ const AdminPage = () => {
                         </li>
                     </ul>
                 </Col>
-                <Col md={10} className="pl-1 right-col">
+                <Col md={{size: 10, offset: 2}} className="pl-5 right-col">
                     <h2>{dataType} manager</h2>
                     <div className="input-button-admin">
                     <Input  

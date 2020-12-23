@@ -1,0 +1,24 @@
+.title-login-admin {
+  font-weight: bold;
+  text-align: center;
+  color: #4285f4;
+}
+
+.input-admin-login {
+  width: 300px;
+}
+.button-login-admin {
+  background-color: #4285f4 !important;
+  border-color: #427aad !important;
+  font-weight: bold !important;
+}
+.button-login-admin:hover {
+  background-color: #386fc7 !important;
+}
+.wrap {
+  background-color: rgb(206, 204, 204) !important;
+}
+.wrapper-content-loginadmin {
+  background-color: #fff !important;
+  border-radius: 1rem;
+}

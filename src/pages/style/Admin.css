@@ -3,6 +3,7 @@
 }
 .dashboard {
   border-right: 1px solid lightseagreen;
+  position: fixed !important;
 }
 .dashboard li {
   list-style-type: none;

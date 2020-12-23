@@ -99,13 +99,13 @@ const HomePage = () => {
               </Col>
             </Row>
             <Row>
-              <Col md="2">
+              <Col md="2" >
                 <Categogies 
                 categogies={categogies}
                 setFilter={setFilter}
                 />
               </Col>
-              <Col md="10"><ListProduct book={book} /></Col>
+              <Col md={10}><ListProduct book={book} /></Col>
             </Row>
           </Container>
         </MessContext.Provider>

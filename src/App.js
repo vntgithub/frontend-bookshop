@@ -7,6 +7,7 @@ import HomePage from "./pages/Home";
 import CartPage from "./pages/Cart";
 import MyInvoice from "./pages/MyInvoice";
 import AdminPage from "./pages/Admin";
+import LoginAdmin from "./pages/LoginAdmin";
 
 import ModalLogin from './components/ModalLogin';
 import ModalSignUp from './components/ModalSignup';
@@ -15,6 +16,7 @@ import Footer from "./components/Footer";
 import ToTop from './components/ToTop';
 
 import userApi from "./api/user.api";
+
 
 function App() {
   const [userCart, setUserCart] = useState([]);
@@ -42,19 +44,20 @@ function App() {
       <CartContext.Provider value={{ userCart, setUserCart }}>
         <UserContext.Provider value={{ user, setUser }}>
           <Router>
-            <Topmenu openModalLogin={openModalLogin} setUserState={setUser}/>
+            {document.URL.substr(document.URL.lastIndexOf('/')) !== '/loginadmin' && <Topmenu openModalLogin={openModalLogin} setUserState={setUser}/>}
             {login&&<ModalLogin openModalLogin={openModalLogin} openModalSignUp={openModalSignUp} />}
             {signup && <ModalSignUp openModalSignUp={openModalSignUp} />}
             <Switch>
               <Route path="/" exact component={HomePage} />
               <Route path="/myinvoice" exact component={MyInvoice} />
               <Route path="/admin" exact component={AdminPage} />
+              <Route path="/loginadmin" exact component={LoginAdmin} />
               <ModalLoginContext.Provider value={{ login, setLogin }}>
                 <Route path="/cart" component={CartPage} />
               </ModalLoginContext.Provider>
             </Switch>
-            <Footer />
-            <ToTop />
+              {document.URL.substr(document.URL.lastIndexOf('/')) !== '/loginadmin' && <Footer />}
+            {document.URL.substr(document.URL.lastIndexOf('/')) !== '/loginadmin' && <ToTop />}
           </Router>
         </UserContext.Provider>
       </CartContext.Provider>
