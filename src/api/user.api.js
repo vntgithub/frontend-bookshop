@@ -2,7 +2,7 @@ import axios from "axios";
 
 const userApi = {
   login: async (user, setUser) => {
-    const url = "http://localhost:3001/api/user/login";
+    const url = process.env.REACT_APP_URL_DATABASE +  "user/login";
     let check = false;
     await axios
       .post(url, user)
