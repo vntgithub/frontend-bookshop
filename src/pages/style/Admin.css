@@ -99,3 +99,12 @@ td {
   margin: 0.75rem !important;
   margin-left: auto !important;
 }
+
+.addbook {
+  background-color: rgb(73, 120, 206) !important;
+  border: cornflowerblue !important;
+}
+.addbook:hover {
+  background-color: rgb(45, 89, 170) !important;
+  border: cornflowerblue !important;
+}

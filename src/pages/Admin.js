@@ -200,7 +200,7 @@ const AdminPage = () => {
                         placeholder="Search..."
                         onKeyDown={input}
                         />
-                    {dataType==='Books' && <Button onClick={openModalAddBook}>Add book</Button>}
+                    {dataType==='Books' && <Button className="addbook" onClick={openModalAddBook}>Add book</Button>}
                     {dataType==='Invoices' && <Input className="filter-state-admin" type="select" onChange={filterState}>
                         <option>All</option>
                         <option>Done</option>
