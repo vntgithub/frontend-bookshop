@@ -1,8 +1,7 @@
-import React, { useState, useContext} from 'react';
+import React, { useState } from 'react';
 import { Container, Form, Input, FormGroup, Button, Row, Col } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationCircle, faTimes
-} from '@fortawesome/free-solid-svg-icons';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import imgSVG from "../img/login.svg";
 import "./style/LoginAdmin.css";
 const LoginAdmin = (props) => {
@@ -54,12 +53,12 @@ const LoginAdmin = (props) => {
                                 <p>Username is require</p>
                             </div>                           
                             <Input 
-                                className="input-admin-login"
+                                className="input-admin-login mt-3"
                                 onChange={setPassword} 
                                 name="password" 
                                 type="password" 
                                 placeholder="Password"
-                                className="mt-3" />
+                                />
                             <div id="password" className="require">
                                 <FontAwesomeIcon icon={faExclamationCircle} className="mr-1 mt-1" />
                                 <p>Password is require</p>

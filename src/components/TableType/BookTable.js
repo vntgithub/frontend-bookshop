@@ -4,13 +4,12 @@ import { Table } from 'reactstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { isOpenDelModalContext, isOpenModalAddBookContext, isOpenModalUpdateBook, TableDataContext } from '../../contexts/Context';
+import { isOpenDelModalContext, isOpenModalUpdateBook, TableDataContext } from '../../contexts/Context';
 
 const BookTable = (props) => {
     const { data } = useContext(TableDataContext)
     const openMUD = useContext(isOpenModalUpdateBook);
     const openDelModal = useContext(isOpenDelModalContext);
-    const openModalAddBook = useContext(isOpenModalAddBookContext);
     return (
         <Table>
             <thead>

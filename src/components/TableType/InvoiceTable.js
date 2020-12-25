@@ -1,6 +1,6 @@
 import React from 'react';
 import { useContext } from 'react';
-import { Table, Input } from 'reactstrap';
+import { Table } from 'reactstrap';
 import classNames from 'classnames';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { Container, FormGroup, Input, Label, Form, Row, Col } from 'reactstrap';
 
 import invoiceApi from '../api/invoice.api';
-import { CartContext, UserContext } from '../contexts/Context';
+import { CartContext, MessContext, UserContext } from '../contexts/Context';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle, faTimes
@@ -10,6 +10,8 @@ import { faExclamationCircle, faTimes
 import './style/invoiceform.css';
 
 const InvoiceForm = (props) => {
+    const openMess = useContext(MessContext);
+    console.log(openMess);
     const { userCart, setUserCart } = useContext(CartContext);
     const { user } = useContext(UserContext);
     const [data, setData] = useState({
@@ -64,6 +66,7 @@ const InvoiceForm = (props) => {
                 invoiceApi.addInvoice(data);
                 setUserCart([]);
                 localStorage.setItem('cartItems', JSON.stringify([]));
+                openMess("Done.");
                 props.toggle();
             }
             

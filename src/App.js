@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { CartContext, UserContext, ModalLoginContext } from "./contexts/Context";
+import { CartContext, UserContext, ModalLoginContext, MessContext } from "./contexts/Context";
 
 import HomePage from "./pages/Home";
 import CartPage from "./pages/Cart";
@@ -14,6 +14,7 @@ import ModalSignUp from './components/ModalSignup';
 import Topmenu from "./components/TopMeu";
 import Footer from "./components/Footer";
 import ToTop from './components/ToTop';
+import Mess from './components/Mess';
 
 import userApi from "./api/user.api";
 
@@ -23,6 +24,8 @@ function App() {
   const [user, setUser] = useState({});
   const [login, setLogin] = useState(false);
   const [signup, setSignup] = useState(false);
+  const [mess, setMess] = useState('');
+  const [isopenMess, setIsOpenMess] = useState(false);
   useEffect(() => {
    const componentDidMount = async () => {
     if(document.cookie !== ''){
@@ -39,8 +42,16 @@ function App() {
   }, []);
   const openModalLogin = () => setLogin(!login);
   const openModalSignUp = () => setSignup(!signup);
+  const openMess = (m) => {
+    setMess(m);
+    setIsOpenMess(true)
+    setTimeout(() => setIsOpenMess(false),1500);
+    console.log("done");
+}
   return (
     <div id="App">
+      {isopenMess && <Mess mess={mess} setIsOpenMess={setIsOpenMess}/>}
+      <MessContext.Provider value={openMess}>
       <CartContext.Provider value={{ userCart, setUserCart }}>
         <UserContext.Provider value={{ user, setUser }}>
           <Router>
@@ -61,6 +72,7 @@ function App() {
           </Router>
         </UserContext.Provider>
       </CartContext.Provider>
+      </MessContext.Provider>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Row, Col, Input, Button } from 'reactstrap';
 import classNames from 'classnames';
 
@@ -9,12 +9,12 @@ import invoiceApi from "../api/invoice.api";
 import { RangePageContext, 
     TableDataContext, 
     isOpenDelModalContext, 
-    isOpenModalAddBookContext } from "../contexts/Context";
+    isOpenModalAddBookContext, 
+    MessContext} from "../contexts/Context";
 
 import AdminTable from '../components/AdminTable';
 import Pagination from '../components/Pagination';
 import ModalUpdateBook from '../components/ModalUpdateBook';
-import Mess from '../components/Mess';
 import DelModal from '../components/DelModal';
 import ModalAddBook from '../components/ModalAddBook';
 import { isOpenModalUpdateBook } from '../contexts/Context'
@@ -24,6 +24,7 @@ import { faBook, faUser, faFileInvoice } from '@fortawesome/free-solid-svg-icons
 import './style/Admin.css';
 
 const AdminPage = () => {
+    const openMess = useContext(MessContext);
     const [data, setData] = useState([]);
     const [isOpenModalAddBook, setIsOpenModalAddBook] = useState(false);
     const [bookUpdate, setBookUpdate] = useState({name: ''});
@@ -35,8 +36,7 @@ const AdminPage = () => {
     const [currentPage, setCurrentPage] = useState(0);
     const [page, setPage] = useState(1);
     const [range, setRange] = useState({begin: 0, end: 5});
-    const [mess, setMess] = useState('');
-    const [isopenMess, setIsOpenMess] = useState(false);
+    
     const [isOpenDelModal, setIsOpenDelModal] = useState(false);
     const loadDataBooks = async () => {
         await bookApi.getBooks(currentPage, setData);
@@ -117,12 +117,7 @@ const AdminPage = () => {
             }
         }
     }
-    const openMess = (m) => {
-        setMess(m);
-        setIsOpenMess(true)
-        setTimeout(() => setIsOpenMess(false),1500);
-        console.log("done");
-    }
+    
     const openDelModal = (id, index) =>{ 
         return () => {
             setIndexDel(index);
@@ -156,7 +151,7 @@ const AdminPage = () => {
                                 openMess={openMess}
                                 dataObj={{data, indexDel}}
                                 />}
-            {isopenMess && <Mess mess={mess} setIsOpenMess={setIsOpenMess}/>}
+            
             {openModalUpdate && <ModalUpdateBook 
                                     bookUpdate={bookUpdate} 
                                     close={setOpenModalUpdate}

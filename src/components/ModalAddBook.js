@@ -42,7 +42,6 @@ const ModalAddBook = (props) => {
 
     const submit = () => {
         let check = true;
-        const RegExp = /^0[1-9]{9,10}$/;
         if(dataForm.name === ''){
             check &= false;
             document.getElementById('usernameSU').children[1].innerHTML = "Name is require";
@@ -157,7 +156,7 @@ const ModalAddBook = (props) => {
                             type="file" 
                             placeholder="Choose Image"
                             className="mt-3"
-                            accept="image/*" className="mt-3"
+                            accept="image/*"
                             onChange={getImage} />
                             <div id="image" className="require">
                                 <FontAwesomeIcon icon={faExclamationCircle} />

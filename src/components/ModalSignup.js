@@ -187,7 +187,7 @@ const ModalSigup = (props) => {
                             type="file" 
                             placeholder="Choose Image"
                             className="mt-3"
-                            accept="image/*" className="mt-3"
+                            accept="image/*"
                             onChange={getImage} />
                             <div id="image" className="require">
                                 <FontAwesomeIcon icon={faExclamationCircle} />
