@@ -43,9 +43,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-"engines": {
-   .... /*other settings*/
-    "npm": "2.1.x" /* latest version*/
- 
+  } 
 }
