@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-import { CartContext, UserContext, ModalLoginContext, MessContext } from "./contexts/Context";
+import { CartContext, 
+          UserContext, 
+          ModalLoginContext, 
+          MessContext, AdminContext } from "./contexts/Context";
 
 import HomePage from "./pages/Home";
 import CartPage from "./pages/Cart";
@@ -20,6 +23,7 @@ import userApi from "./api/user.api";
 
 
 function App() {
+  const [admin, setAdmin] = useState({});
   const [userCart, setUserCart] = useState([]);
   const [user, setUser] = useState({});
   const [login, setLogin] = useState(false);
@@ -51,6 +55,7 @@ function App() {
   return (
     <div id="App">
       {isopenMess && <Mess mess={mess} setIsOpenMess={setIsOpenMess}/>}
+      <AdminContext.Provider value={{admin, setAdmin}}>
       <MessContext.Provider value={openMess}>
       <CartContext.Provider value={{ userCart, setUserCart }}>
         <UserContext.Provider value={{ user, setUser }}>
@@ -73,6 +78,8 @@ function App() {
         </UserContext.Provider>
       </CartContext.Provider>
       </MessContext.Provider>
+      </AdminContext.Provider>
+
     </div>
   );
 }

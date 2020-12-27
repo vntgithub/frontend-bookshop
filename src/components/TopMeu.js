@@ -14,14 +14,22 @@ import {
 } from "reactstrap";
 
 import "./style/TopMenu.css";
-import { CartContext, UserContext } from '../contexts/Context';
+import { CartContext, AdminContext, UserContext } from '../contexts/Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faBell } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 const TopMenu = (props) => {
-  const { user } = useContext(UserContext);
+  const currentPath = document.URL.substr(document.URL.lastIndexOf('/') + 1);
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useContext(UserContext);
+  const { admin, setAdmin } = useContext(AdminContext);
+  let urlimg = '';
+  if(currentPath === 'Admin'){
+    urlimg = admin.urlimg;
+  }else{
+    urlimg = user.urlimg;
+  }
   const { userCart } = useContext(CartContext);
   const toggle = () => setIsOpen(!isOpen);
   let count = 0;
@@ -29,8 +37,14 @@ const TopMenu = (props) => {
     count += userCart[i].count;
   };
   const logout = () => {
-    document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    props.setUserState(null);
+    if(currentPath === 'Admin'){
+      document.cookie = "idadmin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/Admin;";
+      setAdmin(null);
+      window.location.replace('/loginadmin');
+    }else{
+      document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      props.setUserState(null);
+    }
   }
   const myInfo = () => {
 
@@ -47,7 +61,7 @@ const TopMenu = (props) => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="ml-auto" navbar>
-           {window.location.href.indexOf('Admin') === -1 ?
+           {window.location.href.indexOf('Admin') === -1 &&
             <NavItem>
               <div className="cart">
                 <Link className="link" to="/cart">
@@ -55,13 +69,8 @@ const TopMenu = (props) => {
                 </Link>
                   <span className="numberItems">{count}</span>
               </div>
-            </NavItem> :
-            <NavItem>
-              <div className="cart">
-                  <FontAwesomeIcon icon={faBell} size="2x" style={{color: "#999"}} />
-                  <span className="numberItems">{count}</span>
-              </div>
-            </NavItem>
+            </NavItem> 
+            
           }
             {(document.cookie === '') && 
             <NavItem >
@@ -74,7 +83,7 @@ const TopMenu = (props) => {
               <DropdownToggle nav caret>
               <img 
               style={{width: "2.5rem", height: "2.5rem"}} 
-              src={user.urlimg} alt="userimg"
+              src={urlimg} alt="userimg"
               className="userAvt" />
               </DropdownToggle>
               <DropdownMenu right>

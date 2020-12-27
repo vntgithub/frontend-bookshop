@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Container, FormGroup, Input, Form, Row, Col } from 'reactstrap';
 
 import userApi from '../api/user.api';
@@ -105,13 +105,14 @@ const ModalSigup = (props) => {
         }else{
             document.getElementById('image').style.display = "none";
         }
-        console.log(check);
         if(check) {
             Axios.post('https://api.cloudinary.com/v1_1/vntrieu/image/upload', image)
             .then(res => {
                 const userCreate = {...dataForm, urlimg: res.data.secure_url}
                 userApi.create(userCreate).then(() => props.openModalSignUp());
+                
             });
+            
         }
         return;
     }

@@ -10,7 +10,8 @@ import { RangePageContext,
     TableDataContext, 
     isOpenDelModalContext, 
     isOpenModalAddBookContext, 
-    MessContext} from "../contexts/Context";
+    MessContext,
+    AdminContext} from "../contexts/Context";
 
 import AdminTable from '../components/AdminTable';
 import Pagination from '../components/Pagination';
@@ -22,8 +23,16 @@ import { isOpenModalUpdateBook } from '../contexts/Context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faUser, faFileInvoice } from '@fortawesome/free-solid-svg-icons';
 import './style/Admin.css';
+import adminApi from '../api/admin.api';
 
 const AdminPage = () => {
+    const arrCookie = document.cookie.split(';');
+    let check = arrCookie.find(element => element.indexOf('idadmin') !== -1 );
+    const { setAdmin } = useContext(AdminContext);
+    if(!check){
+        window.location.replace('/loginadmin');
+    }
+
     const openMess = useContext(MessContext);
     const [data, setData] = useState([]);
     const [isOpenModalAddBook, setIsOpenModalAddBook] = useState(false);
@@ -58,6 +67,13 @@ const AdminPage = () => {
             setOpenModalUpdate(true);
         }
     }
+    useEffect(() => {
+        const cookie = check.substr(8);
+        const getAdminbyCookie = async () => {
+            await adminApi.getByCookie(cookie, setAdmin);
+        }
+        getAdminbyCookie();
+    }, [])
     useEffect(() => {
         setCurrentPage(0);
         setRange({begin: 0, end: 5});

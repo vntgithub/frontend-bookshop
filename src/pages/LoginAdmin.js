@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Container, Form, Input, FormGroup, Button, Row, Col } from 'reactstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import imgSVG from "../img/login.svg";
+import  adminApi from "../api/admin.api";
 import "./style/LoginAdmin.css";
+import { AdminContext } from '../contexts/Context';
 const LoginAdmin = (props) => {
-    //const { setUser } = useContext(UserContext);
+    const { setAdmin } = useContext(AdminContext);
     const [data, setData] = useState({
         username: '', 
         password: '', 
@@ -29,6 +31,14 @@ const LoginAdmin = (props) => {
                 document.getElementById('password').style.display = "none";
         }
         if(check) {
+            adminApi.login(data, setAdmin).then(c => {
+                if(c){
+                    document.getElementById('check-exist').style.display = "none";
+                    window.location.replace("/Admin");
+                }else{
+                    document.getElementById('check-exist').style.display = "flex";
+                }
+            })
             
             
         }
@@ -64,7 +74,7 @@ const LoginAdmin = (props) => {
                                 <p>Password is require</p>
                             </div>
                             <div id="check-exist" className="require">
-                                <FontAwesomeIcon icon={faExclamationCircle} />
+                                <FontAwesomeIcon icon={faExclamationCircle} className="mr-1 mt-1" />
                                 <p>Username or password is wrong</p>
                             </div>
                             <Button 
