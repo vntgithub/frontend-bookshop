@@ -1,26 +1,30 @@
 import React, { useState, useContext } from 'react';
+import Axios from 'axios';
 import { Container, FormGroup, Input, Label, Form, Row, Col } from 'reactstrap';
 
-import invoiceApi from '../api/invoice.api';
-import { CartContext, MessContext, UserContext } from '../contexts/Context';
+import userApi from '../api/user.api';
+import { AdminContext, isOpenUpdateInfContext, MessContext, UserContext } from '../contexts/Context';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faExclamationCircle, faTimes
+import { faExclamationCircle, faTimes, faEdit
 } from '@fortawesome/free-solid-svg-icons';
 import './style/invoiceform.css';
 
 const UpdateInfForm = (props) => {
+    const currentPath = document.URL.substr(document.URL.lastIndexOf('/') + 1);
+    const {closeUpdateInf} = useContext(isOpenUpdateInfContext);
     const openMess = useContext(MessContext);
     const [image, setImage] = useState(null);
-    const { user } = useContext(UserContext);
-    const [data, setData] = useState({
-        userId: document.cookie.substr(3),
-        name: user.name, 
-        phonenumber: user.phonenumber, 
-        address: user.address,
-        newPass: '',
-        confirmNewPass: ''
-    });
+    const { user, setUser } = useContext(UserContext);
+    const { admin } = useContext(AdminContext);
+    let dataob = {};
+    if(currentPath !== 'Admin'){
+        dataob = {...user};
+    }else{
+        dataob = {...admin};
+    }
+    const [data, setData] = useState({...dataob});
+    const [isOpenChanePass, setIsOpenChangePass] = useState(false);
     const setName = (event) => setData({...data, name: event.target.value})
     const setPhone = (event) => setData({...data, phonenumber: event.target.value});
     const setAddress = (event) => setData({...data, address: event.target.value});
@@ -48,6 +52,22 @@ const UpdateInfForm = (props) => {
                 document.getElementById('phone').style.display = "flex";
             }
         }
+        if(isOpenChanePass){
+            console.log("vo if")
+            if(data.newPass === ''){
+                document.getElementById('np').style.display = 'flex';
+                console.log("vo if set display")
+                check &= false;
+            }else{
+                document.getElementById('np').style.display = 'none';
+            }
+            if(data.confirmNewPass === ''){
+                document.getElementById('cnp').style.display = 'flex';
+                check &= false;
+            }else{
+                document.getElementById('cnp').style.display = 'none';
+            }
+        }
         if(data.address === ''){
             check &= false;
             document.getElementById('address').style.display = "flex";
@@ -60,8 +80,20 @@ const UpdateInfForm = (props) => {
         }else{
             document.getElementById('image').style.display = "none";
         }
-        if(check)
-            
+        if(check){
+            if(image){
+                Axios.post('https://api.cloudinary.com/v1_1/vntrieu/image/upload', image)
+                .then(res => {
+                    const dataUpdate = {...data, urlimg: res.data.secure_url};
+                    setUser(dataUpdate);
+                    userApi.update(dataUpdate);
+                 });
+            }else{
+                setUser(data);
+                userApi.update(data);
+            }
+            closeUpdateInf()
+            openMess("Updated!");
         }
         return;
     }
@@ -74,21 +106,23 @@ const UpdateInfForm = (props) => {
         //Review img
         var reader = new FileReader();
         reader.onload = function (e) {
-                document.getElementById("blah").src = e.target.result;
+                document.getElementById("avtifu").src = e.target.result;
             };
 
         reader.readAsDataURL(file[0]);
     }
+    const openChangePass = () => setIsOpenChangePass(!isOpenChanePass);
+    
     return(
-        <div>
+        <div >
         <div className="overlay"></div>
-        <Container className="invoice-form">
-            <FontAwesomeIcon icon={faTimes} className="exit" onClick={props.toggle} />
+        <Container className="invoice-form updateinf">
+            <FontAwesomeIcon icon={faTimes} className="exit" onClick={closeUpdateInf} />
             <Row className="justify-content-center m-2">
-                <h1 className="title-information">Shipment details</h1>
+                <h1 className="title-information">My information</h1>
             </Row>
             <Row className="justify-content-center">
-                <Col sm={6}>
+                <Col sm={8}>
                     <Form onSubmit={submit}>
                         <FormGroup>
                             <Label>Name</Label>
@@ -110,19 +144,26 @@ const UpdateInfForm = (props) => {
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Address is require</p>
                             </div>
-                            <Label>New password</Label>
-                            <Input onChange={setAddress} name="np" type="password"  />
-                            <div id="npass" className="require">
-                                <FontAwesomeIcon icon={faExclamationCircle} />
-                                <p>Address is require</p>
+                            <div className="mt-2 changepass">
+                                <Label>Change password </Label>
+                                <FontAwesomeIcon icon={faEdit} className="ml-2" onClick={openChangePass} />
                             </div>
-                            <Label>Confirm new password</Label>
-                            <Input onChange={setConfirmNewPass} name="np" type="password"  />
-                            <div id="cnpass" className="require">
-                                <FontAwesomeIcon icon={faExclamationCircle} />
-                                <p>Address is require</p>
+                            {isOpenChanePass && 
+                                <div>
+                                <Label>New password</Label>
+                                <Input onChange={setNewPass} name="npass" type="pasword" />
+                                <div id="np" className="require">
+                                    <FontAwesomeIcon icon={faExclamationCircle} />
+                                    <p>New password is require</p>
+                                </div>
+                                <Label>Confirm password</Label>
+                                <Input onChange={setConfirmNewPass} name="cnpass" type="password"  />
+                                <div id="cnp" className="require">
+                                    <FontAwesomeIcon icon={faExclamationCircle} />
+                                    <p>Confirm password is require</p>
+                                </div>
                             </div>
-
+                            }
                             <Input 
                             id="imagedata"
                             name="image" 
@@ -137,11 +178,11 @@ const UpdateInfForm = (props) => {
                             </div>
                             <img 
                                 className="mt-3"
-                                id="blah" 
+                                id="avtifu" 
                                 src={data.urlimg} 
                                 alt="imgproduct"
-                                width="120px"
-                                height="180px" />
+                                width="30%"
+                                height="30%" />
                         </FormGroup>
                     </Form>
                 </Col>

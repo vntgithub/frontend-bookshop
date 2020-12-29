@@ -67,3 +67,11 @@
   font-size: 2.5rem;
   transition: 1ms;
 }
+.updateinf {
+  width: 700px !important;
+  left: 650px !important;
+  top: 120px !important;
+}
+.changepass {
+  cursor: pointer;
+}

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { CartContext, 
           UserContext, 
           ModalLoginContext, 
-          MessContext, AdminContext } from "./contexts/Context";
+          MessContext, AdminContext, isOpenUpdateInfContext } from "./contexts/Context";
 
 import HomePage from "./pages/Home";
 import CartPage from "./pages/Cart";
@@ -18,6 +18,7 @@ import Topmenu from "./components/TopMeu";
 import Footer from "./components/Footer";
 import ToTop from './components/ToTop';
 import Mess from './components/Mess';
+import UpdateInfForm from "./components/UpdateInfForm";
 
 import userApi from "./api/user.api";
 
@@ -30,6 +31,7 @@ function App() {
   const [signup, setSignup] = useState(false);
   const [mess, setMess] = useState('');
   const [isopenMess, setIsOpenMess] = useState(false);
+  const [isOpenUpdateInf, setIsOpenUpdateInf] = useState(false);
   useEffect(() => {
    const componentDidMount = async () => {
 
@@ -57,15 +59,20 @@ function App() {
     setTimeout(() => setIsOpenMess(false),1500);
     console.log("done");
 }
+  const openUpdateInf = () => setIsOpenUpdateInf(true);
+  const closeUpdateInf = () => setIsOpenUpdateInf(false);
   return (
     <div id="App">
+      
       {isopenMess && <Mess mess={mess} setIsOpenMess={setIsOpenMess}/>}
+      <isOpenUpdateInfContext.Provider value={{openUpdateInf: openUpdateInf, closeUpdateInf: closeUpdateInf}}>
       <AdminContext.Provider value={{admin, setAdmin}}>
       <MessContext.Provider value={openMess}>
       <CartContext.Provider value={{ userCart, setUserCart }}>
         <UserContext.Provider value={{ user, setUser }}>
+        {isOpenUpdateInf && <UpdateInfForm />}
           <Router>
-            {document.URL.substr(document.URL.lastIndexOf('/')) !== '/loginadmin' && <Topmenu openModalLogin={openModalLogin} setUserState={setUser}/>}
+            {(document.URL.indexOf('loginadmin') === -1) && <Topmenu openModalLogin={openModalLogin} setUserState={setUser}/>}
             {login&&<ModalLogin openModalLogin={openModalLogin} openModalSignUp={openModalSignUp} />}
             {signup && <ModalSignUp openModalSignUp={openModalSignUp} />}
             <Switch>
@@ -84,7 +91,7 @@ function App() {
       </CartContext.Provider>
       </MessContext.Provider>
       </AdminContext.Provider>
-
+      </isOpenUpdateInfContext.Provider>
     </div>
   );
 }

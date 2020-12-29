@@ -75,3 +75,6 @@
 .class-del button:active {
   outline: none;
 }
+#rv {
+  display: none;
+}

@@ -19,3 +19,5 @@ export const isOpenDelModalContext = React.createContext(null);
 export const isOpenModalAddBookContext = React.createContext(null);
 
 export const AdminContext = React.createContext(null);
+
+export const isOpenUpdateInfContext = React.createContext(null);

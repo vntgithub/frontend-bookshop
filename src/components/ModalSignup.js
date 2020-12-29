@@ -32,6 +32,14 @@ const ModalSigup = (props) => {
         imageData.append('file', file[0]);
         imageData.append('upload_preset', 'usersimage');
         setImage(imageData);
+        //Review
+        var reader = new FileReader();
+        reader.onload = function (e) {
+                document.getElementById("rv").src = e.target.result;
+                document.getElementById("rv").style.display = "flex";
+            };
+
+        reader.readAsDataURL(file[0]);
     }
 
 
@@ -194,6 +202,13 @@ const ModalSigup = (props) => {
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Image is require</p>
                             </div>
+                            <img 
+                                className="mt-3"
+                                id="rv" 
+                                src={dataForm.urlimg} 
+                                alt="imgproduct"
+                                width="120px"
+                                height="180px" />
                         </FormGroup>
                     </Form>
                 </Col>

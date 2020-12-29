@@ -14,13 +14,14 @@ import {
 } from "reactstrap";
 
 import "./style/TopMenu.css";
-import { CartContext, AdminContext, UserContext } from '../contexts/Context';
+import { CartContext, AdminContext, UserContext, isOpenUpdateInfContext } from '../contexts/Context';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 const TopMenu = (props) => {
   const currentPath = document.URL.substr(document.URL.lastIndexOf('/') + 1);
+  const {openUpdateInf} = useContext(isOpenUpdateInfContext);
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useContext(UserContext);
   const { admin, setAdmin } = useContext(AdminContext);
@@ -46,9 +47,7 @@ const TopMenu = (props) => {
       props.setUserState({});
     }
   }
-  const myInfo = () => {
-
-  }
+  
   const item1 = <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav caret>
                       <img 
@@ -57,14 +56,14 @@ const TopMenu = (props) => {
                       className="userAvt" />
                       </DropdownToggle>
                       <DropdownMenu right>
-                    <DropdownItem onClick={myInfo}>
+                    <DropdownItem onClick={openUpdateInf}>
                           <p>My information</p>
                         </DropdownItem>
-                        <Link to="/myinvoice">
+                        { (currentPath !== 'Admin') && <Link to="/myinvoice">
                           <DropdownItem>
                             My invoice
                           </DropdownItem>
-                        </Link>
+                        </Link>}
                         <DropdownItem divider />
                         <DropdownItem onClick={logout}>
                           <p>Logout</p>
@@ -82,19 +81,18 @@ const TopMenu = (props) => {
   const getItem = () => {
     const checkuser = document.cookie.indexOf('iduser');
     const checkadmin = document.cookie.indexOf('idadmin');
-    switch(currentPath){
-      case '':
-        if(checkuser)
+    if(currentPath !== 'Admin'){
+      if(checkuser)
           return item2;
-        else
-          return item1;
-        
-      case 'Admin':
-        if(checkadmin)
+      else
+        return item1;
+    }else{
+      if(checkadmin)
           return item2;
-        else
-          return item1;
+      else
+        return item1;
     }
+    
   }
   return (
     
