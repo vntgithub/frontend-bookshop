@@ -39,11 +39,11 @@ const TopMenu = (props) => {
   const logout = () => {
     if(currentPath === 'Admin'){
       document.cookie = "idadmin=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/Admin;";
-      setAdmin(null);
+      setAdmin({});
       window.location.replace('/loginadmin');
     }else{
       document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-      props.setUserState(null);
+      props.setUserState({});
     }
   }
   const myInfo = () => {
@@ -90,9 +90,11 @@ const TopMenu = (props) => {
             <DropdownItem onClick={myInfo}>
                   <p>My information</p>
                 </DropdownItem>
-                <DropdownItem>
-                  <Link to="/myinvoice">My invoice</Link>
-                </DropdownItem>
+                <Link to="/myinvoice">
+                  <DropdownItem>
+                    My invoice
+                  </DropdownItem>
+                </Link>
                 <DropdownItem divider />
                 <DropdownItem onClick={logout}>
                   <p>Logout</p>

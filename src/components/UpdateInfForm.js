@@ -9,22 +9,23 @@ import { faExclamationCircle, faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import './style/invoiceform.css';
 
-const InvoiceForm = (props) => {
+const UpdateInfForm = (props) => {
     const openMess = useContext(MessContext);
-    const { userCart, setUserCart } = useContext(CartContext);
+    const [image, setImage] = useState(null);
     const { user } = useContext(UserContext);
     const [data, setData] = useState({
         userId: document.cookie.substr(3),
         name: user.name, 
         phonenumber: user.phonenumber, 
         address: user.address,
-        date: new Date(), 
-        cart: [...userCart],
-        totalamount: props.totalAmount
+        newPass: '',
+        confirmNewPass: ''
     });
     const setName = (event) => setData({...data, name: event.target.value})
     const setPhone = (event) => setData({...data, phonenumber: event.target.value});
     const setAddress = (event) => setData({...data, address: event.target.value});
+    const setNewPass = (event) => setData({...data, newPass: event.target.value});
+    const setConfirmNewPass = (event) => setData({...data, confirmNewPass: event.target.value});
     const submit = () => {
         const RegExp = /^0[1-9]{9,10}$/;
         let check = true;
@@ -53,23 +54,30 @@ const InvoiceForm = (props) => {
         }else{
             document.getElementById('address').style.display = "none";
         }
-        if(check) {
-            if(props.invoiceBuyAgain){
-                const newInvoice = {...props.invoiceBuyAgain, date: new Date()};
-                delete newInvoice._id;
-                invoiceApi.addInvoice(newInvoice);
-                props.reload().then(() =>  props.toggle());
-               
-            }else{
-                invoiceApi.addInvoice(data);
-                setUserCart([]);
-                localStorage.setItem('cartItems', JSON.stringify([]));
-                openMess("Done.");
-                props.toggle();
-            }
+        if(data.urlimg === ''){
+            check &= false;
+            document.getElementById('image').style.display = "flex";
+        }else{
+            document.getElementById('image').style.display = "none";
+        }
+        if(check)
             
         }
         return;
+    }
+    const getImage = (e) => {
+        const file = e.target.files;
+        const imageData  = new FormData();
+        imageData.append('file', file[0]);
+        imageData.append('upload_preset', 'usersimage');
+        setImage(imageData);
+        //Review img
+        var reader = new FileReader();
+        reader.onload = function (e) {
+                document.getElementById("blah").src = e.target.result;
+            };
+
+        reader.readAsDataURL(file[0]);
     }
     return(
         <div>
@@ -102,7 +110,38 @@ const InvoiceForm = (props) => {
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Address is require</p>
                             </div>
-                            
+                            <Label>New password</Label>
+                            <Input onChange={setAddress} name="np" type="password"  />
+                            <div id="npass" className="require">
+                                <FontAwesomeIcon icon={faExclamationCircle} />
+                                <p>Address is require</p>
+                            </div>
+                            <Label>Confirm new password</Label>
+                            <Input onChange={setConfirmNewPass} name="np" type="password"  />
+                            <div id="cnpass" className="require">
+                                <FontAwesomeIcon icon={faExclamationCircle} />
+                                <p>Address is require</p>
+                            </div>
+
+                            <Input 
+                            id="imagedata"
+                            name="image" 
+                            type="file" 
+                            placeholder="Choose Image"
+                            className="mt-3"
+                            accept="image/*"
+                            onChange={getImage} />
+                            <div id="image" className="require">
+                                <FontAwesomeIcon icon={faExclamationCircle} />
+                                <p>Image is require</p>
+                            </div>
+                            <img 
+                                className="mt-3"
+                                id="blah" 
+                                src={data.urlimg} 
+                                alt="imgproduct"
+                                width="120px"
+                                height="180px" />
                         </FormGroup>
                     </Form>
                 </Col>
@@ -114,4 +153,4 @@ const InvoiceForm = (props) => {
         </div>
     );
 }
-export default InvoiceForm;
+export default UpdateInfForm;

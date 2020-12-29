@@ -11,7 +11,7 @@ const userApi = {
           check = res.data.login;
           let expires = new Date();  
           expires.setTime(expires.getTime() + 31536000000);
-          document.cookie = `id=${res.data.user._id}; expires=${expires}; path=/`;
+          document.cookie = `iduser=${res.data.user._id}; expires=${expires}; path=/`;
           setUser(res.data.user);
         }
       })

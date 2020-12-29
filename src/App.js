@@ -32,8 +32,12 @@ function App() {
   const [isopenMess, setIsOpenMess] = useState(false);
   useEffect(() => {
    const componentDidMount = async () => {
-    if(document.cookie !== ''){
-      await userApi.getByCookie(document.cookie.substr(3), setUser);
+
+    if(document.cookie.indexOf('iduser') !== -1){
+      const arrCookie = document.cookie.split(';');
+      const adminStrCookie = arrCookie.find(e => e.substr(0,6) === 'iduser');
+      const cookie = adminStrCookie.substr(7);
+      await userApi.getByCookie(cookie, setUser);
     }
    }
    componentDidMount();

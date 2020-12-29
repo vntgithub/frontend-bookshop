@@ -63,3 +63,6 @@
 .login-signup:hover {
   background-color: rgb(78, 129, 131);
 }
+a:hover {
+  text-decoration: none !important;
+}

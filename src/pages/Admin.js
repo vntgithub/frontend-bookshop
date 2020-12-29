@@ -26,13 +26,11 @@ import './style/Admin.css';
 import adminApi from '../api/admin.api';
 
 const AdminPage = () => {
-    const arrCookie = document.cookie.split(';');
-    let check = arrCookie.find(element => element.indexOf('idadmin') !== -1 );
+    const index = document.cookie.indexOf('idadmin');
     const { setAdmin } = useContext(AdminContext);
-    if(!check){
+    if(index === -1){
         window.location.replace('/loginadmin');
     }
-
     const openMess = useContext(MessContext);
     const [data, setData] = useState([]);
     const [isOpenModalAddBook, setIsOpenModalAddBook] = useState(false);
@@ -68,7 +66,9 @@ const AdminPage = () => {
         }
     }
     useEffect(() => {
-        const cookie = check.substr(8);
+        const arrCookie = document.cookie.split(';');
+        const adminStrCookie = arrCookie.find(e => e.substr(0,7) === 'idadmin');
+        const cookie = adminStrCookie.substr(8);
         const getAdminbyCookie = async () => {
             await adminApi.getByCookie(cookie, setAdmin);
         }
