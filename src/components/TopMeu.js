@@ -42,12 +42,59 @@ const TopMenu = (props) => {
       setAdmin({});
       window.location.replace('/loginadmin');
     }else{
-      document.cookie = "id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = "iduser=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       props.setUserState({});
     }
   }
   const myInfo = () => {
 
+  }
+  const item1 = <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav caret>
+                      <img 
+                      style={{width: "2.5rem", height: "2.5rem"}} 
+                      src={urlimg} alt="userimg"
+                      className="userAvt" />
+                      </DropdownToggle>
+                      <DropdownMenu right>
+                    <DropdownItem onClick={myInfo}>
+                          <p>My information</p>
+                        </DropdownItem>
+                        <Link to="/myinvoice">
+                          <DropdownItem>
+                            My invoice
+                          </DropdownItem>
+                        </Link>
+                        <DropdownItem divider />
+                        <DropdownItem onClick={logout}>
+                          <p>Logout</p>
+                        </DropdownItem>
+                      </DropdownMenu>
+                  </UncontrolledDropdown>;
+  const item2 = <NavItem >
+                  <div >
+                    <p onClick={props.openModalLogin} 
+                      className="login-signup">
+                        Login / Signup
+                    </p>
+                  </div>
+              </NavItem>
+  const getItem = () => {
+    const checkuser = document.cookie.indexOf('iduser');
+    const checkadmin = document.cookie.indexOf('idadmin');
+    switch(currentPath){
+      case '':
+        if(checkuser)
+          return item2;
+        else
+          return item1;
+        
+      case 'Admin':
+        if(checkadmin)
+          return item2;
+        else
+          return item1;
+    }
   }
   return (
     
@@ -72,35 +119,9 @@ const TopMenu = (props) => {
             </NavItem> 
             
           }
-            {(document.cookie === '') && 
-            <NavItem >
-              <div >
-                <p onClick={props.openModalLogin} className="login-signup">Login / Signup</p>
-              </div>
-            </NavItem>}
-            { (document.cookie !== '') && 
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-              <img 
-              style={{width: "2.5rem", height: "2.5rem"}} 
-              src={urlimg} alt="userimg"
-              className="userAvt" />
-              </DropdownToggle>
-              <DropdownMenu right>
-            <DropdownItem onClick={myInfo}>
-                  <p>My information</p>
-                </DropdownItem>
-                <Link to="/myinvoice">
-                  <DropdownItem>
-                    My invoice
-                  </DropdownItem>
-                </Link>
-                <DropdownItem divider />
-                <DropdownItem onClick={logout}>
-                  <p>Logout</p>
-                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>}
+            {
+              getItem()
+            }
           </Nav>
         </Collapse>
       </Navbar>

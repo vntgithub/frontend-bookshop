@@ -34,10 +34,11 @@ function App() {
    const componentDidMount = async () => {
 
     if(document.cookie.indexOf('iduser') !== -1){
-      const arrCookie = document.cookie.split(';');
-      const adminStrCookie = arrCookie.find(e => e.substr(0,6) === 'iduser');
-      const cookie = adminStrCookie.substr(7);
-      await userApi.getByCookie(cookie, setUser);
+      let arrCookie = document.cookie.split(';');
+      arrCookie = arrCookie.map(e => e.trim());
+      const iduser = arrCookie.find(e => e.substr(0,6) === 'iduser').substr(7);
+      userApi.getByCookie(iduser, setUser);
+      
     }
    }
    componentDidMount();
