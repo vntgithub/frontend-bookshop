@@ -12,8 +12,20 @@ const Footer = () => {
     <div className='footer mt-3' >
       <Row>
         <Col md={{size: 3, offset: 1}}>
-          <Row className="mt-3 mr-5 align-items-center" >
-            Bookshop
+          <Row className="mt-3 title-footer">
+            Student information:
+          </Row>
+          <Row className="mt-3 mr-5 " >
+            Name: Vo Nhat Trieu 
+          </Row>
+          <Row className="mt-3 mr-5 " >
+            Class: DI17V7A2 
+          </Row>
+          <Row className="mt-3 mr-5 " >
+            Specialized: Information Technology
+          </Row>
+          <Row className="mt-3 mr-5 " >
+            Specialized: Information Technology
           </Row>
         </Col>
         <Col md={1}>
