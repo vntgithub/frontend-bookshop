@@ -36,7 +36,7 @@ const ModalSigup = (props) => {
         var reader = new FileReader();
         reader.onload = function (e) {
                 document.getElementById("rv").src = e.target.result;
-                document.getElementById("rv").style.display = "flex";
+                document.getElementById("rv").style.display = "inline";
             };
 
         reader.readAsDataURL(file[0]);
@@ -52,8 +52,9 @@ const ModalSigup = (props) => {
             document.getElementById('usernameSU').style.display = "flex";
         }else{
              userApi.checkExist(dataForm.username).then(res => {
-                check &= false;
+                
                 if(res.data.checkUserExist){
+                    check &= false;
                     document.getElementById('usernameSU').children[1].innerHTML = "Account already exists";
                     document.getElementById('usernameSU').style.display = "flex";
                 }else{
@@ -206,7 +207,7 @@ const ModalSigup = (props) => {
                                 <p>Image is require</p>
                             </div>
                             <img 
-                                className="mt-3"
+                                className="mt-2 "
                                 id="rv" 
                                 src={dataForm.urlimg} 
                                 alt="imgproduct"
@@ -217,10 +218,10 @@ const ModalSigup = (props) => {
                 </Col>
             </Row>
             <Row id="donesu" className="justify-content-center mb-2 donesignup">
-                <h4 className="mt-3 ">Signup sucessfully.</h4>
+                <h4 className="mt-1">Signup sucessfully.</h4>
             </Row>
             <Row className="justify-content-center mb-2">
-                <h4 className="mt-5 button-submit" onClick={submit} >Submit</h4>
+                <h4 className="mt-3 button-submit" onClick={submit} >Submit</h4>
             </Row>
         </Container>
         </div>

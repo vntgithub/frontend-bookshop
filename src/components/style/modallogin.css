@@ -5,7 +5,7 @@
   border-radius: 3rem;
   transition: opacity 60ms;
   right: 37rem;
-  top: 8rem;
+  top: 6rem;
   width: 36rem !important;
 }
 .login-form p {
@@ -77,6 +77,7 @@
 }
 #rv {
   display: none;
+  margin-left: 5rem;
 }
 .donesignup h4 {
   color: green;
@@ -84,4 +85,8 @@
 }
 #donesu {
   display: none;
+}
+#imagedata {
+  display: inline !important;
+  width: 200px !important;
 }
