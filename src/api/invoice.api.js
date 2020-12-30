@@ -47,8 +47,23 @@ const invoiceApi = {
   },
   getAllByState: async(page, state, setData) => {
       const url = process.env.REACT_APP_URL_DATABASE + `invoice/getallbystate/${page}&${state}`;
-      console.log(url);
-      await axios.get(url).then(res => setData(res.data));
+      let n = 0
+      await axios.get(url).then(res => {
+          setData(res.data);
+          n = res.data.length/20;
+        });
+    return n;
+  },
+  findByName: async(name, setData) => {
+      const url = process.env.REACT_APP_URL_DATABASE + `invoice/findbyname/${name}`;
+      let n = 0;
+      await axios.get(url)
+      .then(res => {
+        setData(res.data);
+        n = res.data.length;
+      })
+      .catch(err => console.log(err));
+      return n/20;
   }
 };
 

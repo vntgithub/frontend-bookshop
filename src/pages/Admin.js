@@ -112,7 +112,8 @@ const AdminPage = () => {
                 if(str === ''){
                     loadDataBooks();
                 }else{
-                    bookApi.search(str, 0, setData).then(n => setPage(n));
+                    bookApi.search(str, 0, setData);
+                    bookApi.countPageBySearchString(str, setPage);
                 }
                     break;
                 case 'Users':
@@ -126,11 +127,12 @@ const AdminPage = () => {
                     if(str === ''){
                         loadDataInvoices();
                     }else{
-                        invoiceApi.search(str, setData).then(() =>{setPage(1)});
+                        invoiceApi.findByName(str, setData).then(n =>{setPage(n)});
                     }
                     break;
                 default: break;
             }
+            setCurrentPage(0);
         }
     }
     
@@ -150,7 +152,8 @@ const AdminPage = () => {
             loadDataInvoices();
             return;
         }else{
-            invoiceApi.getAllByState(currentPage, e.target.value, setData );
+            setCurrentPage(0);
+            invoiceApi.getAllByState(0, e.target.value, setData ).then(n => setPage(n));
         }
     }
     return(
