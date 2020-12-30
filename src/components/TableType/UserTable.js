@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { isOpenDelModalContext, TableDataContext } from '../../contexts/Context';
 
-const UserTable = (props) => {
+const UserTable = () => {
     const { data } = useContext(TableDataContext);
     const openDelModal = useContext(isOpenDelModalContext);
     return (

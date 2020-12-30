@@ -64,7 +64,7 @@ function App() {
   return (
     <div id="App">
       
-      {isopenMess && <Mess mess={mess} setIsOpenMess={setIsOpenMess}/>}
+      {isopenMess && <Mess mess={mess} setIsOpenMess={setIsOpenMess} />}
       <isOpenUpdateInfContext.Provider value={{openUpdateInf: openUpdateInf, closeUpdateInf: closeUpdateInf}}>
       <AdminContext.Provider value={{admin, setAdmin}}>
       <MessContext.Provider value={openMess}>

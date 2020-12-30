@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { Container, FormGroup, Input, Form, Row, Col } from 'reactstrap';
 
 import userApi from '../api/user.api';
@@ -117,7 +117,10 @@ const ModalSigup = (props) => {
             Axios.post('https://api.cloudinary.com/v1_1/vntrieu/image/upload', image)
             .then(res => {
                 const userCreate = {...dataForm, urlimg: res.data.secure_url}
-                userApi.create(userCreate).then(() => props.openModalSignUp());
+                userApi.create(userCreate).then(() => {
+                    document.getElementById('donesu').style.display = "flex";
+                    setTimeout(() => props.openModalSignUp(), 1500);
+                });
                 
             });
             
@@ -212,6 +215,9 @@ const ModalSigup = (props) => {
                         </FormGroup>
                     </Form>
                 </Col>
+            </Row>
+            <Row id="donesu" className="justify-content-center mb-2 donesignup">
+                <h4 className="mt-3 ">Signup sucessfully.</h4>
             </Row>
             <Row className="justify-content-center mb-2">
                 <h4 className="mt-5 button-submit" onClick={submit} >Submit</h4>

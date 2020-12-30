@@ -78,3 +78,10 @@
 #rv {
   display: none;
 }
+.donesignup h4 {
+  color: green;
+  font-weight: bold;
+}
+#donesu {
+  display: none;
+}
