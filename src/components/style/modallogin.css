@@ -77,7 +77,6 @@
 }
 #rv {
   display: none;
-  margin-left: 5rem;
 }
 .donesignup h4 {
   color: green;
@@ -87,6 +86,9 @@
   display: none;
 }
 #imagedata {
-  display: inline !important;
+  display: none !important;
   width: 200px !important;
+}
+.imgbutton {
+  font-weight: bold !important;
 }

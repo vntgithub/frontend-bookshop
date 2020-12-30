@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, FormGroup, Input, Form, Row, Col } from 'reactstrap';
+import { Container, FormGroup, Input, Form, Row, Col, Button } from 'reactstrap';
 
 import userApi from '../api/user.api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -128,6 +128,7 @@ const ModalSigup = (props) => {
         }
         return;
     }
+    const clickButton = () => document.getElementById('imagedata').click();
     return(
         <div>
         <div className="overlay"></div>
@@ -194,6 +195,7 @@ const ModalSigup = (props) => {
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Address is require</p>
                             </div>
+                            <Button className="imgbutton mt-2 mr-5" onClick={clickButton}>Image</Button>
                             <Input 
                             id="imagedata"
                             name="image" 

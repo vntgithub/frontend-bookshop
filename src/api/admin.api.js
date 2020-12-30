@@ -25,5 +25,9 @@ const adminApi = {
             .then(res => setAdmin(res.data.adminData))
             .catch(err => console.log(err))
     },
+    update: async(data) => {
+      const url = process.env.REACT_APP_URL_DATABASE + 'admin/update';
+      await axios.put(url, data).then(res => console.log(res.data));
+    }
 }
 export default adminApi;

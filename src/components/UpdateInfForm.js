@@ -1,8 +1,9 @@
 import React, { useState, useContext } from 'react';
 import Axios from 'axios';
-import { Container, FormGroup, Input, Label, Form, Row, Col } from 'reactstrap';
+import { Container, FormGroup, Input, Label, Form, Row, Col, Button } from 'reactstrap';
 
 import userApi from '../api/user.api';
+import adminApi from '../api/admin.api';
 import { AdminContext, isOpenUpdateInfContext, MessContext, UserContext } from '../contexts/Context';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,7 +18,7 @@ const UpdateInfForm = (props) => {
     const [image, setImage] = useState(null);
     const [newPassOb, setNewPassOb] = useState({newPass: '', confirmNewPass: ''});
     const { user, setUser } = useContext(UserContext);
-    const { admin } = useContext(AdminContext);
+    const { admin, setAdmin } = useContext(AdminContext);
     let dataob = {};
     if(currentPath !== 'Admin'){
         dataob = {...user};
@@ -34,23 +35,31 @@ const UpdateInfForm = (props) => {
     const submit = () => {
         const RegExp = /^0[1-9]{9,10}$/;
         let check = true;
-        if(data.name === ''){
-            check &= false;
-            document.getElementById('name').style.display = "flex";
-        }else{
-            document.getElementById('name').style.display = "none";
-        }
-        if(data.phone === ''){
-            check &= false;
-            document.getElementById('phone').style.display = "flex";
-            
-        }else{
-            if(RegExp.test(data.phonenumber)){
-                document.getElementById('phone').style.display = "none";
-            }else{
+        if(currentPath !== 'Admin'){
+            if(data.name === ''){
                 check &= false;
-                document.getElementById('phone').children[1].innerHTML= "Phone numbers must begin with 0, have 10-11 numbers";
+                document.getElementById('name').style.display = "flex";
+            }else{
+                document.getElementById('name').style.display = "none";
+            }
+            if(data.phone === ''){
+                check &= false;
                 document.getElementById('phone').style.display = "flex";
+                
+            }else{
+                if(RegExp.test(data.phonenumber)){
+                    document.getElementById('phone').style.display = "none";
+                }else{
+                    check &= false;
+                    document.getElementById('phone').children[1].innerHTML= "Phone numbers must begin with 0, have 10-11 numbers";
+                    document.getElementById('phone').style.display = "flex";
+                }
+            }
+            if(data.address === ''){
+                check &= false;
+                document.getElementById('address').style.display = "flex";
+            }else{
+                document.getElementById('address').style.display = "none";
             }
         }
         if(isOpenChanePass){
@@ -74,12 +83,7 @@ const UpdateInfForm = (props) => {
                 document.getElementById('cnp').style.display = 'none';
             }
         }
-        if(data.address === ''){
-            check &= false;
-            document.getElementById('address').style.display = "flex";
-        }else{
-            document.getElementById('address').style.display = "none";
-        }
+        
         if(data.urlimg === ''){
             check &= false;
             document.getElementById('image').style.display = "flex";
@@ -87,41 +91,72 @@ const UpdateInfForm = (props) => {
             document.getElementById('image').style.display = "none";
         }
         if(check){
-            if(image){
-                Axios.post('https://api.cloudinary.com/v1_1/vntrieu/image/upload', image)
-                .then(res => {
+            if(currentPath !== 'Admin'){
+                if(image){
+                    Axios.post('https://api.cloudinary.com/v1_1/vntrieu/image/upload', image)
+                    .then(res => {
+                        if(isOpenChanePass){
+                            const dataUpdate = {...data, 
+                                urlimg: res.data.secure_url,
+                                password: newPassOb.newPass
+                            };
+                            userApi.update(dataUpdate);
+                            delete dataUpdate.password;
+                            setUser(dataUpdate);
+                        }else{
+                            const dataUpdate = {...data, urlimg: res.data.secure_url};
+                            setUser(dataUpdate);
+                            userApi.update(dataUpdate);
+                        }
+                        
+                     });
+                }else{
                     if(isOpenChanePass){
                         const dataUpdate = {...data, 
-                            urlimg: res.data.secure_url,
                             password: newPassOb.newPass
                         };
-                        console.log(dataUpdate);
                         userApi.update(dataUpdate);
                         delete dataUpdate.password;
                         setUser(dataUpdate);
                     }else{
-                        const dataUpdate = {...data, urlimg: res.data.secure_url};
-                        setUser(dataUpdate);
-                        userApi.update(dataUpdate);
+                        setUser(data);
+                        userApi.update(data);
                     }
-                    
-                 });
-            }else{
-                if(isOpenChanePass){
-                    const dataUpdate = {...data, 
-                        password: newPassOb.newPass
-                    };
-                    console.log(dataUpdate);
-                    userApi.update(dataUpdate);
-                    delete dataUpdate.password;
-                    setUser(dataUpdate);
-                }else{
-                    setUser(data);
-                    userApi.update(data);
                 }
+                closeUpdateInf()
+                openMess("Updated!");
+            }else{
+                if(image){
+                    Axios.post('https://api.cloudinary.com/v1_1/vntrieu/image/upload', image)
+                    .then(res => {
+                        if(isOpenChanePass){
+                            const dataUpdate = {...data, 
+                                urlimg: res.data.secure_url,
+                                password: newPassOb.newPass
+                            };
+                            adminApi.update(dataUpdate);
+                            delete dataUpdate.password;
+                            setAdmin(dataUpdate);
+                        }else{
+                            const dataUpdate = {...data, urlimg: res.data.secure_url};
+                            setAdmin(dataUpdate);
+                            adminApi.update(dataUpdate);
+                        }
+                        
+                     });
+                }else{
+                    if(isOpenChanePass){
+                        const dataUpdate = {...data, 
+                            password: newPassOb.newPass
+                        };
+                        adminApi.update(dataUpdate);
+                        delete dataUpdate.password;
+                        setAdmin(dataUpdate);
+                    }
+                }
+                closeUpdateInf()
+                openMess("Updated!");
             }
-            closeUpdateInf()
-            openMess("Updated!");
         }
         return;
     }
@@ -140,7 +175,8 @@ const UpdateInfForm = (props) => {
         reader.readAsDataURL(file[0]);
     }
     const openChangePass = () => setIsOpenChangePass(!isOpenChanePass);
-    
+    const clickButton = () => document.getElementById('imagedata').click();
+
     return(
         <div >
         <div className="overlay"></div>
@@ -153,6 +189,8 @@ const UpdateInfForm = (props) => {
                 <Col sm={8}>
                     <Form onSubmit={submit}>
                         <FormGroup>
+                            { (currentPath !== 'Admin') &&
+                             <div>
                             <Label>Name</Label>
                             <Input onChange={setName} name="name" type="text" value={data.name} />
                             <div id="name" className="require">
@@ -172,6 +210,7 @@ const UpdateInfForm = (props) => {
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Address is require</p>
                             </div>
+                            </div>}
                             <div className="mt-2 changepass">
                                 <Label>Change password </Label>
                                 <FontAwesomeIcon icon={faEdit} className="ml-2" onClick={openChangePass} />
@@ -192,6 +231,7 @@ const UpdateInfForm = (props) => {
                                 </div>
                             </div>
                             }
+                            <Button className="imgbutton mt-2 mr-5" onClick={clickButton}>Image</Button>
                             <Input 
                             id="imagedata"
                             name="image" 

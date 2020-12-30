@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, FormGroup, Input, Form, Row, Col, Label } from 'reactstrap';
+import { Container, FormGroup, Input, Form, Row, Col, Label, Button } from 'reactstrap';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExclamationCircle, faTimes
@@ -105,6 +105,7 @@ const ModalUpdateBook = (props) => {
         return;
     }
     const close = () => props.close(false);
+    const clickButton = () => document.getElementById('imagedata').click();
     return(
         <div>
         <div className="overlay"></div>
@@ -158,6 +159,7 @@ const ModalUpdateBook = (props) => {
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Price is require</p>
                             </div>
+                            <Button className="imgbutton mt-2 mr-5" onClick={clickButton}>Image</Button>
                             <Input 
                             id="imagedata"
                             name="image" 
