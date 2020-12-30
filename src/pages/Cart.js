@@ -61,7 +61,7 @@ const CartPage = () => {
             document.getElementById('warning').style.visibility = "unset";
             return;
         }
-        if(document.cookie === ''){
+        if(document.cookie.indexOf('iduser') === -1){
             setLogin(!login);
             return;
         }
