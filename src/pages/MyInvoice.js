@@ -49,14 +49,12 @@ const MyInvoice = () => {
         .then(res => {
             setInvoice(res.data);
         });
-    }, []);
+    }, [invoice]);
     return(
         <Container className="body-invoice-list">
             <Row className="justify-content-center ">
-                <Col md={4}>
-                    <Input type="text" placeholder="Search id..." />
-                </Col>
-                <Col md={{size: 2, offset: 2}}>
+                
+                <Col md={{size: 2, offset: 6}}>
                 <Input type="select" onChange={filterState}>
                     <option>All</option>
                     <option>Done</option>
