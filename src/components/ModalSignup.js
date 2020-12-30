@@ -195,6 +195,13 @@ const ModalSigup = (props) => {
                                 <p>Address is require</p>
                             </div>
                             <Button className="imgbutton mt-2 mr-5" onClick={clickButton}>Image</Button>
+                            <img 
+                                className="mt-2 "
+                                id="rv" 
+                                src={dataForm.urlimg} 
+                                alt="imgproduct"
+                                width="120px"
+                                height="180px" />
                             <Input 
                             id="imagedata"
                             name="image" 
@@ -207,13 +214,7 @@ const ModalSigup = (props) => {
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Image is require</p>
                             </div>
-                            <img 
-                                className="mt-2 "
-                                id="rv" 
-                                src={dataForm.urlimg} 
-                                alt="imgproduct"
-                                width="120px"
-                                height="180px" />
+                            
                         </FormGroup>
                     </Form>
                 </Col>

@@ -80,7 +80,8 @@ const UpdateInfForm = (props) => {
                 document.getElementById('cnp').children[1].innerHTML = "Those passwords didn't match. Try again."
                 check &= false;
             }else{
-                document.getElementById('cnp').style.display = 'none';
+                if(newPassOb.confirmNewPass !== '')
+                    document.getElementById('cnp').style.display = 'none';
             }
         }
         
@@ -232,6 +233,13 @@ const UpdateInfForm = (props) => {
                             </div>
                             }
                             <Button className="imgbutton mt-2 mr-5" onClick={clickButton}>Image</Button>
+                            <img 
+                                className="mt-3"
+                                id="avtifu" 
+                                src={data.urlimg} 
+                                alt="imgproduct"
+                                width="30%"
+                                height="30%" />
                             <Input 
                             id="imagedata"
                             name="image" 
@@ -244,13 +252,7 @@ const UpdateInfForm = (props) => {
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Image is require</p>
                             </div>
-                            <img 
-                                className="mt-3"
-                                id="avtifu" 
-                                src={data.urlimg} 
-                                alt="imgproduct"
-                                width="30%"
-                                height="30%" />
+                            
                         </FormGroup>
                     </Form>
                 </Col>

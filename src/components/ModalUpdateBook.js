@@ -160,6 +160,13 @@ const ModalUpdateBook = (props) => {
                                 <p>Price is require</p>
                             </div>
                             <Button className="imgbutton mt-2 mr-5" onClick={clickButton}>Image</Button>
+                            <img 
+                                className="mt-3"
+                                id="blah" 
+                                src={dataForm.urlimg} 
+                                alt="imgproduct"
+                                width="120px"
+                                height="180px" />
                             <Input 
                             id="imagedata"
                             name="image" 
@@ -172,13 +179,7 @@ const ModalUpdateBook = (props) => {
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Image is require</p>
                             </div>
-                            <img 
-                                className="mt-3"
-                                id="blah" 
-                                src={dataForm.urlimg} 
-                                alt="imgproduct"
-                                width="120px"
-                                height="180px" />
+                            
                         </FormGroup>
                     </Form>
                 </Col>

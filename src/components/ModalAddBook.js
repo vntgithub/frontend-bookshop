@@ -152,6 +152,13 @@ const ModalAddBook = (props) => {
                                 <p>Price is require</p>
                             </div>
                             <Button className="imgbutton mt-2 mr-5" onClick={clickButton}>Image</Button>
+                            <img 
+                                className={classNames("mt-3", {'class-display-none': dataForm.urlimg === ''})}
+                                id="blah" 
+                                src={dataForm.urlimg} 
+                                alt="imgproduct"
+                                width="120px"
+                                height="180px" />
                             <Input 
                             id="imagedata"
                             name="image" 
@@ -164,13 +171,7 @@ const ModalAddBook = (props) => {
                                 <FontAwesomeIcon icon={faExclamationCircle} />
                                 <p>Image is require</p>
                             </div>
-                            <img 
-                                className={classNames("mt-3", {'class-display-none': dataForm.urlimg === ''})}
-                                id="blah" 
-                                src={dataForm.urlimg} 
-                                alt="imgproduct"
-                                width="120px"
-                                height="180px" />
+                            
                         </FormGroup>
                     </Form>
                 </Col>
