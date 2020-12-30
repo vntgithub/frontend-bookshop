@@ -15,6 +15,7 @@ const UpdateInfForm = (props) => {
     const {closeUpdateInf} = useContext(isOpenUpdateInfContext);
     const openMess = useContext(MessContext);
     const [image, setImage] = useState(null);
+    const [newPassOb, setNewPassOb] = useState({newPass: '', confirmNewPass: ''});
     const { user, setUser } = useContext(UserContext);
     const { admin } = useContext(AdminContext);
     let dataob = {};
@@ -28,8 +29,8 @@ const UpdateInfForm = (props) => {
     const setName = (event) => setData({...data, name: event.target.value})
     const setPhone = (event) => setData({...data, phonenumber: event.target.value});
     const setAddress = (event) => setData({...data, address: event.target.value});
-    const setNewPass = (event) => setData({...data, newPass: event.target.value});
-    const setConfirmNewPass = (event) => setData({...data, confirmNewPass: event.target.value});
+    const setNewPass = (event) => setNewPassOb({...newPassOb, newPass: event.target.value});
+    const setConfirmNewPass = (event) => setNewPassOb({...newPassOb, confirmNewPass: event.target.value});
     const submit = () => {
         const RegExp = /^0[1-9]{9,10}$/;
         let check = true;
@@ -53,16 +54,21 @@ const UpdateInfForm = (props) => {
             }
         }
         if(isOpenChanePass){
-            console.log("vo if")
-            if(data.newPass === ''){
+            if(newPassOb.newPass === ''){
                 document.getElementById('np').style.display = 'flex';
-                console.log("vo if set display")
                 check &= false;
             }else{
                 document.getElementById('np').style.display = 'none';
             }
-            if(data.confirmNewPass === ''){
+            if(newPassOb.confirmNewPass === ''){
                 document.getElementById('cnp').style.display = 'flex';
+                check &= false;
+            }else{
+                document.getElementById('cnp').style.display = 'none';
+            }
+            if(newPassOb.newPass !== newPassOb.confirmNewPass){
+                document.getElementById('cnp').style.display = 'flex';
+                document.getElementById('cnp').children[1].innerHTML = "Those passwords didn't match. Try again."
                 check &= false;
             }else{
                 document.getElementById('cnp').style.display = 'none';
@@ -84,13 +90,35 @@ const UpdateInfForm = (props) => {
             if(image){
                 Axios.post('https://api.cloudinary.com/v1_1/vntrieu/image/upload', image)
                 .then(res => {
-                    const dataUpdate = {...data, urlimg: res.data.secure_url};
-                    setUser(dataUpdate);
-                    userApi.update(dataUpdate);
+                    if(isOpenChanePass){
+                        const dataUpdate = {...data, 
+                            urlimg: res.data.secure_url,
+                            password: newPassOb.newPass
+                        };
+                        console.log(dataUpdate);
+                        userApi.update(dataUpdate);
+                        delete dataUpdate.password;
+                        setUser(dataUpdate);
+                    }else{
+                        const dataUpdate = {...data, urlimg: res.data.secure_url};
+                        setUser(dataUpdate);
+                        userApi.update(dataUpdate);
+                    }
+                    
                  });
             }else{
-                setUser(data);
-                userApi.update(data);
+                if(isOpenChanePass){
+                    const dataUpdate = {...data, 
+                        password: newPassOb.newPass
+                    };
+                    console.log(dataUpdate);
+                    userApi.update(dataUpdate);
+                    delete dataUpdate.password;
+                    setUser(dataUpdate);
+                }else{
+                    setUser(data);
+                    userApi.update(data);
+                }
             }
             closeUpdateInf()
             openMess("Updated!");
@@ -151,7 +179,7 @@ const UpdateInfForm = (props) => {
                             {isOpenChanePass && 
                                 <div>
                                 <Label>New password</Label>
-                                <Input onChange={setNewPass} name="npass" type="pasword" />
+                                <Input onChange={setNewPass} name="npass" type="password" />
                                 <div id="np" className="require">
                                     <FontAwesomeIcon icon={faExclamationCircle} />
                                     <p>New password is require</p>
