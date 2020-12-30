@@ -126,7 +126,6 @@ const ModalSigup = (props) => {
             });
             
         }
-        return;
     }
     const clickButton = () => document.getElementById('imagedata').click();
     return(

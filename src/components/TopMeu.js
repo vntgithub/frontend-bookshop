@@ -82,15 +82,15 @@ const TopMenu = (props) => {
     const checkuser = document.cookie.indexOf('iduser');
     const checkadmin = document.cookie.indexOf('idadmin');
     if(currentPath !== 'Admin'){
-      if(checkuser)
-          return item2;
+      if(checkuser !== -1)
+          return item1
       else
-        return item1;
+        return item2
     }else{
-      if(checkadmin)
-          return item2;
+      if(checkadmin !== -1)
+          return item1
       else
-        return item1;
+        return item2
     }
     
   }
