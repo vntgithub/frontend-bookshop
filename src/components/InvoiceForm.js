@@ -58,7 +58,8 @@ const InvoiceForm = (props) => {
                 const newInvoice = {...props.invoiceBuyAgain, date: new Date()};
                 delete newInvoice._id;
                 invoiceApi.addInvoice(newInvoice);
-                props.reload().then(() =>  props.toggle());
+                props.toggle();
+                
                
             }else{
                 invoiceApi.addInvoice(data);

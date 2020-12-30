@@ -37,19 +37,15 @@ const MyInvoice = () => {
         invoiceApi.getByState(document.cookie.substr(3), e.target.value)
         .then(res => setInvoice(res.data));
     }
-    const reload = async() => {
-        console.log('reload call');
-        await invoiceApi.getInvoiceByUserId(document.cookie.substr(3))
-        .then(res => {
-            setInvoice(res.data);
-        });
-    }
+ 
+ 
     useEffect(() => {
+        console.log('component did mount');
         invoiceApi.getInvoiceByUserId(document.cookie.substr(3))
         .then(res => {
             setInvoice(res.data);
         });
-    }, [invoice]);
+    }, []);
     return(
         <Container className="body-invoice-list">
             <Row className="justify-content-center ">
@@ -68,7 +64,6 @@ const MyInvoice = () => {
                 <InvoiceForm 
                 toggle={toggle} 
                 invoiceBuyAgain={invoiceBuyAgain}
-                reload={reload}
                 />}
             {invoice.map((item, index) => 
                 <div className="invoice-item mt-5" key={index}>
