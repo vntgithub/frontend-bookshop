@@ -16,7 +16,7 @@ const Mess = (props) => {
         <Container className="login-form">
             <FontAwesomeIcon icon={faTimes} className="exit" onClick={close} />
             <Row className="justify-content-center mt-5">
-                <img src={check} alt="check" />
+                <img width="150px" height="150px" src={check} alt="check" />
             </Row>
             <Row className="justify-content-center mt-3 mb-3">
                 <h2>{props.mess}</h2>
